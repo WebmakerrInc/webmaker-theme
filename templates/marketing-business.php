@@ -106,6 +106,12 @@ if (! function_exists('marketing_business_feature_icon')) {
               </p>
             </div>
             <div class="relative isolate overflow-hidden rounded-[5px] border border-white/60 bg-white/80 p-8 shadow-xl shadow-primary/10 backdrop-blur">
+              <div class="absolute right-4 top-4 flex items-center gap-2 rounded-full border border-primary/20 bg-white/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary shadow-sm">
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo marketing_business_render_icon('target', 'h-4 w-4 text-primary');
+                ?>
+                <span class="text-primary/80"><?php esc_html_e('Launch-ready in 60 days', 'webmakerr'); ?></span>
+              </div>
               <div class="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl"></div>
               <div class="relative flex flex-col gap-6">
                 <?php if (has_post_thumbnail()) : ?>
@@ -116,6 +122,25 @@ if (! function_exists('marketing_business_feature_icon')) {
                 <div class="rounded-[5px] border border-zinc-200 bg-white/80 p-6 shadow-sm">
                   <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary"><?php esc_html_e('Unified growth stack', 'webmakerr'); ?></p>
                   <p class="mt-2 text-sm text-zinc-600"><?php esc_html_e('Webmakerr brings your website, CRM, store, and analytics into one managed platform so you can grow without tech debt.', 'webmakerr'); ?></p>
+                </div>
+                <div class="rounded-[6px] border border-primary/20 bg-gradient-to-r from-primary/5 via-primary/10 to-transparent p-6 shadow-sm">
+                  <div class="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
+                    <span class="flex items-center gap-2">
+                      <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon('trending-up', 'h-4 w-4 text-primary');
+                      ?>
+                      <?php esc_html_e('Adoption momentum', 'webmakerr'); ?>
+                    </span>
+                    <span class="text-primary/70"><?php esc_html_e('Customer cohorts', 'webmakerr'); ?></span>
+                  </div>
+                  <div class="mt-4 flex items-center justify-between text-sm font-medium text-zinc-700">
+                    <span><?php esc_html_e('Teams fully onboarded', 'webmakerr'); ?></span>
+                    <span class="text-lg font-semibold text-zinc-950">78%</span>
+                  </div>
+                  <div class="mt-3 h-2 w-full overflow-hidden rounded-full bg-white/70">
+                    <span class="block h-full w-[78%] rounded-full bg-gradient-to-r from-primary via-primary/80 to-primary/60"></span>
+                  </div>
+                  <p class="mt-3 text-xs text-zinc-500"><?php esc_html_e('Average adoption within the first 60 days of launch.', 'webmakerr'); ?></p>
                 </div>
                 <ul class="grid gap-3 text-sm text-zinc-600">
                   <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
@@ -146,6 +171,19 @@ if (! function_exists('marketing_business_feature_icon')) {
         </div>
       </section>
 
+      <div class="bg-white">
+        <div class="mx-auto flex max-w-screen-xl items-center gap-3 px-6 py-6 lg:px-8">
+          <div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+          <div class="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+            <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo marketing_business_render_icon('repeat', 'h-4 w-4 text-primary');
+            ?>
+            <span class="text-primary/80"><?php esc_html_e('From chaos to clarity', 'webmakerr'); ?></span>
+          </div>
+          <div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+        </div>
+      </div>
+
       <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="grid gap-12 text-zinc-600 lg:grid-cols-[0.9fr_1.1fr]">
@@ -153,8 +191,18 @@ if (! function_exists('marketing_business_feature_icon')) {
               <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
                 Why Growth Feels Harder Than It Should
               </h2>
-              <p class="text-base leading-7 sm:text-lg">Customers expect seamless journeys, yet the experience fractures when the backend can’t keep up.</p>
-              <p class="text-base leading-7 sm:text-lg">Teams get dragged into maintenance firefights instead of shaping the moments that win and retain visitors.</p>
+              <div class="flex flex-col gap-4 text-base leading-7 sm:text-lg">
+                <p>Customers expect seamless journeys, yet the experience fractures when the backend can’t keep up.</p>
+                <p>Teams get dragged into maintenance firefights instead of shaping the moments that win and retain visitors.</p>
+              </div>
+              <div class="flex items-start gap-3 rounded-[6px] border border-primary/20 bg-primary/5 p-4 text-sm text-primary/80 sm:text-base">
+                <span class="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('shield-check', 'h-5 w-5 text-primary');
+                  ?>
+                </span>
+                <p class="leading-6 sm:leading-7"><?php esc_html_e('Webmakerr creates a managed rhythm for launches, so strategy leads and upkeep follows.', 'webmakerr'); ?></p>
+              </div>
             </div>
             <div class="grid gap-4">
               <?php
@@ -196,6 +244,19 @@ if (! function_exists('marketing_business_feature_icon')) {
         </div>
       </section>
 
+      <div class="bg-gradient-to-r from-white via-slate-50 to-white">
+        <div class="mx-auto flex max-w-screen-xl items-center gap-3 px-6 py-6 lg:px-8">
+          <div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
+          <div class="flex items-center gap-2 rounded-full border border-primary/20 bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+            <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo marketing_business_render_icon('cloud', 'h-4 w-4 text-primary');
+            ?>
+            <span class="text-primary/80"><?php esc_html_e('Managed foundation in action', 'webmakerr'); ?></span>
+          </div>
+          <div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
+        </div>
+      </div>
+
       <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center text-zinc-600">
@@ -204,6 +265,19 @@ if (! function_exists('marketing_business_feature_icon')) {
           </div>
         </div>
       </section>
+
+      <div class="bg-white">
+        <div class="mx-auto flex max-w-screen-xl items-center gap-3 px-6 py-6 lg:px-8">
+          <div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+          <div class="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+            <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo marketing_business_render_icon('server', 'h-4 w-4 text-primary');
+            ?>
+            <span class="text-primary/80"><?php esc_html_e('Foundation checkpoints', 'webmakerr'); ?></span>
+          </div>
+          <div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+        </div>
+      </div>
 
       <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
