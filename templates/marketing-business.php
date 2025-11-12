@@ -302,10 +302,10 @@ if (! function_exists('marketing_business_feature_icon')) {
                   'name'         => 'Webmakerr',
                   'logo'         => '/wp-content/uploads/webmakerr-logo.svg',
                   'logo_alt'     => 'Webmakerr',
-                  'header_class' => 'bg-[#01C468] text-white',
-                  'card_border'  => 'border-2 border-[#01C468]',
+                  'header_class' => 'bg-[#1877F2] text-white',
+                  'card_border'  => 'border-2 border-[#1877F2]',
                   'logo_bg'      => 'bg-white',
-                  'text_class'   => 'text-[#01C468]',
+                  'text_class'   => 'text-[#1877F2]',
                   'font_weight'  => 'font-semibold',
                   'highlight'    => true,
               ),
@@ -459,12 +459,12 @@ if (! function_exists('marketing_business_feature_icon')) {
                         <?php foreach ($comparison_features as $feature) : ?>
                           <?php
                           $value        = $feature['platforms'][$key];
-                          $icon_class   = ('check' === $value['status']) ? 'text-[#01C468]' : 'text-zinc-300';
-                          $icon_symbol  = ('check' === $value['status']) ? '✅' : '—';
+                          $icon_class   = ('check' === $value['status']) ? 'text-[#1877F2]' : 'text-zinc-300';
+                          $icon_state   = ('check' === $value['status']) ? 'check' : 'dash';
                           $text_classes = trim($platform['font_weight'] . ' ' . $platform['text_class']);
                           if (! empty($feature['emphasis'])) {
                               if (! empty($platform['highlight'])) {
-                                  $text_classes = 'text-lg font-bold text-[#01C468]';
+                                  $text_classes = 'text-lg font-bold text-[#1877F2]';
                               } else {
                                   $text_classes = trim($text_classes . ' text-base font-semibold');
                               }
@@ -480,8 +480,25 @@ if (! function_exists('marketing_business_feature_icon')) {
                               ?>
                               <span><?php echo esc_html($feature['label']); ?></span>
                             </p>
-                            <div class="flex items-start gap-2">
-                              <span class="mt-0.5 text-base <?php echo esc_attr($icon_class); ?>" aria-hidden="true"><?php echo $icon_symbol; ?></span>
+                            <div class="flex items-start">
+                              <?php if ('check' === $icon_state) : ?>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  class="inline-block align-middle mr-2 h-4 w-4 md:h-5 md:w-5 <?php echo esc_attr($icon_class); ?>"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  aria-hidden="true"
+                                >
+                                  <circle cx="12" cy="12" r="10"></circle>
+                                  <path d="M9 12l2 2 4-4"></path>
+                                </svg>
+                              <?php else : ?>
+                                <span class="inline-block align-middle mr-2 text-base <?php echo esc_attr($icon_class); ?>" aria-hidden="true">—</span>
+                              <?php endif; ?>
                               <span class="leading-6 <?php echo esc_attr($text_classes); ?>"><?php echo esc_html($value['text']); ?></span>
                             </div>
                           </div>
@@ -496,7 +513,7 @@ if (! function_exists('marketing_business_feature_icon')) {
 
           <div class="mt-10 rounded-[5px] bg-gradient-to-r from-primary/90 via-dark to-dark p-10 pb-10 text-center text-white md:p-14 md:pb-14">
             <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-white">
-              💰 Save hundreds every month — one platform, no plugins, no limits.
+              Save hundreds every month — one platform, no plugins, no limits.
             </h3>
             <a href="#" class="btn-main inline-flex items-center justify-center mt-3 px-8 py-3 font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105 !no-underline">See How Webmakerr Works →</a>
           </div>
