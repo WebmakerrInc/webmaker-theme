@@ -640,61 +640,143 @@ if (! function_exists('marketing_business_render_icon')) {
               Your business doesn’t run in pieces — it runs in motion. Webmakerr connects every stage of that motion, so when a visitor lands on your site, every system already knows what to do next.
             </p>
           </div>
-          <div class="mt-12 grid gap-6 lg:grid-cols-2">
+          <div class="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             <?php
             $ecosystem_modules = array(
                 array(
-                    'title' => 'Module 1 — WebBuilder: Where It All Begins',
-                    'body'  => 'Create stunning, ultra-responsive websites using custom designs or industry-grade templates. Every site is SEO-ready, globally cached, and integrated with CRM and analytics. You attract attention. Webmakerr turns it into opportunity.',
+                    'number'      => 1,
+                    'title'       => 'WebBuilder: Where It All Begins',
+                    'summary'     => 'Launch high-performing, ultra-responsive sites without touching a pile of plugins.',
+                    'highlights'  => array(
+                        'Custom designs or industry-grade templates that stay on brand.',
+                        'SEO-ready architecture with global caching by default.',
+                        'Native CRM and analytics integrations on day one.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 2 — WebCRM: Turn Visitors into Relationships',
-                    'body'  => 'Every form, chat, or lead is captured instantly. WebCRM tracks engagement, scores intent, and launches automated follow-ups that fill your pipeline. You got the lead. The relationship starts here.',
+                    'number'      => 2,
+                    'title'       => 'WebCRM: Turn Visitors into Relationships',
+                    'summary'     => 'Capture every interaction and automate the follow-up that moves deals forward.',
+                    'highlights'  => array(
+                        'Forms, chats, and lead sources sync instantly to unified records.',
+                        'Engagement scoring reveals intent across the entire journey.',
+                        'Automated sequences launch the moment interest is detected.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 3 — WebBooking: From Interest to Interaction',
-                    'body'  => 'Prospects can schedule demos, consultations, or services directly from your site. Bookings sync automatically with CRM pipelines and calendars. Your calendar fills itself — hands-free.',
+                    'number'      => 3,
+                    'title'       => 'WebBooking: From Interest to Interaction',
+                    'summary'     => 'Let prospects pick a time that works — while your team stays focused on delivery.',
+                    'highlights'  => array(
+                        'Self-serve booking for demos, consultations, and services.',
+                        'Calendar availability syncs with pipelines and team schedules.',
+                        'Reminders and confirmations go out automatically.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 4 — WebCart + WebCommerce: From Offer to Order',
-                    'body'  => 'Sell anything — physical products, digital downloads, subscriptions, or license keys. WebCommerce connects sales with CRM, analytics, and support. Revenue in. Data synced. Growth automated.',
+                    'number'      => 4,
+                    'title'       => 'WebCart + WebCommerce: From Offer to Order',
+                    'summary'     => 'Sell products, subscriptions, or licenses with transactions tied to every customer profile.',
+                    'highlights'  => array(
+                        'Unified checkout for physical, digital, and recurring offers.',
+                        'Revenue, analytics, and support data stay perfectly in sync.',
+                        'Subscription management without add-on maintenance.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 5 — WebBoard: From Sale to Delivery',
-                    'body'  => 'Once payment clears, WebBoard automatically launches projects and assigns tasks. Deadlines, progress, and communications all stay connected to the same client record. Delivery runs smoothly. Clients stay confident.',
+                    'number'      => 5,
+                    'title'       => 'WebBoard: From Sale to Delivery',
+                    'summary'     => 'Projects launch the moment payment clears, keeping delivery teams ahead of schedule.',
+                    'highlights'  => array(
+                        'Automated task assignments for every new engagement.',
+                        'Progress, files, and communication live on the same record.',
+                        'Clear deadlines keep clients confident in your process.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 6 — WebSupport: From Questions to Loyalty',
-                    'body'  => 'Every ticket, chat, and conversation links back to a customer’s order or project. Agents have full context, which means faster, friendlier support. Retention becomes your new growth channel.',
+                    'number'      => 6,
+                    'title'       => 'WebSupport: From Questions to Loyalty',
+                    'summary'     => 'Delight customers with responses backed by full context from sales to delivery.',
+                    'highlights'  => array(
+                        'Tickets, chats, and conversations link to orders instantly.',
+                        'Agents see history, sentiment, and open tasks in one view.',
+                        'Knowledge sharing turns support into a retention engine.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 7 — WebAffiliate: Turn Customers into Promoters',
-                    'body'  => 'Empower happy clients to refer new business. WebAffiliate automates tracking, payouts, and performance reports. Your customers become your best marketers.',
+                    'number'      => 7,
+                    'title'       => 'WebAffiliate: Turn Customers into Promoters',
+                    'summary'     => 'Empower satisfied clients to drive new growth with hands-free partner management.',
+                    'highlights'  => array(
+                        'Automated referral tracking and performance dashboards.',
+                        'Custom commission structures with transparent payouts.',
+                        'Campaign assets and messaging ready for partners to deploy.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 8 — WebSEO: Always Found, Always Fast',
-                    'body'  => 'WebSEO audits and optimizes every page with AI — paired with our global edge network (170+ nodes) for instant delivery. Visibility and speed — built into every pixel.',
+                    'number'      => 8,
+                    'title'       => 'WebSEO: Always Found, Always Fast',
+                    'summary'     => 'Blend AI-driven optimization with edge delivery for visibility that never lags.',
+                    'highlights'  => array(
+                        'Real-time audits surface technical and on-page wins.',
+                        'Global edge network (170+ nodes) keeps load times instant.',
+                        'Actionable recommendations feed directly into WebBuilder.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 9 — WebPixel: Every Click, Accurately Counted',
-                    'body'  => 'Our server-side tracking ensures every conversion and campaign is recorded correctly. No browser blockers. No lost data. Finally, analytics you can trust.',
+                    'number'      => 9,
+                    'title'       => 'WebPixel: Every Click, Accurately Counted',
+                    'summary'     => 'Trust your reporting with server-side tracking that beats browser blocks.',
+                    'highlights'  => array(
+                        'First-party data capture preserves campaign attribution.',
+                        'Conversion events sync automatically with WebCRM records.',
+                        'Privacy-compliant measurement for every channel.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 10 — Managed Cloud: Always Secure, Always Updated',
-                    'body'  => 'Your system runs on enterprise-grade infrastructure, monitored and maintained 24/7 by our team. Automatic updates, daily backups, and layered protection — no maintenance required. Zero downtime. Total peace of mind.',
+                    'number'      => 10,
+                    'title'       => 'Managed Cloud: Always Secure, Always Updated',
+                    'summary'     => 'Enterprise-grade infrastructure is monitored, patched, and backed up for you.',
+                    'highlights'  => array(
+                        '24/7 monitoring with proactive performance tuning.',
+                        'Automated updates and daily backups built into the service.',
+                        'Layered security reduces downtime and maintenance costs.',
+                    ),
                 ),
                 array(
-                    'title' => 'Module 11 — Custom Solutions: Built for You',
-                    'body'  => 'Need something unique? Our engineers build and integrate it at a simple flat rate — fast, affordable, and fully tested. Your platform evolves as your business grows.',
+                    'number'      => 11,
+                    'title'       => 'Custom Solutions: Built for You',
+                    'summary'     => 'Scale beyond the standard stack with engineering support priced for predictability.',
+                    'highlights'  => array(
+                        'Flat-rate development for bespoke features and integrations.',
+                        'Quality assurance and launch handled by the Webmakerr team.',
+                        'Future-ready architecture that evolves with your roadmap.',
+                    ),
                 ),
             );
 
             foreach ($ecosystem_modules as $module) :
                 ?>
-                <div class="flex h-full flex-col gap-3 rounded-[5px] border border-zinc-200 bg-white p-6 text-left shadow-sm">
-                  <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($module['title']); ?></p>
-                  <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($module['body']); ?></p>
-                </div>
+                <article class="group flex h-full flex-col justify-between rounded-[5px] border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
+                  <div class="flex items-start justify-between gap-4">
+                    <span class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+                      <?php echo esc_html(sprintf(__('Module %s', 'webmakerr'), str_pad((string) $module['number'], 2, '0', STR_PAD_LEFT))); ?>
+                    </span>
+                    <span class="text-sm font-semibold text-zinc-400"><?php echo esc_html(__('Full flow coverage', 'webmakerr')); ?></span>
+                  </div>
+                  <div class="mt-4 flex flex-col gap-3">
+                    <h3 class="text-lg font-semibold text-zinc-950 sm:text-xl"><?php echo esc_html($module['title']); ?></h3>
+                    <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($module['summary']); ?></p>
+                  </div>
+                  <ul class="mt-4 flex flex-col gap-2">
+                    <?php foreach ($module['highlights'] as $highlight) : ?>
+                      <li class="flex items-start gap-2 text-sm text-zinc-600 sm:text-base">
+                        <span class="mt-1 inline-flex h-1.5 w-1.5 flex-none rounded-full bg-primary"></span>
+                        <span><?php echo esc_html($highlight); ?></span>
+                      </li>
+                    <?php endforeach; ?>
+                  </ul>
+                </article>
             <?php endforeach; ?>
           </div>
           <div class="mt-12 flex justify-center">
