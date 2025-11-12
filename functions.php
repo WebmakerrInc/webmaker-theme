@@ -166,6 +166,61 @@ add_filter(
     4
 );
 
+add_filter(
+    'webmakerr_crm_lead_payload',
+    static function (array $payload): array {
+        $fullName = isset($payload['name']) ? trim((string) $payload['name']) : '';
+
+        $prefix = '';
+        $firstName = '';
+        $lastName = '';
+
+        if ($fullName !== '') {
+            $parts = preg_split('/\s+/u', $fullName, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+            if ($parts) {
+                $prefixCandidates = ['mr', 'mr.', 'mrs', 'mrs.', 'ms', 'ms.', 'dr', 'dr.', 'prof', 'prof.'];
+                $firstPart = $parts[0];
+
+                if (in_array(mb_strtolower($firstPart), $prefixCandidates, true)) {
+                    $prefix = array_shift($parts) ?? '';
+                }
+            }
+
+            if ($parts) {
+                $firstName = array_shift($parts) ?? '';
+                if ($parts) {
+                    $lastName = implode(' ', $parts);
+                }
+            }
+        }
+
+        if ($firstName === '' && $fullName !== '') {
+            $firstName = $fullName;
+        }
+
+        $payload['full_name'] = sanitize_text_field($fullName);
+        $payload['first_name'] = sanitize_text_field($firstName);
+        $payload['last_name'] = sanitize_text_field($lastName);
+        $payload['prefix'] = sanitize_text_field($prefix);
+
+        return $payload;
+    },
+    10
+);
+
+add_filter(
+    'webmakerr_crm_endpoint',
+    static function ($endpoint) {
+        if (is_string($endpoint) && $endpoint !== '') {
+            return $endpoint;
+        }
+
+        return 'https://east.webmakerr.com/?fluentcrm=1&route=contact&hash=95a5aea5-bd18-4ce8-a25d-de82adc38d87';
+    },
+    10
+);
+
 add_action(
     'after_setup_theme',
     static function (): void {
