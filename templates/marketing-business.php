@@ -88,10 +88,10 @@ if (! function_exists('marketing_business_feature_icon')) {
                 <?php esc_html_e('Managed Business Platform', 'webmakerr'); ?>
               </span>
               <h1 class="mt-4 text-4xl font-medium tracking-tight [text-wrap:balance] text-zinc-950 sm:text-5xl">
-                <?php esc_html_e('Stop Managing Plugins. Start Scaling Your Business.', 'webmakerr'); ?>
+                <?php esc_html_e('Deliver the Experience Customers Expect—Without the Plugin Juggle.', 'webmakerr'); ?>
               </h1>
               <p class="max-w-2xl text-base leading-7 text-zinc-600 sm:text-lg">
-                <?php esc_html_e('You built something great, but your tech stack keeps slowing you down. Plugins collide, updates break, and every “quick fix” adds cost and chaos. Webmakerr unifies the stack so you can focus on growth.', 'webmakerr'); ?>
+                <?php esc_html_e('Keep journeys fast, consistent, and conversion-ready while Webmakerr handles the updates, security, and integrations that usually derail growth.', 'webmakerr'); ?>
               </p>
               <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:items-center">
                 <a class="inline-flex w-full justify-center rounded bg-dark px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-dark/90 !no-underline sm:w-auto" href="#with-webmakerr">
@@ -153,8 +153,8 @@ if (! function_exists('marketing_business_feature_icon')) {
               <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
                 Why Growth Feels Harder Than It Should
               </h2>
-              <p class="text-base leading-7 sm:text-lg">You already know what makes your product powerful — but your infrastructure slows the momentum.</p>
-              <p class="text-base leading-7 sm:text-lg">Teams end up maintaining tools instead of building the experiences customers expect.</p>
+              <p class="text-base leading-7 sm:text-lg">Customers expect seamless journeys, yet the experience fractures when the backend can’t keep up.</p>
+              <p class="text-base leading-7 sm:text-lg">Teams get dragged into maintenance firefights instead of shaping the moments that win and retain visitors.</p>
             </div>
             <div class="grid gap-4">
               <?php
@@ -199,8 +199,8 @@ if (! function_exists('marketing_business_feature_icon')) {
       <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center text-zinc-600">
-            <h3 class="text-2xl font-semibold text-zinc-950 sm:text-3xl">Growth accelerates when the foundation is managed.</h3>
-            <p class="text-base leading-7 sm:text-lg">Webmakerr removes the friction that keeps teams in reactive mode, so every launch, campaign, and customer touchpoint stays consistent.</p>
+            <h3 class="text-2xl font-semibold text-zinc-950 sm:text-3xl">Visitors convert faster when the foundation is managed.</h3>
+            <p class="text-base leading-7 sm:text-lg">Webmakerr removes the friction that keeps teams in reactive mode, keeping every launch, campaign, and customer touchpoint consistent.</p>
           </div>
         </div>
       </section>
@@ -211,25 +211,25 @@ if (! function_exists('marketing_business_feature_icon')) {
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
               What Makes (or Breaks) a Website
             </h2>
-            <p class="text-base leading-7 sm:text-lg">Most websites fail long before the first conversion.</p>
-            <p class="text-base leading-7 sm:text-lg">Why? Because beneath the design are hidden problems that cost you visitors and sales.</p>
+            <p class="text-base leading-7 sm:text-lg">Visitors abandon sites that feel slow, shaky, or disconnected long before the first conversion opportunity.</p>
+            <p class="text-base leading-7 sm:text-lg">Those issues hide beneath the design — costing you attention, trust, and revenue.</p>
           </div>
           <?php
           $website_failure_signals = array(
               array(
                   'icon'        => 'zap',
                   'title'       => 'Speed',
-                  'description' => '53% of visitors leave if a site loads in more than 3 seconds — a slow, fragile, plugin-heavy site quietly loses revenue every single day.',
+                  'description' => 'Visitors bounce when pages stall; 53% leave if a site takes more than 3 seconds, so fragile, plugin-heavy setups quietly drain revenue.',
               ),
               array(
                   'icon'        => 'layers',
                   'title'       => 'Stability',
-                  'description' => 'Each plugin update risks breaking key functions. Most websites fail long before the first conversion.',
+                  'description' => 'Buyers lose confidence when features glitch mid-journey, and every plugin update risks breaking a critical step.',
               ),
               array(
                   'icon'        => 'shield-check',
                   'title'       => 'Security',
-                  'description' => 'Cheap add-ons create vulnerabilities hackers love. Because beneath the design are hidden problems that cost you visitors and sales.',
+                  'description' => 'Visitors stop trusting brands that feel unsafe, and cheap add-ons invite the vulnerabilities hackers love.',
               ),
               array(
                   'icon'        => 'database',
