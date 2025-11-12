@@ -652,63 +652,116 @@ if (! function_exists('marketing_business_feature_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-white py-16">
-        <div class="container mx-auto px-6 lg:px-8">
-          <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div class="flex flex-col gap-6 text-zinc-600">
-              <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
-                <?php esc_html_e('Trusted by growing teams', 'webmakerr'); ?>
-              </span>
-              <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
-                Growth should be automatic — not exhausting.
-              </h2>
-              <blockquote class="rounded-[6px] border border-zinc-200 bg-light px-6 py-6 text-left shadow-sm">
-                <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-                  “We built Webmakerr after watching businesses waste hours managing tools that never talked to each other. Growth should be automatic — not exhausting.”
-                </p>
-                <footer class="mt-4 text-sm font-semibold text-zinc-950 sm:text-base">
-                  — [Founder Name], Creator of Webmakerr
-                </footer>
-              </blockquote>
-              <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-                Webmakerr removes the friction that keeps teams in reactive mode, so every launch, campaign, and customer touchpoint stays consistent.
-              </p>
-            </div>
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <?php
-              $marketing_stats = array(
-                  array(
-                      'icon'  => 'server',
-                      'label' => 'Global CDN (170 edge servers) — <1.5 s worldwide',
-                  ),
-                  array(
-                      'icon'  => 'shield-check',
-                      'label' => 'Server-Side Marketing Pixel — included',
-                  ),
-                  array(
-                      'icon'  => 'check',
-                      'label' => 'Webmakerr plans start at just $29 / month, including automation, backups, and proactive support.',
-                  ),
-                  array(
-                      'icon'  => 'repeat',
-                      'label' => 'Most users are fully operational within 48 hours.',
-                  ),
-              );
+      <section class="border-t border-zinc-200 bg-white py-16 lg:py-24">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="mx-auto flex max-w-3xl flex-col gap-4 text-center text-zinc-600">
+            <span class="inline-flex w-fit items-center gap-2 self-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
+              <?php esc_html_e('Customer Proof', 'webmakerr'); ?>
+            </span>
+            <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+              <?php esc_html_e('Customer proof backed by measurable wins', 'webmakerr'); ?>
+            </h2>
+            <p class="text-base leading-7 sm:text-lg">
+              <?php esc_html_e('Teams that trust Webmakerr launch faster, collaborate tighter, and show up with the kind of numbers leadership expects.', 'webmakerr'); ?>
+            </p>
+          </div>
 
-              foreach ($marketing_stats as $stat) :
-                  ?>
-                  <div class="flex flex-col gap-3 rounded-[5px] border border-zinc-200 bg-light/60 p-6 text-sm text-zinc-600 shadow-sm">
-                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-primary">
-                      <?php
-                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                      echo marketing_business_render_icon($stat['icon'], 'h-5 w-5');
-                      ?>
-                    </span>
-                    <p class="font-semibold text-zinc-950"><?php echo esc_html($stat['label']); ?></p>
-                  </div>
+          <?php
+          $customer_proof_logos = array(
+              array(
+                  'name' => 'HubSpot',
+                  'logo' => '/wp-content/uploads/logos/hubspot.svg',
+              ),
+              array(
+                  'name' => 'Zendesk',
+                  'logo' => '/wp-content/uploads/logos/zendesk.svg',
+              ),
+              array(
+                  'name' => 'Mailchimp',
+                  'logo' => '/wp-content/uploads/logos/mailchimp.svg',
+              ),
+              array(
+                  'name' => 'Canva',
+                  'logo' => '/wp-content/uploads/logos/canva.svg',
+              ),
+              array(
+                  'name' => 'Buffer',
+                  'logo' => '/wp-content/uploads/logos/buffer.svg',
+              ),
+          );
+
+          $customer_testimonials = array(
+              array(
+                  'quote'   => '“Our revenue team finally works from the same playbook. Launch cycles moved from quarterly to monthly without adding headcount.”',
+                  'name'    => 'Jordan Patel',
+                  'title'   => 'VP Growth, HubSpot Partner Services',
+                  'metric'  => '+38% pipeline velocity in two quarters',
+              ),
+              array(
+                  'quote'   => '“Webmakerr absorbed our storefront, CRM, and support queue in one migration. Customer response times dropped overnight.”',
+                  'name'    => 'Maya Rodríguez',
+                  'title'   => 'Director of CX, Zendesk Labs',
+                  'metric'  => '24% faster support-to-sale handoff',
+              ),
+              array(
+                  'quote'   => '“Campaign ops stopped breaking every launch. We now forecast based on reliable data instead of best guesses.”',
+                  'name'    => 'Chris Allen',
+                  'title'   => 'Head of Lifecycle, Buffer',
+                  'metric'  => '42% lift in qualified demo bookings',
+              ),
+          );
+
+          $customer_case_studies = array(
+              array(
+                  'label' => __('Read the HubSpot implementation case study', 'webmakerr'),
+                  'url'   => '#',
+              ),
+              array(
+                  'label' => __('See how Buffer unified their funnels', 'webmakerr'),
+                  'url'   => '#',
+              ),
+          );
+          ?>
+
+          <div class="mt-12 rounded-[5px] border border-zinc-200 bg-white/80 p-6 shadow-sm">
+            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+              <?php foreach ($customer_proof_logos as $logo) : ?>
+                <div class="flex items-center justify-center">
+                  <img src="<?php echo esc_url($logo['logo']); ?>" alt="<?php echo esc_attr($logo['name']); ?>" class="h-8 w-auto opacity-80 transition hover:opacity-100" />
+                  <span class="sr-only"><?php echo esc_html($logo['name']); ?></span>
+                </div>
               <?php endforeach; ?>
             </div>
           </div>
+
+          <div class="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <?php foreach ($customer_testimonials as $testimonial) : ?>
+              <div class="flex h-full flex-col justify-between gap-6 rounded-[5px] border border-zinc-200 bg-white p-6 text-left shadow-sm">
+                <div class="flex flex-col gap-4">
+                  <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($testimonial['quote']); ?></p>
+                  <div class="flex flex-col">
+                    <span class="text-sm font-semibold text-zinc-950 sm:text-base"><?php echo esc_html($testimonial['name']); ?></span>
+                    <span class="text-xs font-medium uppercase tracking-[0.24em] text-zinc-400 sm:text-[0.7rem] sm:tracking-[0.3em]">
+                      <?php echo esc_html($testimonial['title']); ?>
+                    </span>
+                  </div>
+                </div>
+                <div class="rounded-[5px] border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-primary">
+                  <?php echo esc_html($testimonial['metric']); ?>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+
+          <?php if (! empty($customer_case_studies)) : ?>
+            <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <?php foreach ($customer_case_studies as $case_study) : ?>
+                <a class="inline-flex items-center justify-center rounded-[5px] border border-primary/30 bg-primary/5 px-5 py-2 text-sm font-semibold text-primary transition hover:border-primary/40 hover:bg-primary/10 hover:text-primary !no-underline" href="<?php echo esc_url($case_study['url']); ?>">
+                  <?php echo esc_html($case_study['label']); ?> &rarr;
+                </a>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
         </div>
       </section>
 
