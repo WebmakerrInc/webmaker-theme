@@ -110,7 +110,7 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section class="bg-white py-12 lg:py-20">
+      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="grid gap-12 text-zinc-600 lg:grid-cols-[0.9fr_1.1fr]">
             <div class="flex flex-col gap-6">
@@ -169,41 +169,60 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-b border-zinc-200 bg-light py-12 lg:py-20">
+      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-3xl flex-col gap-4 text-center">
+          <div class="mx-auto flex max-w-3xl flex-col gap-4 text-center text-zinc-600">
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
               What Makes (or Breaks) a Website
             </h2>
-            <p class="text-base leading-7 text-zinc-600 sm:text-lg">Most websites fail long before the first conversion.</p>
-            <p class="text-base leading-7 text-zinc-600 sm:text-lg">Why? Because beneath the design are hidden problems that cost you visitors and sales.</p>
+            <p class="text-base leading-7 sm:text-lg">Most websites fail long before the first conversion.</p>
+            <p class="text-base leading-7 sm:text-lg">Why? Because beneath the design are hidden problems that cost you visitors and sales.</p>
           </div>
+          <?php
+          $website_failure_signals = array(
+              array(
+                  'icon'        => 'zap',
+                  'title'       => 'Speed',
+                  'description' => '53% of visitors leave if a site loads in more than 3 seconds — a slow, fragile, plugin-heavy site quietly loses revenue every single day.',
+              ),
+              array(
+                  'icon'        => 'layers',
+                  'title'       => 'Stability',
+                  'description' => 'Each plugin update risks breaking key functions. Most websites fail long before the first conversion.',
+              ),
+              array(
+                  'icon'        => 'shield-check',
+                  'title'       => 'Security',
+                  'description' => 'Cheap add-ons create vulnerabilities hackers love. Because beneath the design are hidden problems that cost you visitors and sales.',
+              ),
+              array(
+                  'icon'        => 'database',
+                  'title'       => 'Consistency',
+                  'description' => 'When tools don’t share data, your analytics lie. Webmakerr fixes the foundation — not just the surface.',
+              ),
+          );
+
+          ?>
           <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div class="flex h-full flex-col gap-4 rounded-[5px] border border-zinc-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-              <span class="text-3xl">⚡</span>
-              <p class="text-sm font-semibold text-zinc-950">Speed: 53% of visitors leave if a site loads in more than 3 seconds.</p>
-            </div>
-            <div class="flex h-full flex-col gap-4 rounded-[5px] border border-zinc-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-              <span class="text-3xl">🧩</span>
-              <p class="text-sm font-semibold text-zinc-950">Stability: Each plugin update risks breaking key functions.</p>
-            </div>
-            <div class="flex h-full flex-col gap-4 rounded-[5px] border border-zinc-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-              <span class="text-3xl">🔒</span>
-              <p class="text-sm font-semibold text-zinc-950">Security: Cheap add-ons create vulnerabilities hackers love.</p>
-            </div>
-            <div class="flex h-full flex-col gap-4 rounded-[5px] border border-zinc-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-              <span class="text-3xl">📊</span>
-              <p class="text-sm font-semibold text-zinc-950">Consistency: When tools don’t share data, your analytics lie.</p>
-            </div>
-          </div>
-          <div class="mx-auto mt-10 max-w-3xl space-y-4 text-base leading-7 text-zinc-600 sm:text-lg">
-            <p>A slow, fragile, plugin-heavy site quietly loses revenue every single day.</p>
-            <p class="text-zinc-950">Webmakerr fixes the foundation — not just the surface.</p>
+            <?php foreach ($website_failure_signals as $signal) : ?>
+              <div class="flex items-start gap-4 rounded-[5px] border border-zinc-200 bg-white p-5 shadow-sm">
+                <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php
+                  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon($signal['icon']);
+                  ?>
+                </span>
+                <div class="flex flex-col gap-1 text-left">
+                  <p class="text-sm font-semibold text-zinc-950 sm:text-base"><?php echo esc_html($signal['title']); ?></p>
+                  <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($signal['description']); ?></p>
+                </div>
+              </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </section>
 
-      <section class="bg-white py-12 lg:py-20">
+      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-zinc-600">
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
@@ -349,8 +368,8 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-white py-16">
-        <div class="container mx-auto max-w-screen-xl px-6 lg:px-8">
+      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div class="flex flex-col gap-6 text-zinc-600">
               <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
@@ -406,20 +425,54 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
+      <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-5xl flex-col gap-12">
-            <div class="flex flex-col gap-4 text-center">
+            <div class="flex flex-col gap-4 text-center text-zinc-600">
               <span class="inline-flex items-center justify-center self-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
                 The Webmakerr Transformation
               </span>
               <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
                 From Chaos to Clarity — From Cost to Control
               </h2>
-              <div class="space-y-4 text-base leading-7 text-zinc-600 sm:text-lg">
-                <p>Every business hits a point where managing plugins, updates, and tools becomes unsustainable.</p>
-                <p>Webmakerr replaces that complexity with one unified system — faster, smarter, and managed for you.</p>
-              </div>
+              <p class="text-base leading-7 sm:text-lg">Every business hits a point where managing plugins, updates, and tools becomes unsustainable.</p>
+              <p class="text-base leading-7 sm:text-lg">Webmakerr replaces that complexity with one unified system — faster, smarter, and managed for you.</p>
+            </div>
+            <?php
+            $transformation_moments = array(
+                array(
+                    'icon'        => 'activity',
+                    'title'       => 'Operational breaking point',
+                    'description' => 'Every business hits a point where managing plugins, updates, and tools becomes unsustainable.',
+                ),
+                array(
+                    'icon'        => 'server',
+                    'title'       => 'Managed foundation',
+                    'description' => 'Webmakerr replaces that complexity with one unified system — faster, smarter, and managed for you.',
+                ),
+                array(
+                    'icon'        => 'repeat',
+                    'title'       => 'Predictable growth',
+                    'description' => 'From fragmented tools to a managed ecosystem — Webmakerr turns operational noise into predictable growth.',
+                ),
+            );
+
+            ?>
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <?php foreach ($transformation_moments as $moment) : ?>
+                <div class="flex items-start gap-4 rounded-[5px] border border-zinc-200 bg-white p-5 shadow-sm">
+                  <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon($moment['icon']);
+                    ?>
+                  </span>
+                  <div class="flex flex-col gap-1 text-left">
+                    <p class="text-sm font-semibold text-zinc-950 sm:text-base"><?php echo esc_html($moment['title']); ?></p>
+                    <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($moment['description']); ?></p>
+                  </div>
+                </div>
+              <?php endforeach; ?>
             </div>
             <div class="overflow-hidden rounded-[6px] border border-zinc-200 bg-white shadow-sm">
               <div class="overflow-x-auto">
@@ -515,14 +568,11 @@ if (! function_exists('marketing_business_render_icon')) {
                 </table>
               </div>
             </div>
-            <p class="text-center text-base font-medium leading-7 text-zinc-600 sm:text-lg">
-              From fragmented tools to a managed ecosystem — Webmakerr turns operational noise into predictable growth.
-            </p>
           </div>
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-light py-12 lg:py-20">
+      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center">
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
@@ -577,7 +627,7 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
+      <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center">
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
@@ -652,7 +702,7 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-light py-12 lg:py-20">
+      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center">
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
@@ -707,7 +757,7 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
+      <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div class="flex flex-col gap-4">
