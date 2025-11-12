@@ -7,8 +7,6 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-get_header();
-
 if (! function_exists('marketing_business_render_icon')) {
     function marketing_business_render_icon($name, $class = 'h-5 w-5')
     {
@@ -75,9 +73,6 @@ if (! function_exists('marketing_business_feature_icon')) {
         );
     }
 }
-?>
-
-<?php
 $marketing_business_demo_anchor = '#demo';
 $marketing_business_demo_link   = get_permalink(get_page_by_path('book-a-demo'));
 
@@ -88,6 +83,572 @@ if (! $marketing_business_demo_link) {
 if (! $marketing_business_demo_link) {
     $marketing_business_demo_link = home_url('/contact/');
 }
+
+$marketing_business_steps_total = 3;
+$marketing_business_lead_endpoint      = esc_url_raw(rest_url('webmakerr/v1/crm-lead'));
+$marketing_business_lead_nonce         = wp_create_nonce('wp_rest');
+$marketing_business_progress_template  = __('Step {current} of {total}', 'webmakerr');
+$marketing_business_script_handle      = 'webmakerr-build-assets-app-js';
+
+$marketing_business_inline_script = <<<'JS'
+(function () {
+    if (window.__webmakerrMarketingDemoSchedulerInitialized) {
+        return;
+    }
+    window.__webmakerrMarketingDemoSchedulerInitialized = true;
+
+    var ready = function (callback) {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', callback, { once: true });
+        } else {
+            callback();
+        }
+    };
+
+    ready(function () {
+        var form = document.getElementById('marketing-demo-scheduler');
+        var clearGeneralAlert = function () {};
+        var showGeneralAlert = function () {};
+
+        if (form) {
+            var steps = Array.prototype.slice.call(form.querySelectorAll('[data-step]'));
+
+            if (!steps.length) {
+                return;
+            }
+
+            var progressLabel = form.querySelector('[data-progress-label]');
+            var alertBox = form.querySelector('[data-form-alert]');
+            var successPanel = document.getElementById('marketing-demo-success');
+            var successMessage = successPanel ? successPanel.querySelector('[data-success-message]') : null;
+            var confirmationLink = successPanel ? successPanel.querySelector('[data-confirmation-link]') : null;
+            var nameInput = form.querySelector('[name="full_name"]');
+            var emailInput = form.querySelector('[name="company_email"]');
+            var companySizeSelect = form.querySelector('[name="company_size"]');
+            var primaryGoalInputs = Array.prototype.slice.call(form.querySelectorAll('input[name="primary_goal"]'));
+
+            var summaryNodes = {
+                name: form.querySelector('[data-summary="name"]'),
+                email: form.querySelector('[data-summary="email"]'),
+                company_size: form.querySelector('[data-summary="company_size"]'),
+                primary_goal: form.querySelector('[data-summary="primary_goal"]')
+            };
+
+            var fieldWrappers = {};
+            Array.prototype.forEach.call(form.querySelectorAll('[data-field]'), function (wrapper) {
+                var key = wrapper.getAttribute('data-field');
+                if (key) {
+                    fieldWrappers[key] = wrapper;
+                }
+            });
+
+            var errorNodes = {};
+            Array.prototype.forEach.call(form.querySelectorAll('[data-error]'), function (node) {
+                var key = node.getAttribute('data-error');
+                if (key) {
+                    errorNodes[key] = node;
+                }
+            });
+
+            var fieldInputs = {
+                name: nameInput,
+                email: emailInput,
+                company_size: companySizeSelect,
+                primary_goal: primaryGoalInputs.length ? primaryGoalInputs[0] : null
+            };
+
+            var totalSteps = steps.length;
+            var currentStep = 0;
+            var isSubmitting = false;
+
+            clearGeneralAlert = function () {
+                if (alertBox) {
+                    alertBox.classList.add('hidden');
+                    alertBox.textContent = '';
+                }
+            };
+
+            showGeneralAlert = function (message) {
+                if (!alertBox) {
+                    return;
+                }
+
+                alertBox.textContent = message;
+                alertBox.classList.remove('hidden');
+            };
+
+            var getFieldMessage = function (field) {
+                var wrapper = fieldWrappers[field];
+                if (wrapper && wrapper.dataset.errorMessage) {
+                    return wrapper.dataset.errorMessage;
+                }
+
+                return form.dataset.errorMessage || 'Please review the form.';
+            };
+
+            var clearFieldError = function (field) {
+                var wrapper = fieldWrappers[field];
+                if (wrapper) {
+                    wrapper.removeAttribute('data-invalid');
+                }
+
+                var node = errorNodes[field];
+                if (node) {
+                    node.textContent = '';
+                    node.classList.add('hidden');
+                }
+
+                if (field === 'primary_goal') {
+                    primaryGoalInputs.forEach(function (input) {
+                        input.removeAttribute('aria-invalid');
+                    });
+                } else {
+                    var input = fieldInputs[field];
+                    if (input) {
+                        input.removeAttribute('aria-invalid');
+                    }
+                }
+            };
+
+            var showFieldError = function (field, message) {
+                var wrapper = fieldWrappers[field];
+                if (wrapper) {
+                    wrapper.setAttribute('data-invalid', 'true');
+                }
+
+                var node = errorNodes[field];
+                if (node) {
+                    node.textContent = message;
+                    node.classList.remove('hidden');
+                }
+
+                if (field === 'primary_goal') {
+                    primaryGoalInputs.forEach(function (input) {
+                        input.setAttribute('aria-invalid', 'true');
+                    });
+                } else {
+                    var input = fieldInputs[field];
+                    if (input) {
+                        input.setAttribute('aria-invalid', 'true');
+                    }
+                }
+            };
+
+            var updateProgress = function (index) {
+                if (!progressLabel) {
+                    return;
+                }
+
+                var template = form.dataset.progressTemplate || 'Step {current} of {total}';
+                progressLabel.textContent = template.replace('{current}', String(index + 1)).replace('{total}', String(totalSteps));
+            };
+
+            var focusStep = function (index) {
+                var activeStep = steps[index];
+                if (!activeStep) {
+                    return;
+                }
+
+                var focusTarget = activeStep.querySelector('input:not([type="hidden"]), select, textarea, button');
+                if (focusTarget && typeof focusTarget.focus === 'function') {
+                    window.requestAnimationFrame(function () {
+                        focusTarget.focus();
+                    });
+                }
+            };
+
+            var getSelectedGoal = function () {
+                for (var i = 0; i < primaryGoalInputs.length; i += 1) {
+                    if (primaryGoalInputs[i].checked) {
+                        return primaryGoalInputs[i];
+                    }
+                }
+
+                return null;
+            };
+
+            var populateSummary = function () {
+                if (summaryNodes.name && nameInput) {
+                    summaryNodes.name.textContent = nameInput.value.trim() || '—';
+                }
+
+                if (summaryNodes.email && emailInput) {
+                    summaryNodes.email.textContent = emailInput.value.trim() || '—';
+                }
+
+                if (summaryNodes.company_size && companySizeSelect) {
+                    var selectedOption = companySizeSelect.selectedOptions && companySizeSelect.selectedOptions.length ? companySizeSelect.selectedOptions[0] : null;
+                    summaryNodes.company_size.textContent = selectedOption ? selectedOption.textContent.trim() : '—';
+                }
+
+                if (summaryNodes.primary_goal) {
+                    var goal = getSelectedGoal();
+                    summaryNodes.primary_goal.textContent = goal ? (goal.dataset.label || goal.value) : '—';
+                }
+            };
+
+            var goToStep = function (index) {
+                if (index < 0 || index >= totalSteps) {
+                    return;
+                }
+
+                steps.forEach(function (stepElement, idx) {
+                    if (idx === index) {
+                        stepElement.classList.remove('hidden');
+                        stepElement.setAttribute('aria-hidden', 'false');
+                    } else {
+                        stepElement.classList.add('hidden');
+                        stepElement.setAttribute('aria-hidden', 'true');
+                    }
+                });
+
+                currentStep = index;
+                updateProgress(index);
+
+                if (index === totalSteps - 1) {
+                    populateSummary();
+                }
+
+                focusStep(index);
+            };
+
+            var validateStep = function (index) {
+                var valid = true;
+                var firstInvalid = null;
+
+                if (index === 0) {
+                    if (nameInput) {
+                        clearFieldError('name');
+                        if (nameInput.value.trim().length < 2) {
+                            showFieldError('name', getFieldMessage('name'));
+                            if (!firstInvalid) {
+                                firstInvalid = 'name';
+                            }
+                            valid = false;
+                        }
+                    }
+
+                    if (emailInput) {
+                        clearFieldError('email');
+                        var emailValue = emailInput.value.trim();
+                        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                        if (!emailPattern.test(emailValue)) {
+                            showFieldError('email', getFieldMessage('email'));
+                            if (!firstInvalid) {
+                                firstInvalid = 'email';
+                            }
+                            valid = false;
+                        }
+                    }
+                } else if (index === 1) {
+                    if (companySizeSelect) {
+                        clearFieldError('company_size');
+                        if (!companySizeSelect.value) {
+                            showFieldError('company_size', getFieldMessage('company_size'));
+                            if (!firstInvalid) {
+                                firstInvalid = 'company_size';
+                            }
+                            valid = false;
+                        }
+                    }
+
+                    clearFieldError('primary_goal');
+                    var selectedGoal = getSelectedGoal();
+
+                    if (!selectedGoal) {
+                        showFieldError('primary_goal', getFieldMessage('primary_goal'));
+                        if (!firstInvalid) {
+                            firstInvalid = 'primary_goal';
+                        }
+                        valid = false;
+                    }
+                }
+
+                if (!valid && firstInvalid) {
+                    var element = fieldInputs[firstInvalid];
+                    if (firstInvalid === 'primary_goal' && !element && primaryGoalInputs.length) {
+                        element = primaryGoalInputs[0];
+                    }
+
+                    if (element && typeof element.focus === 'function') {
+                        element.focus();
+                    }
+                }
+
+                return valid;
+            };
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+            });
+
+            Array.prototype.forEach.call(form.querySelectorAll('[data-step-next]'), function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    clearGeneralAlert();
+
+                    if (!validateStep(currentStep)) {
+                        return;
+                    }
+
+                    var nextIndex = Math.min(currentStep + 1, totalSteps - 1);
+                    goToStep(nextIndex);
+                });
+            });
+
+            Array.prototype.forEach.call(form.querySelectorAll('[data-step-prev]'), function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    clearGeneralAlert();
+
+                    var previousIndex = Math.max(currentStep - 1, 0);
+                    goToStep(previousIndex);
+                });
+            });
+
+            if (nameInput) {
+                nameInput.addEventListener('input', function () {
+                    clearFieldError('name');
+                });
+            }
+
+            if (emailInput) {
+                emailInput.addEventListener('input', function () {
+                    clearFieldError('email');
+                });
+            }
+
+            if (companySizeSelect) {
+                companySizeSelect.addEventListener('change', function () {
+                    clearFieldError('company_size');
+                });
+            }
+
+            primaryGoalInputs.forEach(function (input) {
+                input.addEventListener('change', function () {
+                    clearFieldError('primary_goal');
+                });
+            });
+
+            var submitButton = form.querySelector('[data-submit]');
+
+            if (submitButton) {
+                var defaultSubmitLabel = submitButton.getAttribute('data-default-label') || submitButton.textContent;
+                var loadingSubmitLabel = submitButton.getAttribute('data-loading-label') || defaultSubmitLabel;
+
+                submitButton.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    if (isSubmitting) {
+                        return;
+                    }
+
+                    clearGeneralAlert();
+
+                    if (!validateStep(currentStep)) {
+                        return;
+                    }
+
+                    var endpoint = form.dataset.endpoint || '';
+
+                    if (!endpoint) {
+                        showGeneralAlert(form.dataset.errorMessage || 'Unable to submit right now. Please try again soon.');
+                        return;
+                    }
+
+                    var nonce = form.dataset.nonce || '';
+                    var selectedGoal = getSelectedGoal();
+
+                    if (!selectedGoal) {
+                        showFieldError('primary_goal', getFieldMessage('primary_goal'));
+                        return;
+                    }
+
+                    isSubmitting = true;
+                    submitButton.disabled = true;
+                    submitButton.textContent = loadingSubmitLabel;
+
+                    var payload = {
+                        name: nameInput ? nameInput.value.trim() : '',
+                        email: emailInput ? emailInput.value.trim() : '',
+                        company_size: companySizeSelect ? companySizeSelect.value : '',
+                        company_size_label: companySizeSelect && companySizeSelect.selectedOptions && companySizeSelect.selectedOptions.length ? companySizeSelect.selectedOptions[0].textContent.trim() : '',
+                        primary_goal: selectedGoal.value,
+                        primary_goal_label: selectedGoal.dataset.label || selectedGoal.value,
+                        source: form.dataset.source || 'marketing-business-hero'
+                    };
+
+                    fetch(endpoint, {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-WP-Nonce': nonce
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                        .then(function (response) {
+                            return response.json().catch(function () {
+                                return {};
+                            }).then(function (data) {
+                                return {
+                                    ok: response.ok,
+                                    status: response.status,
+                                    data: data
+                                };
+                            });
+                        })
+                        .then(function (result) {
+                            isSubmitting = false;
+                            submitButton.disabled = false;
+                            submitButton.textContent = defaultSubmitLabel;
+
+                            if (result.ok && result.data && result.data.success !== false) {
+                                clearGeneralAlert();
+                                form.classList.add('hidden');
+                                form.setAttribute('aria-hidden', 'true');
+
+                                if (progressLabel && form.dataset.progressComplete) {
+                                    progressLabel.textContent = form.dataset.progressComplete;
+                                }
+
+                                if (successPanel) {
+                                    successPanel.classList.remove('hidden');
+                                    successPanel.setAttribute('aria-hidden', 'false');
+                                }
+
+                                if (successMessage && result.data.message) {
+                                    successMessage.textContent = result.data.message;
+                                }
+
+                                if (confirmationLink && result.data.confirmation_url) {
+                                    confirmationLink.href = result.data.confirmation_url;
+                                }
+
+                                form.dispatchEvent(new CustomEvent('webmakerr:leadSuccess', { bubbles: true, detail: payload }));
+                            } else {
+                                var errorMessage = (result.data && result.data.message) ? result.data.message : (form.dataset.errorMessage || 'Something went wrong. Please try again.');
+                                showGeneralAlert(errorMessage);
+
+                                if (result.data && result.data.errors) {
+                                    Object.keys(result.data.errors).forEach(function (fieldKey) {
+                                        var fieldMessage = result.data.errors[fieldKey];
+                                        showFieldError(fieldKey, fieldMessage || getFieldMessage(fieldKey));
+                                    });
+                                }
+                            }
+                        })
+                        .catch(function () {
+                            isSubmitting = false;
+                            submitButton.disabled = false;
+                            submitButton.textContent = defaultSubmitLabel;
+                            showGeneralAlert(form.dataset.errorMessage || 'Something went wrong. Please try again.');
+                        });
+                });
+            }
+
+            updateProgress(currentStep);
+            focusStep(currentStep);
+        }
+
+        var modal = document.getElementById('platform-explainer-modal');
+
+        if (modal) {
+            var triggers = document.querySelectorAll('[data-platform-modal-open]');
+
+            if (triggers.length) {
+                var modalCard = modal.querySelector('[data-platform-modal-card]');
+                var closeButtons = modal.querySelectorAll('[data-platform-modal-close]');
+                var previouslyFocused = null;
+                var transitionDuration = 200;
+
+                var closeModal = function () {
+                    if (modal.classList.contains('hidden')) {
+                        return;
+                    }
+
+                    modal.classList.add('opacity-0');
+
+                    window.setTimeout(function () {
+                        modal.classList.add('hidden');
+                        modal.setAttribute('aria-hidden', 'true');
+                        modal.classList.remove('opacity-0');
+                        document.removeEventListener('keydown', handleKeydown);
+                        document.body.classList.remove('overflow-hidden');
+
+                        if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+                            previouslyFocused.focus();
+                        }
+                    }, transitionDuration);
+                };
+
+                var handleKeydown = function (event) {
+                    if (event.key === 'Escape') {
+                        closeModal();
+                    }
+                };
+
+                var openModal = function (event) {
+                    if (event) {
+                        event.preventDefault();
+                    }
+
+                    if (!modal.classList.contains('hidden')) {
+                        return;
+                    }
+
+                    previouslyFocused = document.activeElement;
+
+                    modal.classList.remove('hidden');
+                    modal.setAttribute('aria-hidden', 'false');
+                    document.body.classList.add('overflow-hidden');
+
+                    window.requestAnimationFrame(function () {
+                        modal.classList.remove('opacity-0');
+                    });
+
+                    if (modalCard && typeof modalCard.focus === 'function') {
+                        window.requestAnimationFrame(function () {
+                            modalCard.focus();
+                        });
+                    }
+
+                    document.addEventListener('keydown', handleKeydown);
+                };
+
+                triggers.forEach(function (button) {
+                    button.addEventListener('click', openModal);
+                });
+
+                closeButtons.forEach(function (button) {
+                    button.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        closeModal();
+                    });
+                });
+
+                modal.addEventListener('click', function (event) {
+                    if (event.target === modal) {
+                        closeModal();
+                    }
+                });
+            }
+        }
+    });
+})();
+JS;
+
+if (wp_script_is($marketing_business_script_handle, 'enqueued') || wp_script_is($marketing_business_script_handle, 'registered')) {
+    wp_add_inline_script($marketing_business_script_handle, $marketing_business_inline_script);
+} else {
+    wp_register_script($marketing_business_script_handle, false, [], null, true);
+    wp_add_inline_script($marketing_business_script_handle, $marketing_business_inline_script);
+    wp_enqueue_script($marketing_business_script_handle);
+}
+
+get_header();
 ?>
 
 <main id="primary" class="flex flex-col bg-white">
@@ -106,7 +667,7 @@ if (! $marketing_business_demo_link) {
               <p class="max-w-2xl text-base leading-7 text-zinc-600 sm:text-lg">
                 <?php esc_html_e('Webmakerr keeps every experience fast, on-brand, and conversion-ready while it handles the updates, security, and integrations that usually slow teams down.', 'webmakerr'); ?>
               </p>
-              <div class="flex gap-3 mt-6">
+            <div class="flex gap-3 mt-6">
                 <div class="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-[5px] shadow-sm text-sm font-medium">
                   <?php esc_html_e('4.9/5 Satisfaction', 'webmakerr'); ?>
                 </div>
@@ -117,17 +678,176 @@ if (! $marketing_business_demo_link) {
                   <?php esc_html_e('Trusted by 250+ Teams', 'webmakerr'); ?>
                 </div>
               </div>
-              <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:items-center">
-                <a class="inline-flex w-full justify-center rounded bg-dark px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-dark/90 !no-underline sm:w-auto" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
-                  <?php esc_html_e('Schedule Your Launch Call →', 'webmakerr'); ?>
-                </a>
-                <a class="inline-flex w-full justify-center rounded border border-zinc-200 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition hover:border-zinc-300 hover:text-zinc-950 !no-underline sm:w-auto" href="#platform-overview">
+              <div class="mt-10 w-full max-w-xl rounded-[8px] border border-white/70 bg-white/90 p-6 shadow-lg shadow-primary/10 backdrop-blur-sm">
+                <div class="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
+                  <span><?php esc_html_e('Plan Your Demo', 'webmakerr'); ?></span>
+                  <span data-progress-label><?php echo esc_html(sprintf(__('Step %1$s of %2$s', 'webmakerr'), 1, $marketing_business_steps_total)); ?></span>
+                </div>
+                <form
+                  id="marketing-demo-scheduler"
+                  class="mt-6 flex flex-col gap-6"
+                  novalidate
+                  data-endpoint="<?php echo esc_url($marketing_business_lead_endpoint); ?>"
+                  data-nonce="<?php echo esc_attr($marketing_business_lead_nonce); ?>"
+                  data-source="marketing-business-hero"
+                  data-error-message="<?php esc_attr_e('We couldn’t send your request. Please try again.', 'webmakerr'); ?>"
+                  data-progress-template="<?php echo esc_attr($marketing_business_progress_template); ?>"
+                  data-progress-complete="<?php esc_attr_e('Complete', 'webmakerr'); ?>"
+                >
+                  <div class="flex flex-col gap-4" data-step="0">
+                    <div class="flex flex-col gap-2" data-field="name" data-error-message="<?php esc_attr_e('Please enter your name.', 'webmakerr'); ?>">
+                      <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="marketing-demo-name">
+                        <?php esc_html_e('Full name', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                        type="text"
+                        id="marketing-demo-name"
+                        name="full_name"
+                        autocomplete="name"
+                      />
+                      <p class="hidden text-xs font-medium text-red-600" data-error="name"></p>
+                    </div>
+                    <div class="flex flex-col gap-2" data-field="email" data-error-message="<?php esc_attr_e('Add a valid work email so we can follow up.', 'webmakerr'); ?>">
+                      <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="marketing-demo-email">
+                        <?php esc_html_e('Work email', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                        type="email"
+                        id="marketing-demo-email"
+                        name="company_email"
+                        autocomplete="email"
+                      />
+                      <p class="hidden text-xs font-medium text-red-600" data-error="email"></p>
+                    </div>
+                    <div class="flex justify-end">
+                      <button type="button" class="inline-flex justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark" data-step-next>
+                        <?php esc_html_e('Next', 'webmakerr'); ?>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="hidden flex flex-col gap-4" data-step="1" aria-hidden="true">
+                    <div class="flex flex-col gap-2" data-field="company_size" data-error-message="<?php esc_attr_e('Choose the size of your team.', 'webmakerr'); ?>">
+                      <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="marketing-demo-size">
+                        <?php esc_html_e('Company size', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                      </label>
+                      <select
+                        class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                        id="marketing-demo-size"
+                        name="company_size"
+                      >
+                        <option value=""><?php esc_html_e('Select an option', 'webmakerr'); ?></option>
+                        <option value="1-10"><?php esc_html_e('1–10 people', 'webmakerr'); ?></option>
+                        <option value="11-50"><?php esc_html_e('11–50 people', 'webmakerr'); ?></option>
+                        <option value="51-200"><?php esc_html_e('51–200 people', 'webmakerr'); ?></option>
+                        <option value="201-500"><?php esc_html_e('201–500 people', 'webmakerr'); ?></option>
+                        <option value="500+"><?php esc_html_e('500+ people', 'webmakerr'); ?></option>
+                      </select>
+                      <p class="hidden text-xs font-medium text-red-600" data-error="company_size"></p>
+                    </div>
+                    <div class="flex flex-col gap-3" data-field="primary_goal" data-error-message="<?php esc_attr_e('Pick the goal that fits your next launch.', 'webmakerr'); ?>">
+                      <span class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                        <?php esc_html_e('Primary goal', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                      </span>
+                      <div class="space-y-3" role="group" aria-label="<?php esc_attr_e('Select your primary goal', 'webmakerr'); ?>">
+                        <label class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 text-left text-sm text-zinc-600 transition hover:border-zinc-300">
+                          <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="launch" data-label="<?php esc_attr_e('Launch faster', 'webmakerr'); ?>" />
+                          <span>
+                            <span class="block text-sm font-semibold text-zinc-900"><?php esc_html_e('Launch faster', 'webmakerr'); ?></span>
+                            <span class="block text-xs text-zinc-500 sm:text-sm sm:text-zinc-600"><?php esc_html_e('Ship a conversion-ready experience in weeks.', 'webmakerr'); ?></span>
+                          </span>
+                        </label>
+                        <label class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 text-left text-sm text-zinc-600 transition hover:border-zinc-300">
+                          <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="migrate" data-label="<?php esc_attr_e('Migrate without downtime', 'webmakerr'); ?>" />
+                          <span>
+                            <span class="block text-sm font-semibold text-zinc-900"><?php esc_html_e('Migrate without downtime', 'webmakerr'); ?></span>
+                            <span class="block text-xs text-zinc-500 sm:text-sm sm:text-zinc-600"><?php esc_html_e('Replatform safely with CRM and commerce synced.', 'webmakerr'); ?></span>
+                          </span>
+                        </label>
+                        <label class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 text-left text-sm text-zinc-600 transition hover:border-zinc-300">
+                          <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="scale" data-label="<?php esc_attr_e('Scale conversions', 'webmakerr'); ?>" />
+                          <span>
+                            <span class="block text-sm font-semibold text-zinc-900"><?php esc_html_e('Scale conversions', 'webmakerr'); ?></span>
+                            <span class="block text-xs text-zinc-500 sm:text-sm sm:text-zinc-600"><?php esc_html_e('Unify funnels, analytics, and experiments.', 'webmakerr'); ?></span>
+                          </span>
+                        </label>
+                        <label class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 text-left text-sm text-zinc-600 transition hover:border-zinc-300">
+                          <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="integrations" data-label="<?php esc_attr_e('Automate workflows', 'webmakerr'); ?>" />
+                          <span>
+                            <span class="block text-sm font-semibold text-zinc-900"><?php esc_html_e('Automate workflows', 'webmakerr'); ?></span>
+                            <span class="block text-xs text-zinc-500 sm:text-sm sm:text-zinc-600"><?php esc_html_e('Connect CRM, store, and support in one motion.', 'webmakerr'); ?></span>
+                          </span>
+                        </label>
+                      </div>
+                      <p class="hidden text-xs font-medium text-red-600" data-error="primary_goal"></p>
+                    </div>
+                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <button type="button" class="inline-flex justify-center rounded border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:border-zinc-300 hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900" data-step-prev>
+                        <?php esc_html_e('Back', 'webmakerr'); ?>
+                      </button>
+                      <button type="button" class="inline-flex justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark" data-step-next>
+                        <?php esc_html_e('Next', 'webmakerr'); ?>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="hidden flex flex-col gap-6" data-step="2" aria-hidden="true">
+                    <div class="rounded border border-zinc-200 bg-white px-4 py-5">
+                      <h3 class="text-base font-semibold text-zinc-900"><?php esc_html_e('Confirm your details', 'webmakerr'); ?></h3>
+                      <dl class="mt-4 space-y-3 text-sm text-zinc-600">
+                        <div class="flex items-center justify-between gap-3">
+                          <dt class="font-medium text-zinc-500"><?php esc_html_e('Name', 'webmakerr'); ?></dt>
+                          <dd class="text-zinc-900" data-summary="name">—</dd>
+                        </div>
+                        <div class="flex items-center justify-between gap-3">
+                          <dt class="font-medium text-zinc-500"><?php esc_html_e('Email', 'webmakerr'); ?></dt>
+                          <dd class="text-zinc-900" data-summary="email">—</dd>
+                        </div>
+                        <div class="flex items-center justify-between gap-3">
+                          <dt class="font-medium text-zinc-500"><?php esc_html_e('Company size', 'webmakerr'); ?></dt>
+                          <dd class="text-zinc-900" data-summary="company_size">—</dd>
+                        </div>
+                        <div class="flex items-center justify-between gap-3">
+                          <dt class="font-medium text-zinc-500"><?php esc_html_e('Primary goal', 'webmakerr'); ?></dt>
+                          <dd class="text-zinc-900" data-summary="primary_goal">—</dd>
+                        </div>
+                      </dl>
+                    </div>
+                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <button type="button" class="inline-flex justify-center rounded border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:border-zinc-300 hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900" data-step-prev>
+                        <?php esc_html_e('Back', 'webmakerr'); ?>
+                      </button>
+                      <button
+                        type="button"
+                        class="inline-flex justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark"
+                        data-submit
+                        data-default-label="<?php esc_attr_e('Submit & Unlock Link', 'webmakerr'); ?>"
+                        data-loading-label="<?php esc_attr_e('Sending…', 'webmakerr'); ?>"
+                      >
+                        <?php esc_html_e('Submit & Unlock Link', 'webmakerr'); ?>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="hidden rounded border border-red-200 bg-red-50 px-4 py-3 text-xs font-medium text-red-700" data-form-alert role="alert"></div>
+                </form>
+                <div id="marketing-demo-success" class="mt-6 hidden rounded border border-green-200 bg-green-50 p-5 text-sm text-green-900" aria-hidden="true">
+                  <h3 class="text-lg font-semibold text-green-900"><?php esc_html_e('You’re confirmed!', 'webmakerr'); ?></h3>
+                  <p class="mt-2 text-sm text-green-800" data-success-message>
+                    <?php esc_html_e('Thanks for sharing your goals. Use the link below to choose your session time.', 'webmakerr'); ?>
+                  </p>
+                  <a class="mt-4 inline-flex items-center justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark !no-underline" href="<?php echo esc_url($marketing_business_demo_link); ?>" data-confirmation-link>
+                    <?php esc_html_e('Choose your time →', 'webmakerr'); ?>
+                  </a>
+                </div>
+              </div>
+              <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <button type="button" class="inline-flex w-full justify-center rounded border border-zinc-200 bg-transparent px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:border-zinc-300 hover:bg-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:w-auto" data-platform-modal-open aria-controls="platform-explainer-modal">
                   <?php esc_html_e('See How the Platform Works →', 'webmakerr'); ?>
+                </button>
+                <a class="inline-block text-sm text-gray-600 underline transition hover:text-gray-800 sm:ml-4" href="#lead-magnet">
+                  <?php esc_html_e('Download the Growth Playbook', 'webmakerr'); ?>
                 </a>
               </div>
-              <a class="inline-block mt-3 text-sm text-gray-600 underline hover:text-gray-800" href="#lead-magnet">
-                <?php esc_html_e('Download the Growth Playbook', 'webmakerr'); ?>
-              </a>
               <p class="mt-3 text-xs font-medium text-zinc-500 sm:text-sm">
                 <?php esc_html_e('Onboarding cohorts fill quickly—reserve your spot while availability lasts.', 'webmakerr'); ?>
               </p>
@@ -206,6 +926,58 @@ if (! $marketing_business_demo_link) {
           </div>
         </div>
       </section>
+
+      <div
+        id="platform-explainer-modal"
+        class="fixed inset-0 z-[80] hidden flex items-center justify-center bg-zinc-950/70 px-6 py-8 transition-opacity duration-200 opacity-0"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="platform-explainer-title"
+      >
+        <div class="relative w-full max-w-3xl rounded-2xl border border-white/20 bg-white p-8 shadow-2xl focus:outline-none" data-platform-modal-card tabindex="-1">
+          <button type="button" class="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 transition hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900" data-platform-modal-close>
+            <span class="sr-only"><?php esc_html_e('Close explainer modal', 'webmakerr'); ?></span>
+            &times;
+          </button>
+          <div class="flex flex-col gap-4 text-left">
+            <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+              <?php
+              // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+              echo marketing_business_render_icon('activity', 'h-4 w-4 text-primary');
+              ?>
+              <?php esc_html_e('Platform overview', 'webmakerr'); ?>
+            </span>
+            <h2 id="platform-explainer-title" class="text-2xl font-semibold text-zinc-950 sm:text-3xl">
+              <?php esc_html_e('See the managed stack in action', 'webmakerr'); ?>
+            </h2>
+            <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+              <?php esc_html_e('Walk through the orchestration layer that keeps Webmakerr fast, consistent, and conversion-ready. Every workflow shown in the demo is what your team receives on day one.', 'webmakerr'); ?>
+            </p>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div class="rounded-[10px] border border-zinc-200 bg-white p-4 shadow-sm">
+                <h3 class="text-sm font-semibold text-zinc-900 sm:text-base"><?php esc_html_e('Connected experiences', 'webmakerr'); ?></h3>
+                <p class="mt-2 text-sm text-zinc-600"><?php esc_html_e('Web, CRM, storefront, and analytics run on one data model so every signal is synced automatically.', 'webmakerr'); ?></p>
+              </div>
+              <div class="rounded-[10px] border border-zinc-200 bg-white p-4 shadow-sm">
+                <h3 class="text-sm font-semibold text-zinc-900 sm:text-base"><?php esc_html_e('Hands-on specialists', 'webmakerr'); ?></h3>
+                <p class="mt-2 text-sm text-zinc-600"><?php esc_html_e('Your launch crew configures automations, consent, and reporting without extra agencies or plugins.', 'webmakerr'); ?></p>
+              </div>
+              <div class="rounded-[10px] border border-zinc-200 bg-white p-4 shadow-sm">
+                <h3 class="text-sm font-semibold text-zinc-900 sm:text-base"><?php esc_html_e('Governed updates', 'webmakerr'); ?></h3>
+                <p class="mt-2 text-sm text-zinc-600"><?php esc_html_e('We manage releases, security patches, and QA so marketing stays focused on pipeline.', 'webmakerr'); ?></p>
+              </div>
+              <div class="rounded-[10px] border border-zinc-200 bg-white p-4 shadow-sm">
+                <h3 class="text-sm font-semibold text-zinc-900 sm:text-base"><?php esc_html_e('Conversion intelligence', 'webmakerr'); ?></h3>
+                <p class="mt-2 text-sm text-zinc-600"><?php esc_html_e('Unified analytics and testing surface the next best action for every campaign and team.', 'webmakerr'); ?></p>
+              </div>
+            </div>
+            <div class="overflow-hidden rounded-[12px] border border-zinc-200 bg-slate-900/90 p-6 text-white shadow-inner">
+              <p class="text-sm font-medium uppercase tracking-[0.25em] text-white/70"><?php esc_html_e('Demo snapshot', 'webmakerr'); ?></p>
+              <p class="mt-3 text-base leading-7 text-white/90"><?php esc_html_e('Follow a three-minute walkthrough of how new campaigns move from concept to live experiences, complete with CRM routing and performance alerts.', 'webmakerr'); ?></p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <section class="border-y border-zinc-200 bg-slate-50/80 py-10">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
