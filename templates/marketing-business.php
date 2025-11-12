@@ -29,6 +29,10 @@ if (! function_exists('marketing_business_render_icon')) {
             'cloud' => '<path d="M17.5 19a4.5 4.5 0 0 0-.5-9 7 7 0 0 0-13.5 1 4.5 4.5 0 0 0 .5 9Z"></path>',
             'target' => '<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>',
             'search' => '<circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path>',
+            'user-plus' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line>',
+            'sliders' => '<line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line>',
+            'rocket' => '<path d="M4.5 16.5a2.12 2.12 0 0 0 3 3L12 15"></path><path d="M12 15l4.5 4.5a2.12 2.12 0 0 0 3-3"></path><path d="M12 15v4"></path><path d="M6 9c3-3 9-3 12 0l2 2-8 8-8-8 2-2Z"></path><circle cx="12" cy="9" r="2"></circle><path d="M12 3v3"></path>',
+            'trending-up' => '<path d="M22 7 12.5 16.5 8 12l-6 6"></path><path d="M16 7h6v6"></path>',
         );
 
         if (! isset($icons[$name])) {
@@ -873,43 +877,60 @@ if (! function_exists('marketing_business_feature_icon')) {
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center">
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
-              How to Get Started with Webmakerr
+              <?php esc_html_e('How to Get Started with Webmakerr', 'webmakerr'); ?>
             </h2>
             <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-              We keep onboarding simple and personal. Here’s how it works in four steps:
+              <?php esc_html_e('We keep onboarding collaborative and personal. Here’s how we guide every launch in four focused phases.', 'webmakerr'); ?>
             </p>
           </div>
           <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <?php
             $onboarding_steps = array(
                 array(
-                    'number' => '1️⃣',
-                    'title'  => 'Connect',
-                    'body'   => 'Create your account and link your WordPress site.',
+                    'step' => 1,
+                    'icon' => 'user-plus',
+                    'title'  => __('Connect', 'webmakerr'),
+                    'body'   => __('Create your account, connect your WordPress site, and meet your onboarding specialist.', 'webmakerr'),
                 ),
                 array(
-                    'number' => '2️⃣',
-                    'title'  => 'Configure',
-                    'body'   => 'Choose modules and import your existing data automatically.',
+                    'step' => 2,
+                    'icon' => 'sliders',
+                    'title'  => __('Configure', 'webmakerr'),
+                    'body'   => __('Pick the modules you need while we import your existing data and align integrations.', 'webmakerr'),
                 ),
                 array(
-                    'number' => '3️⃣',
-                    'title'  => 'Launch',
-                    'body'   => 'Our team provisions your system on the Webmakerr Cloud and runs initial optimizations.',
+                    'step' => 3,
+                    'icon' => 'rocket',
+                    'title'  => __('Launch', 'webmakerr'),
+                    'body'   => __('We provision your environment on Webmakerr Cloud, run optimizations, and validate every workflow.', 'webmakerr'),
                 ),
                 array(
-                    'number' => '4️⃣',
-                    'title'  => 'Scale',
-                    'body'   => 'Automate your workflows and watch your business run in sync.',
+                    'step' => 4,
+                    'icon' => 'trending-up',
+                    'title'  => __('Scale', 'webmakerr'),
+                    'body'   => __('Automate recurring processes, monitor insights, and partner with us to keep momentum high.', 'webmakerr'),
                 ),
             );
 
             foreach ($onboarding_steps as $step) :
                 ?>
-                <div class="flex h-full flex-col gap-3 rounded-[5px] border border-zinc-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                  <span class="text-3xl" aria-hidden="true"><?php echo esc_html($step['number']); ?></span>
-                  <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($step['title']); ?></p>
+                <div class="flex h-full flex-col justify-between gap-5 rounded-[6px] border border-zinc-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
+                  <div class="flex items-start gap-4">
+                    <span class="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon($step['icon'], 'h-6 w-6');
+                      ?>
+                    </span>
+                    <div class="flex flex-col">
+                      <span class="text-xs font-semibold uppercase tracking-[0.32em] text-primary">
+                        <?php echo esc_html(sprintf(__('Step %s', 'webmakerr'), str_pad((string) $step['step'], 2, '0', STR_PAD_LEFT))); ?>
+                      </span>
+                      <p class="mt-1 text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($step['title']); ?></p>
+                    </div>
+                  </div>
                   <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($step['body']); ?></p>
+                  <div class="mt-2 h-0.5 w-16 rounded-full bg-gradient-to-r from-primary via-primary/60 to-transparent"></div>
                 </div>
             <?php endforeach; ?>
           </div>
@@ -920,6 +941,9 @@ if (! function_exists('marketing_business_feature_icon')) {
             <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#">
               Start Free Setup →
             </a>
+            <p class="text-xs text-zinc-500 sm:text-sm">
+              <?php esc_html_e('Your onboarding team remains on-call to fine-tune automations after go-live.', 'webmakerr'); ?>
+            </p>
           </div>
         </div>
       </section>
