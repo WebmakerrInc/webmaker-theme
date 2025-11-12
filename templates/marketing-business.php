@@ -879,11 +879,11 @@ if (! $marketing_business_demo_link) {
 
       <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center">
+          <div class="mx-auto flex max-w-4xl flex-col gap-4 text-center">
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
               Why Webmakerr Wins Where Others Stop
             </h2>
-            <p class="text-base leading-7 text-zinc-600 sm:text-lg">We engineered Webmakerr to deliver enterprise reliability with the simplicity of a managed service.</p>
+            <p class="text-base leading-7 text-zinc-600 sm:text-lg">Webmakerr is designed to feel effortless day-to-day while quietly delivering the reliability leaders expect.</p>
           </div>
           <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <?php
@@ -893,42 +893,66 @@ if (! $marketing_business_demo_link) {
                     'eyebrow'  => 'Unified Architecture',
                     'icon_bg'  => 'from-primary/15 via-primary/5 to-white text-primary',
                     'title'    => 'A True Platform — Not a Patchwork',
-                    'body'     => 'Most “all-in-ones” glue plugins together. Webmakerr is engineered as one ecosystem — one core, one logic, one design language.',
+                    'summary'  => 'One ecosystem keeps every touchpoint aligned.',
+                    'bullets'  => array(
+                        'Shared design system for web, store, and CRM.',
+                        'No plugin glue or conflicting admin panels.',
+                    ),
                 ),
                 array(
                     'icon'     => 'cloud',
                     'eyebrow'  => 'Managed Infrastructure',
                     'icon_bg'  => 'from-sky-200/60 via-sky-100/80 to-white text-sky-600',
                     'title'    => 'Global Cloud + Managed Reliability',
-                    'body'     => 'Your business runs on our distributed cloud. We handle security, updates, and daily backups, so you never worry about uptime again.',
+                    'summary'  => 'Your site runs on our distributed cloud.',
+                    'bullets'  => array(
+                        'Security patches, updates, and uptime handled for you.',
+                        'Automated daily backups and 24/7 monitoring.',
+                    ),
                 ),
                 array(
                     'icon'     => 'target',
                     'eyebrow'  => 'Conversion Accuracy',
                     'icon_bg'  => 'from-amber-200/70 via-amber-100/80 to-white text-amber-600',
                     'title'    => 'Server-Side Pixel — Included',
-                    'body'     => 'Track every conversion accurately, bypass browser blocks, and save $39 per month — built in by default.',
+                    'summary'  => 'Never miss a conversion event again.',
+                    'bullets'  => array(
+                        'Server-side tracking bypasses browser blocks.',
+                        'Included by default—no extra $39/month add-on.',
+                    ),
                 ),
                 array(
                     'icon'     => 'search',
                     'eyebrow'  => 'Search Performance',
                     'icon_bg'  => 'from-violet-200/70 via-violet-100/80 to-white text-violet-600',
                     'title'    => 'SEO Intelligence Built In',
-                    'body'     => 'AI-powered audits, live scoring, and automatic optimization keep every page ranking at its best.',
+                    'summary'  => 'Rank-ready pages out of the box.',
+                    'bullets'  => array(
+                        'AI audits flag issues before campaigns launch.',
+                        'Live scoring guides every edit to stay optimized.',
+                    ),
                 ),
                 array(
                     'icon'     => 'repeat',
                     'eyebrow'  => 'On-Demand Engineering',
                     'icon_bg'  => 'from-rose-200/70 via-rose-100/80 to-white text-rose-600',
                     'title'    => 'Custom Solutions on Demand',
-                    'body'     => 'Need a feature or integration? Our engineers build it at a flat rate — no hourly surprises.',
+                    'summary'  => 'Ship custom requests without pausing momentum.',
+                    'bullets'  => array(
+                        'Flat-rate builds for new integrations or workflows.',
+                        'Delivered by the same team that maintains the platform.',
+                    ),
                 ),
                 array(
                     'icon'     => 'shield-check',
                     'eyebrow'  => 'Ownership & Control',
                     'icon_bg'  => 'from-emerald-200/70 via-emerald-100/80 to-white text-emerald-600',
                     'title'    => 'You Own It',
-                    'body'     => 'Built on WordPress. Open-source. Secure. Yours forever. Your data, your control, your advantage.',
+                    'summary'  => 'Open-source foundations with your name on the keys.',
+                    'bullets'  => array(
+                        'Built on WordPress so data stays portable.',
+                        'Full control over content, customers, and stack.',
+                    ),
                 ),
             );
 
@@ -947,7 +971,19 @@ if (! $marketing_business_demo_link) {
                       <span class="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-primary/70"><?php echo esc_html($feature['eyebrow']); ?></span>
                     <?php endif; ?>
                     <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($feature['title']); ?></p>
-                    <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($feature['body']); ?></p>
+                    <?php if (! empty($feature['summary'])) : ?>
+                      <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($feature['summary']); ?></p>
+                    <?php endif; ?>
+                    <?php if (! empty($feature['bullets'])) : ?>
+                      <ul class="mt-2 flex flex-col gap-1.5 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                        <?php foreach ($feature['bullets'] as $bullet) : ?>
+                          <li class="flex gap-2">
+                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/50"></span>
+                            <span class="flex-1"><?php echo esc_html($bullet); ?></span>
+                          </li>
+                        <?php endforeach; ?>
+                      </ul>
+                    <?php endif; ?>
                   </div>
                 </div>
             <?php endforeach; ?>
