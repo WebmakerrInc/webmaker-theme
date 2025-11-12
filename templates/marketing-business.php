@@ -491,11 +491,11 @@ if (! function_exists('marketing_business_feature_icon')) {
             </div>
           </div>
 
-          <div class="mt-10 rounded-[5px] bg-gradient-to-r from-[#01C468] to-[#00B7A5] p-10 pb-10 text-center text-white md:p-14 md:pb-14">
+          <div class="mt-10 rounded-[5px] bg-gradient-to-r from-primary/90 via-dark to-dark p-10 pb-10 text-center text-white md:p-14 md:pb-14">
             <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-white">
               💰 Save hundreds every month — one platform, no plugins, no limits.
             </h3>
-            <a href="#" class="btn-main inline-block mt-3 px-8 py-3 bg-white text-[#01C468] font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105">See How Webmakerr Works →</a>
+            <a href="#" class="btn-main inline-flex items-center justify-center mt-3 px-8 py-3 font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105 !no-underline">See How Webmakerr Works →</a>
           </div>
         </div>
       </section>
