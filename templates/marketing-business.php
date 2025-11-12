@@ -1124,39 +1124,116 @@ if (! $marketing_business_demo_link) {
               <?php esc_html_e('We keep onboarding collaborative and personal. Here’s how we guide every launch in four focused phases.', 'webmakerr'); ?>
             </p>
           </div>
-          <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <aside class="flex flex-col gap-6 rounded-[14px] border border-primary/15 bg-gradient-to-br from-primary/5 via-white to-white px-6 py-8 text-left shadow-sm lg:px-8">
+              <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                <?php
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo marketing_business_render_icon('target', 'h-4 w-4 text-primary');
+                ?>
+                <span class="text-primary/80"><?php esc_html_e('Guided onboarding', 'webmakerr'); ?></span>
+              </span>
+              <h3 class="text-2xl font-semibold text-zinc-950 sm:text-3xl">
+                <?php esc_html_e('A phased rollout with your team at the center', 'webmakerr'); ?>
+              </h3>
+              <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                <?php esc_html_e('Every customer pairs with a dedicated specialist who shapes the launch schedule around your timeline and tech stack.', 'webmakerr'); ?>
+              </p>
+              <ul class="grid gap-2 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                <li class="flex items-start gap-3 rounded-[10px] border border-white/60 bg-white/60 p-3 shadow-sm">
+                  <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                    ?>
+                  </span>
+                  <span><?php esc_html_e('Dedicated onboarding specialist from day one.', 'webmakerr'); ?></span>
+                </li>
+                <li class="flex items-start gap-3 rounded-[10px] border border-white/60 bg-white/60 p-3 shadow-sm">
+                  <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                    ?>
+                  </span>
+                  <span><?php esc_html_e('Weekly launch checkpoints tailored to your goals.', 'webmakerr'); ?></span>
+                </li>
+                <li class="flex items-start gap-3 rounded-[10px] border border-white/60 bg-white/60 p-3 shadow-sm">
+                  <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                    ?>
+                  </span>
+                  <span><?php esc_html_e('Automation tune-ups continue after your site goes live.', 'webmakerr'); ?></span>
+                </li>
+              </ul>
+              <div class="flex items-center gap-4 rounded-[12px] border border-primary/20 bg-primary/5 px-4 py-4 text-left">
+                <span class="text-4xl font-semibold text-primary">48h</span>
+                <p class="text-sm font-medium uppercase tracking-[0.26em] text-primary/80">
+                  <?php esc_html_e('Most teams launch within 48 hours', 'webmakerr'); ?>
+                </p>
+              </div>
+              <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
+                <?php esc_html_e('Talk with Onboarding →', 'webmakerr'); ?>
+              </a>
+              <p class="text-xs text-zinc-500 sm:text-sm">
+                <?php esc_html_e('Your onboarding team stays on-call to refine automations after go-live.', 'webmakerr'); ?>
+              </p>
+            </aside>
+            <div class="relative flex flex-col gap-6">
+              <span class="pointer-events-none absolute left-5 top-6 hidden h-[calc(100%-3rem)] w-px bg-gradient-to-b from-primary/40 via-primary/20 to-transparent lg:block"></span>
             <?php
             $onboarding_steps = array(
                 array(
                     'step' => 1,
                     'icon' => 'user-plus',
                     'title'  => __('Connect', 'webmakerr'),
-                    'body'   => __('Create your account, connect your WordPress site, and meet your onboarding specialist.', 'webmakerr'),
+                    'summary' => __('Kickoff & orientation', 'webmakerr'),
+                    'highlights' => array(
+                        __('Create your account and secure admin access.', 'webmakerr'),
+                        __('Link your WordPress site and review goals together.', 'webmakerr'),
+                    ),
                 ),
                 array(
                     'step' => 2,
                     'icon' => 'sliders',
                     'title'  => __('Configure', 'webmakerr'),
-                    'body'   => __('Pick the modules you need while we import your existing data and align integrations.', 'webmakerr'),
+                    'summary' => __('Tailored configuration', 'webmakerr'),
+                    'highlights' => array(
+                        __('Select the modules that match your pipeline.', 'webmakerr'),
+                        __('We migrate data and align your integrations.', 'webmakerr'),
+                    ),
                 ),
                 array(
                     'step' => 3,
                     'icon' => 'rocket',
                     'title'  => __('Launch', 'webmakerr'),
-                    'body'   => __('We provision your environment on Webmakerr Cloud, run optimizations, and validate every workflow.', 'webmakerr'),
+                    'summary' => __('Cloud provisioning & QA', 'webmakerr'),
+                    'highlights' => array(
+                        __('We provision your Webmakerr Cloud environment.', 'webmakerr'),
+                        __('Performance tuning and workflow validation follow.', 'webmakerr'),
+                    ),
                 ),
                 array(
                     'step' => 4,
                     'icon' => 'trending-up',
                     'title'  => __('Scale', 'webmakerr'),
-                    'body'   => __('Automate recurring processes, monitor insights, and partner with us to keep momentum high.', 'webmakerr'),
+                    'summary' => __('Optimization without the stall', 'webmakerr'),
+                    'highlights' => array(
+                        __('Automate recurring processes alongside our team.', 'webmakerr'),
+                        __('Monitor insights and plan continual optimizations.', 'webmakerr'),
+                    ),
                 ),
             );
 
             foreach ($onboarding_steps as $step) :
                 ?>
-                <div class="flex h-full flex-col justify-between gap-5 rounded-[6px] border border-zinc-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
-                  <div class="flex items-start gap-4">
+                <article class="relative flex h-full flex-col gap-4 rounded-[10px] border border-zinc-200 bg-white/95 p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg lg:pl-12">
+                  <span class="absolute -left-[26px] top-6 hidden h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-primary text-sm font-semibold text-white shadow-sm lg:flex">
+                    <?php echo esc_html(str_pad((string) $step['step'], 2, '0', STR_PAD_LEFT)); ?>
+                  </span>
+                  <div class="flex items-start justify-between gap-4">
                     <span class="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
                       <?php
                       // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -1168,23 +1245,27 @@ if (! $marketing_business_demo_link) {
                         <?php echo esc_html(sprintf(__('Step %s', 'webmakerr'), str_pad((string) $step['step'], 2, '0', STR_PAD_LEFT))); ?>
                       </span>
                       <p class="mt-1 text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($step['title']); ?></p>
+                      <p class="text-sm font-medium text-primary sm:text-base">
+                        <?php echo esc_html($step['summary']); ?>
+                      </p>
                     </div>
                   </div>
-                  <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($step['body']); ?></p>
-                  <div class="mt-2 h-0.5 w-16 rounded-full bg-gradient-to-r from-primary via-primary/60 to-transparent"></div>
-                </div>
+                  <ul class="grid gap-2 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                    <?php foreach ($step['highlights'] as $highlight) : ?>
+                      <li class="flex items-start gap-3 rounded-[10px] bg-slate-50/70 p-3">
+                        <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                          <?php
+                          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                          echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                          ?>
+                        </span>
+                        <span><?php echo esc_html($highlight); ?></span>
+                      </li>
+                    <?php endforeach; ?>
+                  </ul>
+                </article>
             <?php endforeach; ?>
-          </div>
-          <div class="mx-auto mt-10 flex max-w-3xl flex-col items-center gap-3 text-center">
-            <p class="text-sm font-medium uppercase tracking-[0.24em] text-primary">
-              Most users are fully operational within 48 hours.
-            </p>
-            <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
-              Talk with Onboarding →
-            </a>
-            <p class="text-xs text-zinc-500 sm:text-sm">
-              <?php esc_html_e('Your onboarding team remains on-call to fine-tune automations after go-live.', 'webmakerr'); ?>
-            </p>
+            </div>
           </div>
         </div>
       </section>
