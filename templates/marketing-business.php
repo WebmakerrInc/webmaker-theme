@@ -101,21 +101,21 @@ if (! $marketing_business_demo_link) {
                 <?php esc_html_e('Managed Business Platform', 'webmakerr'); ?>
               </span>
               <h1 class="mt-4 text-4xl font-medium tracking-tight [text-wrap:balance] text-zinc-950 sm:text-5xl">
-                <?php esc_html_e('Deliver the Experience Customers Expect—Without the Plugin Juggle.', 'webmakerr'); ?>
+                <?php esc_html_e('Turn your digital journey into a revenue engine—without the upkeep.', 'webmakerr'); ?>
               </h1>
               <p class="max-w-2xl text-base leading-7 text-zinc-600 sm:text-lg">
-                <?php esc_html_e('Keep journeys fast, consistent, and conversion-ready while Webmakerr handles the updates, security, and integrations that usually derail growth.', 'webmakerr'); ?>
+                <?php esc_html_e('Webmakerr keeps every experience fast, on-brand, and conversion-ready while it handles the updates, security, and integrations that usually slow teams down.', 'webmakerr'); ?>
               </p>
               <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:items-center">
                 <a class="inline-flex w-full justify-center rounded bg-dark px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-dark/90 !no-underline sm:w-auto" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
-                  <?php esc_html_e('Book a Demo →', 'webmakerr'); ?>
+                  <?php esc_html_e('Schedule Your Launch Call →', 'webmakerr'); ?>
                 </a>
                 <a class="inline-flex w-full justify-center rounded border border-zinc-200 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition hover:border-zinc-300 hover:text-zinc-950 !no-underline sm:w-auto" href="#platform-overview">
-                  <?php esc_html_e('Explore the Platform →', 'webmakerr'); ?>
+                  <?php esc_html_e('See How the Platform Works →', 'webmakerr'); ?>
                 </a>
               </div>
               <p class="mt-3 text-xs font-medium text-zinc-500 sm:text-sm">
-                <?php esc_html_e('Limited onboarding slots available each month.', 'webmakerr'); ?>
+                <?php esc_html_e('Onboarding cohorts fill quickly—reserve your spot while availability lasts.', 'webmakerr'); ?>
               </p>
             </div>
             <div class="relative isolate overflow-hidden rounded-[5px] border border-white/60 bg-white/80 p-8 shadow-xl shadow-primary/10 backdrop-blur">
