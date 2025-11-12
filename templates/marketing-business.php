@@ -49,27 +49,24 @@ if (! function_exists('marketing_business_render_icon')) {
           <div class="grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
             <div class="flex flex-col gap-6">
               <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
-                Managed Business Platform
+                <?php esc_html_e('Managed Business Platform', 'webmakerr'); ?>
               </span>
-              <h1 class="h1-webs tracking-tight [text-wrap:balance] text-zinc-950">
-                Stop Managing Plugins. Start Scaling Your Business.
+              <h1 class="mt-4 text-4xl font-medium tracking-tight [text-wrap:balance] text-zinc-950 sm:text-5xl">
+                <?php esc_html_e('Stop Managing Plugins. Start Scaling Your Business.', 'webmakerr'); ?>
               </h1>
-              <div class="flex flex-col gap-4 text-base leading-7 text-zinc-600 sm:text-lg">
-                <p>You’ve built something great — but your tech stack is holding you hostage.</p>
-                <p>Plugins collide. Updates break. Every “quick fix” adds cost and chaos.</p>
-                <p>You spend more time maintaining software than growing your business.</p>
-                <p>That ends here.</p>
-              </div>
+              <p class="max-w-2xl text-base leading-7 text-zinc-600 sm:text-lg">
+                <?php esc_html_e('You built something great, but your tech stack keeps slowing you down. Plugins collide, updates break, and every “quick fix” adds cost and chaos. Webmakerr unifies the stack so you can focus on growth.', 'webmakerr'); ?>
+              </p>
               <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:items-center">
                 <a class="inline-flex w-full justify-center rounded bg-dark px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-dark/90 !no-underline sm:w-auto" href="#with-webmakerr">
-                  Start Free →
+                  <?php esc_html_e('Start Free →', 'webmakerr'); ?>
                 </a>
                 <a class="inline-flex w-full justify-center rounded border border-zinc-200 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition hover:border-zinc-300 hover:text-zinc-950 !no-underline sm:w-auto" href="#with-webmakerr">
-                  Book a Demo →
+                  <?php esc_html_e('Book a Demo →', 'webmakerr'); ?>
                 </a>
               </div>
               <p class="mt-3 text-xs font-medium text-zinc-500 sm:text-sm">
-                Limited onboarding slots available each month.
+                <?php esc_html_e('Limited onboarding slots available each month.', 'webmakerr'); ?>
               </p>
             </div>
             <div class="relative isolate overflow-hidden rounded-[5px] border border-white/60 bg-white/80 p-8 shadow-xl shadow-primary/10 backdrop-blur">
@@ -81,8 +78,8 @@ if (! function_exists('marketing_business_render_icon')) {
                   </figure>
                 <?php endif; ?>
                 <div class="rounded-[5px] border border-zinc-200 bg-white/80 p-6 shadow-sm">
-                  <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Unified growth stack</p>
-                  <p class="mt-2 text-sm text-zinc-600">Webmakerr brings your website, CRM, store, and analytics into one managed platform so you can grow without tech debt.</p>
+                  <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary"><?php esc_html_e('Unified growth stack', 'webmakerr'); ?></p>
+                  <p class="mt-2 text-sm text-zinc-600"><?php esc_html_e('Webmakerr brings your website, CRM, store, and analytics into one managed platform so you can grow without tech debt.', 'webmakerr'); ?></p>
                 </div>
                 <ul class="grid gap-3 text-sm text-zinc-600">
                   <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
@@ -90,21 +87,21 @@ if (! function_exists('marketing_business_render_icon')) {
                       <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                       echo marketing_business_render_icon('zap', 'h-5 w-5'); ?>
                     </span>
-                    Lightning-fast sites with enterprise uptime.
+                    <?php esc_html_e('Lightning-fast sites with enterprise uptime.', 'webmakerr'); ?>
                   </li>
                   <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
                     <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
                       <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                       echo marketing_business_render_icon('layers', 'h-5 w-5'); ?>
                     </span>
-                    Managed updates, security, and performance.
+                    <?php esc_html_e('Managed updates, security, and performance.', 'webmakerr'); ?>
                   </li>
                   <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
                     <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
                       <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                       echo marketing_business_render_icon('check', 'h-5 w-5'); ?>
                     </span>
-                    All-in-one tooling that scales with your business.
+                    <?php esc_html_e('All-in-one tooling that scales with your business.', 'webmakerr'); ?>
                   </li>
                 </ul>
               </div>
