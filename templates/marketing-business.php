@@ -921,13 +921,46 @@ if (! $marketing_business_demo_link) {
 
       <section id="ecosystem" class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center">
-            <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
-              Everything Inside One Platform — One Flow from Visitor to Revenue
-            </h2>
-            <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-              Your business doesn’t run in pieces — it runs in motion. Webmakerr connects every stage of that motion, so when a visitor lands on your site, every system already knows what to do next.
-            </p>
+          <div class="mx-auto flex max-w-5xl flex-col gap-10">
+            <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+              <div class="flex flex-col gap-4">
+                <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+                  Everything Inside One Platform — One Flow from Visitor to Revenue
+                </h2>
+                <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                  Your business moves as one continuous experience. Webmakerr keeps that experience connected—from the first visit to the renewal conversation—so teams share the same momentum.
+                </p>
+              </div>
+              <div class="grid gap-3 rounded-[12px] border border-primary/20 bg-white/90 p-6 shadow-sm sm:grid-cols-2">
+                <?php
+                $ecosystem_overview = array(
+                    array(
+                        'title' => __('11 connected modules', 'webmakerr'),
+                        'body'  => __('Marketing, sales, and service data stay synced automatically.', 'webmakerr'),
+                    ),
+                    array(
+                        'title' => __('One managed workspace', 'webmakerr'),
+                        'body'  => __('Launch, convert, and support customers without juggling plugins.', 'webmakerr'),
+                    ),
+                    array(
+                        'title' => __('Built-in automation', 'webmakerr'),
+                        'body'  => __('Adaptive journeys keep deals moving while your team stays focused.', 'webmakerr'),
+                    ),
+                    array(
+                        'title' => __('Real-time insight', 'webmakerr'),
+                        'body'  => __('Shared reporting keeps every department working from the same playbook.', 'webmakerr'),
+                    ),
+                );
+
+                foreach ($ecosystem_overview as $overview) :
+                    ?>
+                    <div class="flex flex-col gap-1 rounded-[10px] border border-zinc-200/60 bg-slate-50/60 p-4">
+                      <span class="text-sm font-semibold text-zinc-900"><?php echo esc_html($overview['title']); ?></span>
+                      <span class="text-xs leading-5 text-zinc-600"><?php echo esc_html($overview['body']); ?></span>
+                    </div>
+                <?php endforeach; ?>
+              </div>
+            </div>
           </div>
           <div class="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             <?php
@@ -1046,22 +1079,27 @@ if (! $marketing_business_demo_link) {
 
             foreach ($ecosystem_modules as $module) :
                 ?>
-                <article class="group flex h-full flex-col justify-between rounded-[5px] border border-zinc-200 bg-white p-6 shadow-sm transition transition-transform hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
+                <article class="group flex h-full flex-col justify-between rounded-[16px] border border-zinc-200 bg-white p-6 shadow-sm transition transition-transform hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
                   <div class="flex items-start justify-between gap-4">
                     <span class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
                       <?php echo esc_html(sprintf(__('Module %s', 'webmakerr'), str_pad((string) $module['number'], 2, '0', STR_PAD_LEFT))); ?>
                     </span>
-                    <span class="text-sm font-semibold text-zinc-400"><?php echo esc_html__('Unified revenue journey', 'webmakerr'); ?></span>
+                    <span class="rounded-full bg-slate-100 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-primary/70"><?php echo esc_html__('Unified journey', 'webmakerr'); ?></span>
                   </div>
                   <div class="mt-4 flex flex-col gap-3">
                     <h3 class="text-lg font-semibold text-zinc-950 sm:text-xl"><?php echo esc_html($module['title']); ?></h3>
                     <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($module['summary']); ?></p>
                   </div>
-                  <ul class="mt-4 flex flex-col gap-2">
+                  <ul class="mt-5 grid gap-2">
                     <?php foreach ($module['highlights'] as $highlight) : ?>
-                      <li class="flex items-start gap-2 text-sm text-zinc-600 sm:text-base">
-                        <span class="mt-1 inline-flex h-1.5 w-1.5 flex-none rounded-full bg-primary"></span>
-                        <span><?php echo esc_html($highlight); ?></span>
+                      <li class="flex items-start gap-3 rounded-[10px] border border-zinc-100 bg-slate-50/80 p-3 text-sm text-zinc-600 shadow-sm">
+                        <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                          <?php
+                          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                          echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                          ?>
+                        </span>
+                        <span class="leading-5 sm:text-base sm:leading-6"><?php echo esc_html($highlight); ?></span>
                       </li>
                     <?php endforeach; ?>
                   </ul>
