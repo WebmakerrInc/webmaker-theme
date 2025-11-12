@@ -224,90 +224,508 @@ if (! function_exists('marketing_business_render_icon')) {
 
       <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-4xl flex-col gap-6 text-zinc-600">
-            <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
-              The Hidden Cost of “Simple” Website Setups
+          <div class="mx-auto max-w-6xl">
+            <h2 class="text-3xl font-semibold text-zinc-950 text-center sm:text-4xl">
+              The Real Cost of Managing Multiple Platforms vs Webmakerr
             </h2>
-            <p class="text-base leading-7 sm:text-lg">Running a modern website isn’t cheap — it’s just disguised as a dozen “affordable” tools.</p>
-            <p class="text-base leading-7 sm:text-lg">Here’s what most businesses really spend:</p>
-            <div class="overflow-hidden rounded-[6px] border border-zinc-200 bg-white shadow-sm">
-              <div class="overflow-x-auto">
-                <table class="min-w-full border-collapse text-left">
-                  <thead class="bg-light/70 text-xs font-semibold uppercase tracking-[0.26em] text-zinc-500">
-                    <tr>
-                      <th class="px-6 py-4 align-bottom">Tool / Service</th>
-                      <th class="px-6 py-4 align-bottom">Typical Monthly Cost</th>
-                      <th class="px-6 py-4 align-bottom">Purpose</th>
+            <p class="mt-6 text-center text-base leading-7 text-zinc-600 sm:text-lg">
+              Most businesses pay for different tools to do what Webmakerr delivers in one platform.
+              Here’s how your current stack compares with top industry tools — and what you get with Webmakerr.
+            </p>
+
+            <!-- TABLE WRAPPER -->
+            <div class="hidden md:block mt-12">
+              <div class="overflow-x-auto rounded-xl shadow-lg bg-white">
+                <table class="w-full table-auto text-left border-collapse">
+                  <!-- HEADER WITH LOGOS -->
+                  <thead class="bg-gray-50">
+                    <tr class="text-center align-middle">
+                      <th class="p-4 text-sm font-semibold text-zinc-600 text-left">Tool / Function</th>
+                      <th class="p-4">
+                        <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6 mx-auto mb-2">
+                        <p class="font-semibold text-zinc-700 text-sm">Typical Stack</p>
+                      </th>
+                      <th class="p-4">
+                        <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6 mx-auto mb-2">
+                        <p class="font-semibold text-zinc-700 text-sm">Shopify</p>
+                      </th>
+                      <th class="p-4">
+                        <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6 mx-auto mb-2">
+                        <p class="font-semibold text-zinc-700 text-sm">CRM (HubSpot / Salesforce)</p>
+                      </th>
+                      <th class="p-4">
+                        <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6 mx-auto mb-2">
+                        <p class="font-semibold text-[#01C468] text-sm">Webmakerr</p>
+                      </th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-zinc-200 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
-                    <tr>
-                      <td class="px-6 py-4">Web Design (basic setup)</td>
-                      <td class="px-6 py-4">$149 (one-time)</td>
-                      <td class="px-6 py-4">Initial design &amp; updates</td>
+
+                  <!-- BODY -->
+                  <tbody class="divide-y divide-gray-200 text-zinc-700">
+                    <tr class="hover:bg-gray-50">
+                      <td class="p-4 font-medium">Website + Store Setup</td>
+                      <td class="p-4">$149 one-time (basic setup)</td>
+                      <td class="p-4">$29 / mo minimum + design fees</td>
+                      <td class="p-4">Requires CMS integration</td>
+                      <td class="p-4 text-[#01C468] font-semibold">Included with WebBuilder</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">Cloud Hosting</td>
-                      <td class="px-6 py-4">$15</td>
-                      <td class="px-6 py-4">Keeps your site online</td>
+                    <tr class="bg-gray-50 hover:bg-gray-50">
+                      <td class="p-4 font-medium">Cloud Hosting + CDN</td>
+                      <td class="p-4">$15 / mo + $15 CDN add-on</td>
+                      <td class="p-4">Hosting included, CDN extra</td>
+                      <td class="p-4">Not included — separate hosting</td>
+                      <td class="p-4 text-[#01C468] font-semibold">Included — 170 edge servers, &lt;1.5 s load</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">CRM Software</td>
-                      <td class="px-6 py-4">$39</td>
-                      <td class="px-6 py-4">Manage leads &amp; clients</td>
+                    <tr class="hover:bg-gray-50">
+                      <td class="p-4 font-medium">CRM &amp; Automation</td>
+                      <td class="p-4">$39 / mo (standalone CRM)</td>
+                      <td class="p-4">Needs app integration</td>
+                      <td class="p-4">$45–$60 / user / mo</td>
+                      <td class="p-4 text-[#01C468] font-semibold">Built-in WebCRM + Automation</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">eCommerce Platform</td>
-                      <td class="px-6 py-4">$29</td>
-                      <td class="px-6 py-4">Sell products &amp; subscriptions</td>
+                    <tr class="bg-gray-50 hover:bg-gray-50">
+                      <td class="p-4 font-medium">eCommerce / Checkout</td>
+                      <td class="p-4">$29 / mo + plugins</td>
+                      <td class="p-4">$29–$79 / mo + 2–3 % fees</td>
+                      <td class="p-4">Requires external system</td>
+                      <td class="p-4 text-[#01C468] font-semibold">WebCommerce built-in, 0 % fees</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">Booking System</td>
-                      <td class="px-6 py-4">$15</td>
-                      <td class="px-6 py-4">Schedule demos &amp; calls</td>
+                    <tr class="hover:bg-gray-50">
+                      <td class="p-4 font-medium">Booking / Scheduling</td>
+                      <td class="p-4">$15 / mo (Calendly, etc.)</td>
+                      <td class="p-4">Requires app</td>
+                      <td class="p-4">Add-on module</td>
+                      <td class="p-4 text-[#01C468] font-semibold">WebBooking included</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">SEO Plugin</td>
-                      <td class="px-6 py-4">$12</td>
-                      <td class="px-6 py-4">Optimize pages for search</td>
+                    <tr class="bg-gray-50 hover:bg-gray-50">
+                      <td class="p-4 font-medium">SEO Tools</td>
+                      <td class="p-4">$12 / mo (Yoast Pro)</td>
+                      <td class="p-4">Basic SEO built-in</td>
+                      <td class="p-4">Advanced features in higher tiers</td>
+                      <td class="p-4 text-[#01C468] font-semibold">AI SEO Suite built-in</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">Support System</td>
-                      <td class="px-6 py-4">$49</td>
-                      <td class="px-6 py-4">Handle chats &amp; tickets</td>
+                    <tr class="hover:bg-gray-50">
+                      <td class="p-4 font-medium">Customer Support</td>
+                      <td class="p-4">$49 / mo (Crisp, Intercom)</td>
+                      <td class="p-4">App integrations</td>
+                      <td class="p-4">Add-on product</td>
+                      <td class="p-4 text-[#01C468] font-semibold">WebSupport included</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">Project Management Tool</td>
-                      <td class="px-6 py-4">$25</td>
-                      <td class="px-6 py-4">Manage work &amp; deadlines</td>
+                    <tr class="bg-gray-50 hover:bg-gray-50">
+                      <td class="p-4 font-medium">Project Management</td>
+                      <td class="p-4">$25 / mo (Asana, ClickUp)</td>
+                      <td class="p-4">Not included</td>
+                      <td class="p-4">Not included</td>
+                      <td class="p-4 text-[#01C468] font-semibold">WebBoard included</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">Server-Side Pixel Tracking</td>
-                      <td class="px-6 py-4">$19</td>
-                      <td class="px-6 py-4">Accurate ad attribution</td>
+                    <tr class="hover:bg-gray-50">
+                      <td class="p-4 font-medium">Server-Side Tracking</td>
+                      <td class="p-4">$19 / mo (Stape)</td>
+                      <td class="p-4">Third-party integration</td>
+                      <td class="p-4">Manual setup required</td>
+                      <td class="p-4 text-[#01C468] font-semibold">WebPixel server-side tracking included</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">CDN &amp; Performance Add-ons</td>
-                      <td class="px-6 py-4">$15</td>
-                      <td class="px-6 py-4">Global speed optimization</td>
+                    <tr class="bg-gray-50 hover:bg-gray-50">
+                      <td class="p-4 font-medium">Backup &amp; Security</td>
+                      <td class="p-4">$5 / mo plugin</td>
+                      <td class="p-4">Basic included, advanced extra</td>
+                      <td class="p-4">Higher-tier feature</td>
+                      <td class="p-4 text-[#01C468] font-semibold">Managed by our team 24/7</td>
                     </tr>
-                    <tr>
-                      <td class="px-6 py-4">Backup &amp; Security</td>
-                      <td class="px-6 py-4">$5</td>
-                      <td class="px-6 py-4">Prevent data loss</td>
-                    </tr>
-                    <tr>
-                      <td class="px-6 py-4">Paid Plugin Licenses</td>
-                      <td class="px-6 py-4">$29</td>
-                      <td class="px-6 py-4">Extend functionality</td>
+
+                    <!-- TOTAL -->
+                    <tr class="bg-white hover:bg-gray-50 font-semibold text-zinc-900">
+                      <td class="p-4">Total Monthly Cost</td>
+                      <td class="p-4">$253 / mo + $149 setup</td>
+                      <td class="p-4">$100–$200 / mo (avg)</td>
+                      <td class="p-4">$70–$150 / mo per user</td>
+                      <td class="p-4 text-[#01C468] text-lg font-bold">$29 / mo (all-inclusive)</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-            <div class="mt-6 space-y-2 text-base leading-7 text-zinc-950 sm:text-lg">
-              <p>Average Monthly Stack Cost: ≈ $253 / month</p>
-              <p>Average Startup Cost (with design): ≈ $400+</p>
+
+            <div class="md:hidden mt-10 space-y-6">
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">Website + Store Setup</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$149 one-time (basic setup)</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$29 / mo minimum + design fees</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Requires CMS integration</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">Included with WebBuilder</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">Cloud Hosting + CDN</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$15 / mo + $15 CDN add-on</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Hosting included, CDN extra</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Not included — separate hosting</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">Included — 170 edge servers, &lt;1.5 s load</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">CRM &amp; Automation</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$39 / mo (standalone CRM)</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Needs app integration</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$45–$60 / user / mo</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">Built-in WebCRM + Automation</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">eCommerce / Checkout</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$29 / mo + plugins</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$29–$79 / mo + 2–3 % fees</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Requires external system</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">WebCommerce built-in, 0 % fees</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">Booking / Scheduling</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$15 / mo (Calendly, etc.)</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Requires app</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Add-on module</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">WebBooking included</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">SEO Tools</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$12 / mo (Yoast Pro)</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Basic SEO built-in</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Advanced features in higher tiers</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">AI SEO Suite built-in</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">Customer Support</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$49 / mo (Crisp, Intercom)</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">App integrations</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Add-on product</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">WebSupport included</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">Project Management</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$25 / mo (Asana, ClickUp)</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Not included</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Not included</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">WebBoard included</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">Server-Side Tracking</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$19 / mo (Stape)</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Third-party integration</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Manual setup required</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">WebPixel server-side tracking included</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">Backup &amp; Security</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$5 / mo plugin</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Basic included, advanced extra</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">Higher-tier feature</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-semibold text-[#01C468]">Managed by our team 24/7</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border rounded-xl shadow-sm p-5 bg-white">
+                <h3 class="text-lg font-semibold text-zinc-950">Total Monthly Cost</h3>
+                <div class="mt-4 space-y-3">
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/typical-stack-icon.png" alt="Typical Stack" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Typical Stack</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$253 / mo + $149 setup</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/shopify-logo.svg" alt="Shopify" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">Shopify</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$100–$200 / mo (avg)</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/hubspot-logo.svg" alt="HubSpot or Salesforce" class="h-6">
+                      <span class="text-sm font-semibold text-zinc-700">CRM (HubSpot / Salesforce)</span>
+                    </div>
+                    <span class="text-sm text-zinc-600">$70–$150 / mo per user</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                      <img src="/wp-content/uploads/webmakerr-logo.svg" alt="Webmakerr" class="h-6">
+                      <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                    </div>
+                    <span class="text-sm font-bold text-[#01C468]">$29 / mo (all-inclusive)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-12">
+              <p class="text-lg font-semibold text-zinc-950">
+                💰 <span class="text-[#01C468] font-bold">Save hundreds every month</span> — one platform, no plugins, no limits.
+              </p>
             </div>
           </div>
         </div>
@@ -423,153 +841,6 @@ if (! function_exists('marketing_business_render_icon')) {
                     <p class="font-semibold text-zinc-950"><?php echo esc_html($stat['label']); ?></p>
                   </div>
               <?php endforeach; ?>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
-        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-5xl flex-col gap-12">
-            <div class="flex flex-col gap-4 text-center text-zinc-600">
-              <span class="inline-flex items-center justify-center self-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
-                The Webmakerr Transformation
-              </span>
-              <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
-                From Chaos to Clarity — From Cost to Control
-              </h2>
-              <p class="text-base leading-7 sm:text-lg">Every business hits a point where managing plugins, updates, and tools becomes unsustainable.</p>
-              <p class="text-base leading-7 sm:text-lg">Webmakerr replaces that complexity with one unified system — faster, smarter, and managed for you.</p>
-            </div>
-            <?php
-            $transformation_moments = array(
-                array(
-                    'icon'        => 'activity',
-                    'title'       => 'Operational breaking point',
-                    'description' => 'Every business hits a point where managing plugins, updates, and tools becomes unsustainable.',
-                ),
-                array(
-                    'icon'        => 'server',
-                    'title'       => 'Managed foundation',
-                    'description' => 'Webmakerr replaces that complexity with one unified system — faster, smarter, and managed for you.',
-                ),
-                array(
-                    'icon'        => 'repeat',
-                    'title'       => 'Predictable growth',
-                    'description' => 'From fragmented tools to a managed ecosystem — Webmakerr turns operational noise into predictable growth.',
-                ),
-            );
-
-            ?>
-            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <?php foreach ($transformation_moments as $moment) : ?>
-                <div class="flex items-start gap-4 rounded-[5px] border border-zinc-200 bg-white p-5 shadow-sm">
-                  <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <?php
-                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                    echo marketing_business_render_icon($moment['icon']);
-                    ?>
-                  </span>
-                  <div class="flex flex-col gap-1 text-left">
-                    <p class="text-sm font-semibold text-zinc-950 sm:text-base"><?php echo esc_html($moment['title']); ?></p>
-                    <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($moment['description']); ?></p>
-                  </div>
-                </div>
-              <?php endforeach; ?>
-            </div>
-            <div class="overflow-hidden rounded-[6px] border border-zinc-200 bg-white shadow-sm">
-              <div class="overflow-x-auto">
-                <table class="min-w-full border-collapse text-left">
-                  <thead class="bg-light/70 text-xs font-semibold uppercase tracking-[0.26em] text-zinc-500">
-                    <tr>
-                      <th class="px-6 py-4 align-bottom">Before</th>
-                      <th class="px-6 py-4 align-bottom">After with Webmakerr</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-zinc-200 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
-                    <tr>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Tech Stack</p>
-                        <p>12 plugins / 5 dashboards</p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Tech Stack</p>
-                        <p>One unified platform</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Performance</p>
-                        <p>Slow loads, fragile uptime</p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Performance</p>
-                        <p>Global CDN (170 edge servers) — &lt;1.5 s worldwide</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">SEO Visibility</p>
-                        <p>Manual plugins &amp; guesswork</p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">SEO Visibility</p>
-                        <p>Built-in AI SEO Suite with live audits</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Tracking &amp; Analytics</p>
-                        <p>Paid pixel tools ($39 / mo)</p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Tracking &amp; Analytics</p>
-                        <p>Server-Side Marketing Pixel — included</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Maintenance</p>
-                        <p>You handle backups &amp; security</p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Maintenance</p>
-                        <p>Our team manages hosting, security &amp; backups</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Customization</p>
-                        <p>Hire developers hourly</p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Customization</p>
-                        <p>Flat-rate custom feature development</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Monthly Cost</p>
-                        <p>$300–$500 in add-ons</p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Monthly Cost</p>
-                        <p>Starts at $29 / mo — all built in</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Scalability</p>
-                        <p>Manual fixes &amp; plugin bloat</p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <p class="font-medium text-zinc-950">Scalability</p>
-                        <p>Cloud uptime 99.9 %, zero conflicts</p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
           </div>
         </div>
