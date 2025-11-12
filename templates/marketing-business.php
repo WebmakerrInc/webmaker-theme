@@ -93,7 +93,7 @@ if (! $marketing_business_demo_link) {
 <main id="primary" class="flex flex-col bg-white">
   <?php while (have_posts()) : the_post(); ?>
     <article <?php post_class('flex flex-col'); ?>>
-      <section class="relative overflow-hidden border-b border-zinc-200 bg-gradient-to-b from-white via-white to-light">
+      <section class="relative overflow-hidden border-b border-zinc-200 bg-gradient-to-br from-[#F5F9FF] via-[#ECF3FF] to-[#D9E8FF]">
         <div class="relative z-10 mx-auto max-w-screen-xl px-6 py-12 lg:px-8 lg:py-20">
           <div class="grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
             <div class="flex flex-col gap-6">
@@ -132,9 +132,18 @@ if (! $marketing_business_demo_link) {
                     <?php echo wp_kses_post(get_the_post_thumbnail(null, 'large', array('class' => 'h-full w-full object-cover'))); ?>
                   </figure>
                 <?php endif; ?>
-                <div class="rounded-[5px] border border-zinc-200 bg-white/80 p-6 shadow-sm">
-                  <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary"><?php esc_html_e('Unified growth stack', 'webmakerr'); ?></p>
-                  <p class="mt-2 text-sm text-zinc-600"><?php esc_html_e('Webmakerr brings your website, CRM, store, and analytics into one managed platform so you can grow without tech debt.', 'webmakerr'); ?></p>
+                <div class="bg-white shadow-sm rounded-[5px] p-6 mb-6">
+                  <div class="inline-flex items-center px-3 py-1 bg-blue-50 text-blue-600 text-[12px] font-medium rounded-full mb-3">
+                    LAUNCH-READY IN 60 DAYS
+                  </div>
+
+                  <h3 class="text-[24px] font-semibold text-gray-900 mb-2">
+                    Unified Growth Stack
+                  </h3>
+
+                  <p class="text-[15px] text-gray-600 leading-relaxed">
+                    Webmakerr brings your website, CRM, store, and analytics into one managed platform so you can grow without tech debt.
+                  </p>
                 </div>
                 <div class="rounded-[6px] border border-primary/20 bg-gradient-to-r from-primary/5 via-primary/10 to-transparent p-6 shadow-sm">
                   <div class="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
