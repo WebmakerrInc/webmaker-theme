@@ -352,6 +352,63 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
+      <section class="border-t border-zinc-200 bg-white py-16">
+        <div class="container mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div class="flex flex-col gap-6 text-zinc-600">
+              <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+                Growth should be automatic — not exhausting.
+              </h2>
+              <blockquote class="rounded-[6px] border border-zinc-200 bg-light px-6 py-6 text-left shadow-sm">
+                <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                  “We built Webmakerr after watching businesses waste hours managing tools that never talked to each other. Growth should be automatic — not exhausting.”
+                </p>
+                <footer class="mt-4 text-sm font-semibold text-zinc-950 sm:text-base">
+                  — [Founder Name], Creator of Webmakerr
+                </footer>
+              </blockquote>
+              <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                Webmakerr removes the friction that keeps teams in reactive mode, so every launch, campaign, and customer touchpoint stays consistent.
+              </p>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-3">
+              <?php
+              $marketing_stats = array(
+                  array(
+                      'icon'  => 'server',
+                      'label' => 'Global CDN (170 edge servers) — <1.5 s worldwide',
+                  ),
+                  array(
+                      'icon'  => 'shield-check',
+                      'label' => 'Server-Side Marketing Pixel — included',
+                  ),
+                  array(
+                      'icon'  => 'check',
+                      'label' => 'Webmakerr plans start at just $29 / month, including automation, backups, and proactive support.',
+                  ),
+                  array(
+                      'icon'  => 'repeat',
+                      'label' => 'Most users are fully operational within 48 hours.',
+                  ),
+              );
+
+              foreach ($marketing_stats as $stat) :
+                  ?>
+                  <div class="flex flex-col gap-3 rounded-[5px] border border-zinc-200 bg-light/60 p-6 text-sm text-zinc-600 shadow-sm">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon($stat['icon'], 'h-5 w-5');
+                      ?>
+                    </span>
+                    <p class="font-semibold text-zinc-950"><?php echo esc_html($stat['label']); ?></p>
+                  </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-5xl flex-col gap-12">
