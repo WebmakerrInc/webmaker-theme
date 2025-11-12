@@ -11,10 +11,13 @@ class LeadCapture
 {
     private string $namespace = 'webmakerr/v1';
     private string $route = '/crm-lead';
+    private string $fluentCrmListSlug = 'database';
+    private string $fluentCrmTagSlug = 'demo-requested';
 
     public function register(): void
     {
         add_action('rest_api_init', [$this, 'registerRoutes']);
+        add_action('webmakerr_crm_lead_captured', [$this, 'syncLeadToFluentCrm'], 10, 2);
     }
 
     public function registerRoutes(): void
@@ -206,5 +209,129 @@ class LeadCapture
             ],
             200
         );
+    }
+
+    public function syncLeadToFluentCrm(array $payload, WP_REST_Request $request): void
+    {
+        if (! function_exists('FluentCrmApi')) {
+            return;
+        }
+
+        $email = isset($payload['email']) ? sanitize_email((string) $payload['email']) : '';
+
+        if ($email === '' || ! is_email($email)) {
+            return;
+        }
+
+        $switched = false;
+
+        if (is_multisite() && function_exists('switch_to_blog')) {
+            $targetBlogId = $this->getNetworkSiteId();
+
+            if ($targetBlogId > 0 && get_current_blog_id() !== $targetBlogId) {
+                switch_to_blog($targetBlogId);
+                $switched = true;
+            }
+        }
+
+        try {
+            $contactData = [
+                'email'     => $email,
+                'full_name' => isset($payload['name']) ? sanitize_text_field((string) $payload['name']) : '',
+                'status'    => 'subscribed',
+            ];
+
+            if (! empty($payload['source'])) {
+                $contactData['source'] = sanitize_text_field((string) $payload['source']);
+            }
+
+            $listIds = $this->resolveFluentCrmObjectIds('\\FluentCrm\\App\\Models\\Lists', [$this->fluentCrmListSlug]);
+            if ($listIds) {
+                $contactData['lists'] = $listIds;
+            }
+
+            $tagIds = $this->resolveFluentCrmObjectIds('\\FluentCrm\\App\\Models\\Tag', [$this->fluentCrmTagSlug]);
+            if ($tagIds) {
+                $contactData['tags'] = $tagIds;
+            }
+
+            $contact = \FluentCrmApi('contacts')->createOrUpdate($contactData);
+
+            if ($contact) {
+                $meta = array_filter([
+                    'company_size' => $payload['company_size_label'] ?? $payload['company_size'] ?? '',
+                    'primary_goal' => $payload['primary_goal_label'] ?? $payload['primary_goal'] ?? '',
+                ]);
+
+                if ($meta) {
+                    $sanitizedMeta = array_map(
+                        static fn ($value) => sanitize_text_field((string) $value),
+                        $meta
+                    );
+
+                    $contact->updateMeta(
+                        'webmakerr_marketing_lead',
+                        wp_json_encode($sanitizedMeta),
+                        'webmakerr'
+                    );
+                }
+            }
+        } catch (\Throwable $exception) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log(sprintf('Webmakerr FluentCRM sync error: %s', $exception->getMessage()));
+            }
+        } finally {
+            if ($switched && function_exists('restore_current_blog')) {
+                restore_current_blog();
+            }
+        }
+    }
+
+    private function resolveFluentCrmObjectIds(string $modelClass, array $slugs): array
+    {
+        if (! class_exists($modelClass)) {
+            return [];
+        }
+
+        $ids = [];
+
+        foreach ($slugs as $slug) {
+            $normalized = sanitize_title($slug);
+
+            if ($normalized === '') {
+                continue;
+            }
+
+            $record = $modelClass::where('slug', $normalized)->first();
+
+            if ($record && isset($record->id)) {
+                $ids[] = (int) $record->id;
+            }
+        }
+
+        return array_values(array_unique(array_filter($ids)));
+    }
+
+    private function getNetworkSiteId(): int
+    {
+        if (! function_exists('get_main_site_id')) {
+            return 0;
+        }
+
+        $siteId = (int) get_main_site_id();
+
+        if ($siteId > 0) {
+            return $siteId;
+        }
+
+        if (function_exists('get_network')) {
+            $network = get_network();
+
+            if ($network && isset($network->site_id)) {
+                return (int) $network->site_id;
+            }
+        }
+
+        return 1;
     }
 }
