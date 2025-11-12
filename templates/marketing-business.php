@@ -106,6 +106,362 @@ $marketing_business_inline_script = <<<'JS'
     };
 
     ready(function () {
+        var initializeSimpleLeadForm = function (simpleForm) {
+            if (!simpleForm || simpleForm.__webmakerrInitialized) {
+                return;
+            }
+
+            simpleForm.__webmakerrInitialized = true;
+
+            var endpoint = simpleForm.dataset.endpoint || '';
+            var nonce = simpleForm.dataset.nonce || '';
+            var successPanel = simpleForm.dataset.successTarget ? document.querySelector(simpleForm.dataset.successTarget) : null;
+            var successMessage = successPanel ? successPanel.querySelector('[data-success-message]') : null;
+            var successLink = successPanel ? successPanel.querySelector('[data-success-link]') : null;
+            var successHeading = successPanel ? successPanel.querySelector('[data-success-heading]') : null;
+            var downloadUrl = simpleForm.dataset.downloadUrl || '';
+            var isSubmitting = false;
+
+            var alertBox = simpleForm.querySelector('[data-form-alert]');
+            var submitButton = simpleForm.querySelector('[data-submit]');
+            var defaultSubmitLabel = submitButton ? (submitButton.getAttribute('data-default-label') || submitButton.textContent) : '';
+            var loadingSubmitLabel = submitButton ? (submitButton.getAttribute('data-loading-label') || defaultSubmitLabel) : defaultSubmitLabel;
+
+            var fieldWrappers = {};
+            Array.prototype.forEach.call(simpleForm.querySelectorAll('[data-field]'), function (wrapper) {
+                var key = wrapper.getAttribute('data-field');
+
+                if (key) {
+                    fieldWrappers[key] = wrapper;
+                }
+            });
+
+            var errorNodes = {};
+            Array.prototype.forEach.call(simpleForm.querySelectorAll('[data-error]'), function (node) {
+                var key = node.getAttribute('data-error');
+
+                if (key) {
+                    errorNodes[key] = node;
+                }
+            });
+
+            var fieldInputs = {};
+            Object.keys(fieldWrappers).forEach(function (key) {
+                var wrapper = fieldWrappers[key];
+                var input = wrapper.querySelector('input, select, textarea');
+
+                if (input) {
+                    fieldInputs[key] = input;
+
+                    var eventName = input.tagName === 'SELECT' ? 'change' : 'input';
+
+                    input.addEventListener(eventName, function () {
+                        clearFieldError(key);
+                        clearGeneralAlert();
+                    });
+                }
+            });
+
+            var clearGeneralAlert = function () {
+                if (alertBox) {
+                    alertBox.classList.add('hidden');
+                    alertBox.textContent = '';
+                }
+            };
+
+            var showGeneralAlert = function (message) {
+                if (alertBox) {
+                    alertBox.textContent = message;
+                    alertBox.classList.remove('hidden');
+                }
+            };
+
+            var getFieldMessage = function (field) {
+                var wrapper = fieldWrappers[field];
+
+                if (wrapper && wrapper.dataset.errorMessage) {
+                    return wrapper.dataset.errorMessage;
+                }
+
+                return simpleForm.dataset.errorMessage || 'Please review the form.';
+            };
+
+            var clearFieldError = function (field) {
+                var wrapper = fieldWrappers[field];
+
+                if (wrapper) {
+                    wrapper.removeAttribute('data-invalid');
+                }
+
+                var node = errorNodes[field];
+
+                if (node) {
+                    node.textContent = '';
+                    node.classList.add('hidden');
+                }
+
+                var input = fieldInputs[field];
+
+                if (input) {
+                    input.removeAttribute('aria-invalid');
+                }
+            };
+
+            var showFieldError = function (field, message) {
+                var wrapper = fieldWrappers[field];
+
+                if (wrapper) {
+                    wrapper.setAttribute('data-invalid', 'true');
+                }
+
+                var node = errorNodes[field];
+
+                if (node) {
+                    node.textContent = message;
+                    node.classList.remove('hidden');
+                }
+
+                var input = fieldInputs[field];
+
+                if (input) {
+                    input.setAttribute('aria-invalid', 'true');
+                }
+            };
+
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            var validateForm = function () {
+                var valid = true;
+                var firstInvalid = null;
+
+                Object.keys(fieldInputs).forEach(function (key) {
+                    clearFieldError(key);
+
+                    var input = fieldInputs[key];
+                    var wrapper = fieldWrappers[key];
+                    var required = wrapper && wrapper.hasAttribute('data-required');
+                    var value = '';
+
+                    if (input.type === 'checkbox') {
+                        value = input.checked ? (input.value || 'on') : '';
+                    } else if (input.type === 'radio') {
+                        if (input.checked) {
+                            value = input.value;
+                        }
+                    } else {
+                        value = (input.value || '').trim();
+                    }
+
+                    if (required && !value) {
+                        valid = false;
+
+                        if (!firstInvalid) {
+                            firstInvalid = key;
+                        }
+
+                        showFieldError(key, getFieldMessage(key));
+                        return;
+                    }
+
+                    if (value && wrapper && wrapper.dataset.validate === 'email' && !emailPattern.test(value)) {
+                        valid = false;
+
+                        if (!firstInvalid) {
+                            firstInvalid = key;
+                        }
+
+                        showFieldError(key, getFieldMessage(key));
+                    }
+                });
+
+                if (!valid && firstInvalid && fieldInputs[firstInvalid] && typeof fieldInputs[firstInvalid].focus === 'function') {
+                    fieldInputs[firstInvalid].focus();
+                }
+
+                return valid;
+            };
+
+            if (simpleForm.tagName === 'FORM') {
+                simpleForm.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                });
+            }
+
+            if (!submitButton) {
+                return;
+            }
+
+            submitButton.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                if (isSubmitting) {
+                    return;
+                }
+
+                clearGeneralAlert();
+
+                if (!validateForm()) {
+                    return;
+                }
+
+                if (!endpoint) {
+                    showGeneralAlert(simpleForm.dataset.errorMessage || 'Unable to submit right now. Please try again soon.');
+                    return;
+                }
+
+                isSubmitting = true;
+                submitButton.disabled = true;
+                submitButton.textContent = loadingSubmitLabel;
+
+                var payload = {
+                    name: fieldInputs.name ? (fieldInputs.name.value || '').trim() : '',
+                    email: fieldInputs.email ? (fieldInputs.email.value || '').trim() : '',
+                    company: fieldInputs.company ? (fieldInputs.company.value || '').trim() : '',
+                    company_size: fieldInputs.company_size ? (fieldInputs.company_size.value || '').trim() : '',
+                    website: fieldInputs.website ? (fieldInputs.website.value || '').trim() : ''
+                };
+
+                Object.keys(fieldInputs).forEach(function (key) {
+                    var input = fieldInputs[key];
+                    var value = '';
+
+                    if (input.type === 'checkbox') {
+                        value = input.checked ? (input.value || 'on') : '';
+                    } else if (input.type === 'radio') {
+                        if (input.checked) {
+                            value = input.value;
+                        }
+                    } else {
+                        value = (input.value || '').trim();
+                    }
+
+                    if (input.name && value) {
+                        payload[input.name] = value;
+                    }
+                });
+
+                if (simpleForm.dataset.source) {
+                    payload.source = simpleForm.dataset.source;
+                }
+
+                if (simpleForm.dataset.offer) {
+                    payload.offer = simpleForm.dataset.offer;
+                }
+
+                if (simpleForm.dataset.funnel) {
+                    payload.funnel_stage = simpleForm.dataset.funnel;
+                }
+
+                if (simpleForm.dataset.intent) {
+                    payload.intent = simpleForm.dataset.intent;
+                }
+
+                if (simpleForm.dataset.formLocation) {
+                    payload.form_location = simpleForm.dataset.formLocation;
+                }
+
+                payload.page = window.location.href;
+
+                Array.prototype.forEach.call(simpleForm.querySelectorAll('input[type="hidden"]'), function (hiddenInput) {
+                    if (hiddenInput.name && hiddenInput.value) {
+                        payload[hiddenInput.name] = hiddenInput.value;
+                    }
+                });
+
+                fetch(endpoint, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-WP-Nonce': nonce
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(function (response) {
+                        return response.json().catch(function () {
+                            return {};
+                        }).then(function (data) {
+                            return {
+                                ok: response.ok,
+                                status: response.status,
+                                data: data
+                            };
+                        });
+                    })
+                    .then(function (result) {
+                        isSubmitting = false;
+                        submitButton.disabled = false;
+                        submitButton.textContent = defaultSubmitLabel;
+
+                        if (result.ok && result.data && result.data.success !== false) {
+                            clearGeneralAlert();
+
+                            if (simpleForm.tagName === 'FORM') {
+                                simpleForm.classList.add('hidden');
+                                simpleForm.setAttribute('aria-hidden', 'true');
+                                simpleForm.reset();
+                            }
+
+                            if (successPanel) {
+                                successPanel.classList.remove('hidden');
+                                successPanel.setAttribute('aria-hidden', 'false');
+                            }
+
+                            if (successMessage) {
+                                if (result.data && result.data.message) {
+                                    successMessage.textContent = result.data.message;
+                                } else if (successMessage.dataset.defaultMessage) {
+                                    successMessage.textContent = successMessage.dataset.defaultMessage;
+                                }
+                            }
+
+                            if (successHeading) {
+                                if (result.data && result.data.title) {
+                                    successHeading.textContent = result.data.title;
+                                } else if (successHeading.dataset.defaultHeading) {
+                                    successHeading.textContent = successHeading.dataset.defaultHeading;
+                                }
+                            }
+
+                            if (successLink) {
+                                if (result.data && result.data.confirmation_url) {
+                                    successLink.href = result.data.confirmation_url;
+                                } else if (downloadUrl) {
+                                    successLink.href = downloadUrl;
+                                }
+                            }
+
+                            simpleForm.dispatchEvent(new CustomEvent('webmakerr:leadSuccess', { bubbles: true, detail: payload }));
+                        } else {
+                            var message = (result.data && result.data.message) ? result.data.message : (simpleForm.dataset.errorMessage || 'Something went wrong. Please try again.');
+                            showGeneralAlert(message);
+
+                            if (result.data && result.data.errors) {
+                                Object.keys(result.data.errors).forEach(function (fieldKey) {
+                                    var fieldMessage = result.data.errors[fieldKey];
+                                    showFieldError(fieldKey, fieldMessage || getFieldMessage(fieldKey));
+                                });
+                            }
+                        }
+                    })
+                    .catch(function () {
+                        isSubmitting = false;
+                        submitButton.disabled = false;
+                        submitButton.textContent = defaultSubmitLabel;
+                        showGeneralAlert(simpleForm.dataset.errorMessage || 'Something went wrong. Please try again.');
+                    });
+            });
+        };
+
+        var simpleForms = document.querySelectorAll('[data-lead-form]');
+
+        if (simpleForms.length) {
+            simpleForms.forEach(function (simpleForm) {
+                initializeSimpleLeadForm(simpleForm);
+            });
+        }
+
         var form = document.getElementById('marketing-demo-scheduler');
         var clearGeneralAlert = function () {};
         var showGeneralAlert = function () {};
@@ -636,6 +992,90 @@ $marketing_business_inline_script = <<<'JS'
                 });
             }
         }
+
+        var diagnosticModal = document.getElementById('stack-risk-modal');
+
+        if (diagnosticModal) {
+            var diagnosticTriggers = document.querySelectorAll('[data-diagnostic-modal-open]');
+
+            if (diagnosticTriggers.length) {
+                var diagnosticCard = diagnosticModal.querySelector('[data-diagnostic-modal-card]');
+                var diagnosticCloseButtons = diagnosticModal.querySelectorAll('[data-diagnostic-modal-close]');
+                var previouslyFocusedElement = null;
+                var transitionMs = 200;
+
+                var closeDiagnostic = function () {
+                    if (diagnosticModal.classList.contains('hidden')) {
+                        return;
+                    }
+
+                    diagnosticModal.classList.add('opacity-0');
+
+                    window.setTimeout(function () {
+                        diagnosticModal.classList.add('hidden');
+                        diagnosticModal.setAttribute('aria-hidden', 'true');
+                        diagnosticModal.classList.remove('opacity-0');
+                        document.body.classList.remove('overflow-hidden');
+                        document.removeEventListener('keydown', handleEscape);
+
+                        if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
+                            previouslyFocusedElement.focus();
+                        }
+                    }, transitionMs);
+                };
+
+                var handleEscape = function (event) {
+                    if (event.key === 'Escape') {
+                        closeDiagnostic();
+                    }
+                };
+
+                var openDiagnostic = function (event) {
+                    if (event) {
+                        event.preventDefault();
+                    }
+
+                    if (!diagnosticModal.classList.contains('hidden')) {
+                        return;
+                    }
+
+                    previouslyFocusedElement = document.activeElement;
+
+                    diagnosticModal.classList.remove('hidden');
+                    diagnosticModal.setAttribute('aria-hidden', 'false');
+                    document.body.classList.add('overflow-hidden');
+
+                    window.requestAnimationFrame(function () {
+                        diagnosticModal.classList.remove('opacity-0');
+                    });
+
+                    if (diagnosticCard && typeof diagnosticCard.focus === 'function') {
+                        window.requestAnimationFrame(function () {
+                            diagnosticCard.focus();
+                        });
+                    }
+
+                    document.addEventListener('keydown', handleEscape);
+                };
+
+                diagnosticTriggers.forEach(function (button) {
+                    button.addEventListener('click', openDiagnostic);
+                });
+
+                diagnosticCloseButtons.forEach(function (button) {
+                    button.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        closeDiagnostic();
+                    });
+                });
+
+                diagnosticModal.addEventListener('click', function (event) {
+                    if (event.target === diagnosticModal) {
+                        closeDiagnostic();
+                    }
+                });
+            }
+        }
     });
 })();
 JS;
@@ -821,10 +1261,12 @@ get_header();
                         type="button"
                         class="inline-flex justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark"
                         data-submit
-                        data-default-label="<?php esc_attr_e('Submit & Unlock Link', 'webmakerr'); ?>"
-                        data-loading-label="<?php esc_attr_e('Sending…', 'webmakerr'); ?>"
+                        data-default-label="<?php esc_attr_e('Confirm My Demo Plan', 'webmakerr'); ?>"
+                        data-loading-label="<?php esc_attr_e('Scheduling…', 'webmakerr'); ?>"
+                        data-analytics-event="marketing-top-demo-submit"
+                        data-analytics-funnel="top"
                       >
-                        <?php esc_html_e('Submit & Unlock Link', 'webmakerr'); ?>
+                        <?php esc_html_e('Confirm My Demo Plan', 'webmakerr'); ?>
                       </button>
                     </div>
                   </div>
@@ -841,11 +1283,11 @@ get_header();
                 </div>
               </div>
               <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <button type="button" class="inline-flex w-full justify-center rounded border border-zinc-200 bg-transparent px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:border-zinc-300 hover:bg-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:w-auto" data-platform-modal-open aria-controls="platform-explainer-modal">
-                  <?php esc_html_e('See How the Platform Works →', 'webmakerr'); ?>
+                <button type="button" class="inline-flex w-full justify-center rounded border border-zinc-200 bg-transparent px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:border-zinc-300 hover:bg-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:w-auto" data-platform-modal-open aria-controls="platform-explainer-modal" data-analytics-event="marketing-top-platform-preview" data-analytics-funnel="top">
+                  <?php esc_html_e('Preview the Platform Tour →', 'webmakerr'); ?>
                 </button>
-                <a class="inline-block text-sm text-gray-600 underline transition hover:text-gray-800 sm:ml-4" href="#lead-magnet">
-                  <?php esc_html_e('Download the Growth Playbook', 'webmakerr'); ?>
+                <a class="inline-block text-sm text-gray-600 underline transition hover:text-gray-800 sm:ml-4" href="#lead-magnet" data-analytics-event="marketing-mid-blueprint-scroll" data-analytics-funnel="mid">
+                  <?php esc_html_e('Get the Blueprint', 'webmakerr'); ?>
                 </a>
               </div>
               <p class="mt-3 text-xs font-medium text-zinc-500 sm:text-sm">
@@ -974,6 +1416,158 @@ get_header();
             <div class="overflow-hidden rounded-[12px] border border-zinc-200 bg-slate-900/90 p-6 text-white shadow-inner">
               <p class="text-sm font-medium uppercase tracking-[0.25em] text-white/70"><?php esc_html_e('Demo snapshot', 'webmakerr'); ?></p>
               <p class="mt-3 text-base leading-7 text-white/90"><?php esc_html_e('Follow a three-minute walkthrough of how new campaigns move from concept to live experiences, complete with CRM routing and performance alerts.', 'webmakerr'); ?></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="stack-risk-modal"
+        class="fixed inset-0 z-[90] hidden flex items-center justify-center bg-zinc-950/70 px-6 py-8 transition-opacity duration-200 opacity-0"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="stack-risk-modal-title"
+        aria-hidden="true"
+      >
+        <div class="relative w-full max-w-2xl rounded-2xl border border-primary/20 bg-white p-6 shadow-2xl focus:outline-none sm:p-8" data-diagnostic-modal-card tabindex="-1">
+          <button type="button" class="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 transition hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900" data-diagnostic-modal-close>
+            <span class="sr-only"><?php esc_html_e('Close stack diagnostic modal', 'webmakerr'); ?></span>
+            &times;
+          </button>
+          <div class="flex flex-col gap-5 text-left text-zinc-600">
+            <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+              <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+              echo marketing_business_render_icon('search', 'h-4 w-4 text-primary');
+              ?>
+              <span class="text-primary/80"><?php esc_html_e('Stack risk diagnostic', 'webmakerr'); ?></span>
+            </span>
+            <h2 id="stack-risk-modal-title" class="text-2xl font-semibold text-zinc-950 sm:text-3xl">
+              <?php esc_html_e('See your stack risk score in two minutes', 'webmakerr'); ?>
+            </h2>
+            <p class="text-sm leading-6 sm:text-base sm:leading-7">
+              <?php esc_html_e('Answer a few questions about your current tooling and we’ll benchmark your stack reliability, automation coverage, and launch readiness.', 'webmakerr'); ?>
+            </p>
+            <ul class="grid gap-3 rounded-[10px] border border-primary/20 bg-primary/5 p-4 text-sm text-primary/80 sm:text-base">
+              <li class="flex items-start gap-3">
+                <span class="mt-1 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-white/80 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('activity', 'h-4 w-4');
+                  ?>
+                </span>
+                <span><?php esc_html_e('Identify where manual work creates launch delays and data gaps.', 'webmakerr'); ?></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-white/80 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('shield-check', 'h-4 w-4');
+                  ?>
+                </span>
+                <span><?php esc_html_e('Get a personalized plan to de-risk your stack with managed automation.', 'webmakerr'); ?></span>
+              </li>
+            </ul>
+            <form
+              id="stack-risk-form"
+              class="flex flex-col gap-4"
+              novalidate
+              data-lead-form
+              data-endpoint="<?php echo esc_url($marketing_business_lead_endpoint); ?>"
+              data-nonce="<?php echo esc_attr($marketing_business_lead_nonce); ?>"
+              data-source="marketing-business-diagnostic"
+              data-offer="Stack Risk Diagnostic"
+              data-funnel="mid"
+              data-form-location="marketing-business-diagnostic"
+              data-success-target="#stack-risk-success"
+              data-download-url="<?php echo esc_url(home_url('/resources/stack-risk-brief/')); ?>"
+              data-error-message="<?php esc_attr_e('We couldn’t score your stack. Please try again in a moment.', 'webmakerr'); ?>"
+            >
+              <input type="hidden" name="intent" value="stack_risk_score" />
+              <div class="flex flex-col gap-2" data-field="name" data-required data-error-message="<?php esc_attr_e('Share your name so we can personalize the results.', 'webmakerr'); ?>">
+                <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="stack-risk-name">
+                  <?php esc_html_e('Full name', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                </label>
+                <input
+                  class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                  type="text"
+                  id="stack-risk-name"
+                  name="full_name"
+                  autocomplete="name"
+                />
+                <p class="hidden text-xs font-medium text-red-600" data-error="name"></p>
+              </div>
+              <div class="flex flex-col gap-2" data-field="email" data-required data-error-message="<?php esc_attr_e('Add a valid work email so we can send the report.', 'webmakerr'); ?>" data-validate="email">
+                <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="stack-risk-email">
+                  <?php esc_html_e('Work email', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                </label>
+                <input
+                  class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                  type="email"
+                  id="stack-risk-email"
+                  name="company_email"
+                  autocomplete="email"
+                />
+                <p class="hidden text-xs font-medium text-red-600" data-error="email"></p>
+              </div>
+              <div class="flex flex-col gap-2" data-field="company_size" data-required data-error-message="<?php esc_attr_e('Select the team size that matches your operation.', 'webmakerr'); ?>">
+                <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="stack-risk-size">
+                  <?php esc_html_e('Team size managing the stack', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                </label>
+                <select
+                  class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                  id="stack-risk-size"
+                  name="company_size"
+                >
+                  <option value=""><?php esc_html_e('Select an option', 'webmakerr'); ?></option>
+                  <option value="solo"><?php esc_html_e('Solo or 1–2 people', 'webmakerr'); ?></option>
+                  <option value="small"><?php esc_html_e('3–10 people', 'webmakerr'); ?></option>
+                  <option value="mid"><?php esc_html_e('11–25 people', 'webmakerr'); ?></option>
+                  <option value="large"><?php esc_html_e('26+ people', 'webmakerr'); ?></option>
+                </select>
+                <p class="hidden text-xs font-medium text-red-600" data-error="company_size"></p>
+              </div>
+              <div class="flex flex-col gap-2" data-field="website" data-error-message="<?php esc_attr_e('Share your main site so we can review the experience.', 'webmakerr'); ?>">
+                <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="stack-risk-url">
+                  <?php esc_html_e('Primary website (optional)', 'webmakerr'); ?>
+                </label>
+                <input
+                  class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                  type="url"
+                  id="stack-risk-url"
+                  name="website_url"
+                  placeholder="https://"
+                />
+                <p class="hidden text-xs font-medium text-red-600" data-error="website"></p>
+              </div>
+              <button
+                type="submit"
+                class="inline-flex items-center justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark"
+                data-submit
+                data-default-label="<?php esc_attr_e('Calculate My Risk Score', 'webmakerr'); ?>"
+                data-loading-label="<?php esc_attr_e('Calculating…', 'webmakerr'); ?>"
+                data-analytics-event="marketing-mid-diagnostic-submit"
+                data-analytics-funnel="mid"
+              >
+                <?php esc_html_e('Calculate My Risk Score', 'webmakerr'); ?>
+              </button>
+              <p class="hidden rounded border border-red-200 bg-red-50 px-4 py-2 text-xs font-medium text-red-600" data-form-alert role="alert"></p>
+            </form>
+            <div id="stack-risk-success" class="hidden rounded border border-green-200 bg-green-50 p-5 text-sm text-green-900" aria-hidden="true">
+              <h3 class="text-lg font-semibold text-green-900" data-success-heading data-default-heading="<?php esc_attr_e('Your diagnostic is on the way!', 'webmakerr'); ?>">
+                <?php esc_html_e('Your diagnostic is on the way!', 'webmakerr'); ?>
+              </h3>
+              <p class="mt-2 text-sm text-green-800" data-success-message data-default-message="<?php esc_attr_e('Check your inbox for a personalized risk score and recommendations. You can also review the quick brief below.', 'webmakerr'); ?>">
+                <?php esc_html_e('Check your inbox for a personalized risk score and recommendations. You can also review the quick brief below.', 'webmakerr'); ?>
+              </p>
+              <a
+                class="mt-4 inline-flex items-center justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark !no-underline"
+                href="<?php echo esc_url(home_url('/resources/stack-risk-brief/')); ?>"
+                data-success-link
+                data-analytics-event="marketing-mid-diagnostic-download"
+                data-analytics-funnel="mid"
+                target="_blank"
+                rel="noopener"
+              >
+                <?php esc_html_e('Review the Stack Risk Brief', 'webmakerr'); ?>
+              </a>
             </div>
           </div>
         </div>
@@ -1182,6 +1776,163 @@ get_header();
                 </div>
               </div>
             <?php endforeach; ?>
+          </div>
+        </div>
+      </section>
+
+      <section id="lead-magnet" class="border-t border-zinc-200 bg-gradient-to-br from-primary/5 via-white to-primary/10 py-16 lg:py-24">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div class="flex flex-col gap-6 text-zinc-600">
+              <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo marketing_business_render_icon('target', 'h-4 w-4 text-primary');
+                ?>
+                <span class="text-primary/80"><?php esc_html_e('Managed Growth Blueprint', 'webmakerr'); ?></span>
+              </span>
+              <h3 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+                <?php esc_html_e('Unlock the playbook teams use to scale with fewer tools.', 'webmakerr'); ?>
+              </h3>
+              <p class="text-base leading-7 sm:text-lg">
+                <?php esc_html_e('Access the Managed Growth Blueprint to see the exact stack, automations, and launch cadence high-performing teams use inside Webmakerr.', 'webmakerr'); ?>
+              </p>
+              <ul class="grid gap-3 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                <li class="flex items-start gap-3">
+                  <span class="mt-1 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('check', 'h-4 w-4');
+                    ?>
+                  </span>
+                  <span><?php esc_html_e('Map the marketing-to-revenue journey across web, CRM, and commerce.', 'webmakerr'); ?></span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="mt-1 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('check', 'h-4 w-4');
+                    ?>
+                  </span>
+                  <span><?php esc_html_e('See the automations and reporting cadence proven to keep teams proactive.', 'webmakerr'); ?></span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="mt-1 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('check', 'h-4 w-4');
+                    ?>
+                  </span>
+                  <span><?php esc_html_e('Benchmark your stack against managed growth leaders and spot the gaps.', 'webmakerr'); ?></span>
+                </li>
+              </ul>
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center rounded border border-primary/40 bg-white px-5 py-2 text-sm font-semibold text-primary shadow-sm transition hover:border-primary/60 hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  data-diagnostic-modal-open
+                  data-analytics-event="marketing-mid-diagnostic-open"
+                  data-analytics-funnel="mid"
+                  aria-controls="stack-risk-modal"
+                >
+                  <?php esc_html_e('See your stack risk score', 'webmakerr'); ?>
+                </button>
+                <p class="text-xs font-medium uppercase tracking-[0.26em] text-zinc-400 sm:text-[0.7rem]">
+                  <?php esc_html_e('Instant diagnostic, no meeting required.', 'webmakerr'); ?>
+                </p>
+              </div>
+            </div>
+            <div class="rounded-[12px] border border-primary/20 bg-white/90 p-6 shadow-lg shadow-primary/10 backdrop-blur">
+              <h4 class="text-xl font-semibold text-zinc-950 sm:text-2xl">
+                <?php esc_html_e('Get the Managed Growth Blueprint', 'webmakerr'); ?>
+              </h4>
+              <p class="mt-2 text-sm text-zinc-600 sm:text-base sm:leading-7">
+                <?php esc_html_e('Drop in your details to receive the blueprint via email and unlock the immediate download.', 'webmakerr'); ?>
+              </p>
+              <form
+                id="managed-blueprint-form"
+                class="mt-6 flex flex-col gap-4"
+                novalidate
+                data-lead-form
+                data-endpoint="<?php echo esc_url($marketing_business_lead_endpoint); ?>"
+                data-nonce="<?php echo esc_attr($marketing_business_lead_nonce); ?>"
+                data-source="marketing-business-blueprint"
+                data-offer="Managed Growth Blueprint"
+                data-funnel="mid"
+                data-form-location="marketing-business-blueprint"
+                data-success-target="#managed-blueprint-success"
+                data-download-url="<?php echo esc_url(home_url('/resources/managed-growth-blueprint/')); ?>"
+                data-error-message="<?php esc_attr_e('We couldn’t send the blueprint. Please try again shortly.', 'webmakerr'); ?>"
+              >
+                <input type="hidden" name="intent" value="managed_growth_blueprint" />
+                <div class="flex flex-col gap-2" data-field="name" data-required data-error-message="<?php esc_attr_e('Please share your name so we can personalize the asset.', 'webmakerr'); ?>">
+                  <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="managed-blueprint-name">
+                    <?php esc_html_e('Full name', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                    type="text"
+                    id="managed-blueprint-name"
+                    name="full_name"
+                    autocomplete="name"
+                  />
+                  <p class="hidden text-xs font-medium text-red-600" data-error="name"></p>
+                </div>
+                <div class="flex flex-col gap-2" data-field="email" data-required data-error-message="<?php esc_attr_e('Add a valid work email to receive the download.', 'webmakerr'); ?>" data-validate="email">
+                  <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="managed-blueprint-email">
+                    <?php esc_html_e('Work email', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                    type="email"
+                    id="managed-blueprint-email"
+                    name="company_email"
+                    autocomplete="email"
+                  />
+                  <p class="hidden text-xs font-medium text-red-600" data-error="email"></p>
+                </div>
+                <div class="flex flex-col gap-2" data-field="company" data-error-message="<?php esc_attr_e('Let us know your brand so we can tailor the follow-up.', 'webmakerr'); ?>">
+                  <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="managed-blueprint-company">
+                    <?php esc_html_e('Company (optional)', 'webmakerr'); ?>
+                  </label>
+                  <input
+                    class="w-full rounded border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition focus:border-dark focus:outline-none focus:ring-2 focus:ring-dark/10"
+                    type="text"
+                    id="managed-blueprint-company"
+                    name="company_name"
+                    autocomplete="organization"
+                  />
+                  <p class="hidden text-xs font-medium text-red-600" data-error="company"></p>
+                </div>
+                <button
+                  type="submit"
+                  class="inline-flex items-center justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark"
+                  data-submit
+                  data-default-label="<?php esc_attr_e('Get the Blueprint', 'webmakerr'); ?>"
+                  data-loading-label="<?php esc_attr_e('Sending…', 'webmakerr'); ?>"
+                  data-analytics-event="marketing-mid-blueprint-submit"
+                  data-analytics-funnel="mid"
+                >
+                  <?php esc_html_e('Get the Blueprint', 'webmakerr'); ?>
+                </button>
+                <p class="hidden rounded border border-red-200 bg-red-50 px-4 py-2 text-xs font-medium text-red-600" data-form-alert role="alert"></p>
+              </form>
+              <div id="managed-blueprint-success" class="mt-6 hidden rounded border border-green-200 bg-green-50 p-5 text-sm text-green-900" aria-hidden="true">
+                <h4 class="text-lg font-semibold text-green-900" data-success-heading data-default-heading="<?php esc_attr_e('Blueprint delivered!', 'webmakerr'); ?>">
+                  <?php esc_html_e('Blueprint delivered!', 'webmakerr'); ?>
+                </h4>
+                <p class="mt-2 text-sm text-green-800" data-success-message data-default-message="<?php esc_attr_e('Check your inbox for the Managed Growth Blueprint. You can also open it below.', 'webmakerr'); ?>">
+                  <?php esc_html_e('Check your inbox for the Managed Growth Blueprint. You can also open it below.', 'webmakerr'); ?>
+                </p>
+                <a
+                  class="mt-4 inline-flex items-center justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark !no-underline"
+                  href="<?php echo esc_url(home_url('/resources/managed-growth-blueprint/')); ?>"
+                  data-success-link
+                  data-analytics-event="marketing-mid-blueprint-download"
+                  data-analytics-funnel="mid"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <?php esc_html_e('Access the Blueprint', 'webmakerr'); ?>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1495,7 +2246,7 @@ get_header();
                 <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-white">
                   Save hundreds every month — one platform, no plugins, no limits.
                 </h3>
-                <a href="#platform-overview" class="btn-main inline-flex items-center justify-center mt-3 px-8 py-3 font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105 !no-underline">See How Webmakerr Works →</a>
+                <a href="#platform-overview" class="btn-main inline-flex items-center justify-center mt-3 px-8 py-3 font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105 !no-underline" data-analytics-event="marketing-mid-savings" data-analytics-funnel="mid"><?php esc_html_e('Calculate Your Savings →', 'webmakerr'); ?></a>
               </div>
             </div>
           </div>
@@ -1511,8 +2262,8 @@ get_header();
               <p class="text-base leading-7 sm:text-lg">Cloud hosting, CRM, store, SEO, support, analytics — managed, connected, and always up to date.</p>
               <p class="text-base leading-7 sm:text-lg">Webmakerr plans start at just $29 / month, including automation, backups, and proactive support.</p>
               <div class="mt-2 flex justify-center lg:justify-start">
-                <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#ecosystem">
-                  Discover the Managed Platform →
+                <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#ecosystem" data-analytics-event="marketing-mid-platform-tour" data-analytics-funnel="mid">
+                  <?php esc_html_e('Explore the Managed Platform Tour →', 'webmakerr'); ?>
                 </a>
               </div>
             </div>
@@ -1678,8 +2429,8 @@ get_header();
               <p class="text-sm text-zinc-600 sm:text-base"><?php esc_html_e('Meet with our specialists to map your workflows and success plan.', 'webmakerr'); ?></p>
             </div>
             <div class="flex justify-center sm:justify-end">
-              <a class="inline-flex items-center justify-center rounded bg-dark px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-dark/90 !no-underline" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
-                <?php esc_html_e('Book a Demo', 'webmakerr'); ?>
+              <a class="inline-flex items-center justify-center rounded bg-dark px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-dark/90 !no-underline" href="<?php echo esc_url($marketing_business_demo_anchor); ?>" data-analytics-event="marketing-bottom-banner" data-analytics-funnel="bottom">
+                <?php esc_html_e('Start My Managed Launch', 'webmakerr'); ?>
               </a>
             </div>
           </div>
@@ -2061,8 +2812,8 @@ get_header();
                         <?php esc_html_e('Most teams launch within 48 hours', 'webmakerr'); ?>
                       </p>
                     </div>
-                    <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
-                      <?php esc_html_e('Talk with Onboarding →', 'webmakerr'); ?>
+                    <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="<?php echo esc_url($marketing_business_demo_anchor); ?>" data-analytics-event="marketing-mid-onboarding" data-analytics-funnel="mid">
+                      <?php esc_html_e('Plan Your Rollout →', 'webmakerr'); ?>
                     </a>
                     <p class="text-xs text-zinc-500 sm:text-sm">
                       <?php esc_html_e('Your onboarding team stays on-call to refine automations after go-live.', 'webmakerr'); ?>
@@ -2402,8 +3153,8 @@ get_header();
                 <span><?php esc_html_e('Limited onboarding each month', 'webmakerr'); ?></span>
               </div>
               <div class="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
-                <a class="inline-flex w-full items-center justify-center rounded border border-transparent bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline sm:w-auto" href="<?php echo esc_url($marketing_business_demo_link); ?>">
-                  <?php esc_html_e('Book a Demo →', 'webmakerr'); ?>
+                <a class="inline-flex w-full items-center justify-center rounded border border-transparent bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline sm:w-auto" href="<?php echo esc_url($marketing_business_demo_link); ?>" data-analytics-event="marketing-bottom-demo" data-analytics-funnel="bottom">
+                  <?php esc_html_e('Reserve My Managed Launch →', 'webmakerr'); ?>
                 </a>
                 <a class="inline-flex w-full items-center justify-center rounded border border-white/70 bg-transparent px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline sm:w-auto" href="#platform-overview">
                   <?php esc_html_e('Explore the Platform →', 'webmakerr'); ?>
