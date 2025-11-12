@@ -1550,57 +1550,6 @@ get_header();
                     </ol>
                   </div>
                 </div>
-                <div class="mt-6 space-y-4">
-                  <div class="rounded-xl border border-zinc-200 bg-white/80 px-5 py-4 shadow-sm">
-                    <p class="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-zinc-500">
-                      <?php esc_html_e('Trusted by growth teams at', 'webmakerr'); ?>
-                    </p>
-                    <div class="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-semibold text-zinc-400 sm:text-base">
-                      <span class="text-zinc-500">Playwright Commerce</span>
-                      <span class="text-zinc-500">Northbeam Studios</span>
-                      <span class="text-zinc-500">Brightline Collective</span>
-                      <span class="text-zinc-500">Atlas &amp; Co.</span>
-                    </div>
-                  </div>
-                  <div class="rounded-xl border border-primary/20 bg-primary/5 p-5 text-left">
-                    <div class="flex items-start gap-3">
-                      <span class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white/80 text-primary">
-                        <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo marketing_business_render_icon('shield-check', 'h-5 w-5');
-                        ?>
-                      </span>
-                      <div class="space-y-2 text-sm text-primary/80 sm:text-base">
-                        <p class="font-semibold text-primary"><?php esc_html_e('Security &amp; support you can rely on', 'webmakerr'); ?></p>
-                        <ul class="space-y-1 text-sm leading-6 text-primary/90 sm:text-base sm:leading-7">
-                          <li class="flex items-start gap-2">
-                            <span class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
-                              <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                              echo marketing_business_render_icon('check', 'h-3 w-3');
-                              ?>
-                            </span>
-                            <span><?php esc_html_e('24/7 managed support desk with sub-30 minute response times.', 'webmakerr'); ?></span>
-                          </li>
-                          <li class="flex items-start gap-2">
-                            <span class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
-                              <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                              echo marketing_business_render_icon('cloud', 'h-3 w-3');
-                              ?>
-                            </span>
-                            <span><?php esc_html_e('99.95% uptime SLA backed by global monitoring and failover.', 'webmakerr'); ?></span>
-                          </li>
-                          <li class="flex items-start gap-2">
-                            <span class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
-                              <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                              echo marketing_business_render_icon('lock', 'h-3 w-3');
-                              ?>
-                            </span>
-                            <span><?php esc_html_e('GDPR-ready data handling and quarterly compliance reviews.', 'webmakerr'); ?></span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
