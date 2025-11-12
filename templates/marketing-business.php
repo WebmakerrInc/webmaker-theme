@@ -26,6 +26,9 @@ if (! function_exists('marketing_business_render_icon')) {
             'repeat' => '<path d="m17 2 4 4-4 4"></path><path d="m7 22-4-4 4-4"></path><path d="M21 6H12a3 3 0 0 0-3 3v1"></path><path d="M3 18h9a3 3 0 0 0 3-3v-1"></path>',
             'server' => '<rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect><path d="M6 6h.01"></path><path d="M6 18h.01"></path>',
             'smile' => '<circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line>',
+            'cloud' => '<path d="M17.5 19a4.5 4.5 0 0 0-.5-9 7 7 0 0 0-13.5 1 4.5 4.5 0 0 0 .5 9Z"></path>',
+            'target' => '<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>',
+            'search' => '<circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path>',
         );
 
         if (! isset($icons[$name])) {
@@ -626,43 +629,66 @@ if (! function_exists('marketing_business_feature_icon')) {
             <?php
             $transformation_features = array(
                 array(
-                    'icon' => '🧩',
-                    'title' => 'A True Platform — Not a Patchwork',
-                    'body'  => 'Most “all-in-ones” glue plugins together. Webmakerr is engineered as one ecosystem — one core, one logic, one design language.',
+                    'icon'     => 'layers',
+                    'eyebrow'  => 'Unified Architecture',
+                    'icon_bg'  => 'from-primary/15 via-primary/5 to-white text-primary',
+                    'title'    => 'A True Platform — Not a Patchwork',
+                    'body'     => 'Most “all-in-ones” glue plugins together. Webmakerr is engineered as one ecosystem — one core, one logic, one design language.',
                 ),
                 array(
-                    'icon' => '☁️',
-                    'title' => 'Global Cloud + Managed Reliability',
-                    'body'  => 'Your business runs on our distributed cloud. We handle security, updates, and daily backups, so you never worry about uptime again.',
+                    'icon'     => 'cloud',
+                    'eyebrow'  => 'Managed Infrastructure',
+                    'icon_bg'  => 'from-sky-200/60 via-sky-100/80 to-white text-sky-600',
+                    'title'    => 'Global Cloud + Managed Reliability',
+                    'body'     => 'Your business runs on our distributed cloud. We handle security, updates, and daily backups, so you never worry about uptime again.',
                 ),
                 array(
-                    'icon' => '🎯',
-                    'title' => 'Server-Side Pixel — Included',
-                    'body'  => 'Track every conversion accurately, bypass browser blocks, and save $39 per month — built in by default.',
+                    'icon'     => 'target',
+                    'eyebrow'  => 'Conversion Accuracy',
+                    'icon_bg'  => 'from-amber-200/70 via-amber-100/80 to-white text-amber-600',
+                    'title'    => 'Server-Side Pixel — Included',
+                    'body'     => 'Track every conversion accurately, bypass browser blocks, and save $39 per month — built in by default.',
                 ),
                 array(
-                    'icon' => '🔍',
-                    'title' => 'SEO Intelligence Built In',
-                    'body'  => 'AI-powered audits, live scoring, and automatic optimization keep every page ranking at its best.',
+                    'icon'     => 'search',
+                    'eyebrow'  => 'Search Performance',
+                    'icon_bg'  => 'from-violet-200/70 via-violet-100/80 to-white text-violet-600',
+                    'title'    => 'SEO Intelligence Built In',
+                    'body'     => 'AI-powered audits, live scoring, and automatic optimization keep every page ranking at its best.',
                 ),
                 array(
-                    'icon' => '⚙️',
-                    'title' => 'Custom Solutions on Demand',
-                    'body'  => 'Need a feature or integration? Our engineers build it at a flat rate — no hourly surprises.',
+                    'icon'     => 'repeat',
+                    'eyebrow'  => 'On-Demand Engineering',
+                    'icon_bg'  => 'from-rose-200/70 via-rose-100/80 to-white text-rose-600',
+                    'title'    => 'Custom Solutions on Demand',
+                    'body'     => 'Need a feature or integration? Our engineers build it at a flat rate — no hourly surprises.',
                 ),
                 array(
-                    'icon' => '🔒',
-                    'title' => 'You Own It',
-                    'body'  => 'Built on WordPress. Open-source. Secure. Yours forever. Your data, your control, your advantage.',
+                    'icon'     => 'shield-check',
+                    'eyebrow'  => 'Ownership & Control',
+                    'icon_bg'  => 'from-emerald-200/70 via-emerald-100/80 to-white text-emerald-600',
+                    'title'    => 'You Own It',
+                    'body'     => 'Built on WordPress. Open-source. Secure. Yours forever. Your data, your control, your advantage.',
                 ),
             );
 
             foreach ($transformation_features as $feature) :
                 ?>
-                <div class="flex h-full flex-col gap-4 rounded-[5px] border border-zinc-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                  <span class="text-3xl" aria-hidden="true"><?php echo esc_html($feature['icon']); ?></span>
-                  <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($feature['title']); ?></p>
-                  <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($feature['body']); ?></p>
+                <div class="group relative flex h-full flex-col gap-5 overflow-hidden rounded-[12px] border border-zinc-200 bg-gradient-to-br from-white via-white to-light/70 p-6 text-left shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
+                  <span class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-primary/60 via-primary to-primary/40 opacity-0 transition duration-300 group-hover:opacity-100" aria-hidden="true"></span>
+                  <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br <?php echo esc_attr($feature['icon_bg']); ?> shadow-inner ring-1 ring-white/60">
+                    <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon($feature['icon'], 'h-6 w-6');
+                    ?>
+                  </span>
+                  <div class="flex flex-col gap-2">
+                    <?php if (! empty($feature['eyebrow'])) : ?>
+                      <span class="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-primary/70"><?php echo esc_html($feature['eyebrow']); ?></span>
+                    <?php endif; ?>
+                    <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($feature['title']); ?></p>
+                    <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($feature['body']); ?></p>
+                  </div>
                 </div>
             <?php endforeach; ?>
           </div>
