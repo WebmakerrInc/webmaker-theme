@@ -1210,6 +1210,58 @@ if (! $marketing_business_demo_link) {
         </div>
       </section>
 
+      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="mx-auto flex max-w-4xl flex-col gap-4 text-center">
+            <span class="inline-flex w-fit items-center gap-2 self-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
+              <?php esc_html_e('Webmakerr Advantage', 'webmakerr'); ?>
+            </span>
+            <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+              <?php esc_html_e('Three pillars competitors can’t deliver together', 'webmakerr'); ?>
+            </h2>
+            <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+              <?php esc_html_e('Here’s what makes Webmakerr the managed choice: enterprise infrastructure, custom development without the agency meter, and tracking that keeps your data honest.', 'webmakerr'); ?>
+            </p>
+          </div>
+          <?php
+          $webmakerr_pillars = array(
+              array(
+                  'icon'        => 'cloud',
+                  'title'       => __('Managed Cloud', 'webmakerr'),
+                  'description' => __('Always-on, optimized hosting with a global edge network — while DIY stacks leave your team chasing downtime and patches.', 'webmakerr'),
+              ),
+              array(
+                  'icon'        => 'repeat',
+                  'title'       => __('Flat-rate Custom Development', 'webmakerr'),
+                  'description' => __('Request features and integrations at a predictable flat rate instead of juggling agencies and unpredictable invoices.', 'webmakerr'),
+              ),
+              array(
+                  'icon'        => 'target',
+                  'title'       => __('Server-side Tracking', 'webmakerr'),
+                  'description' => __('Capture conversions accurately through native server-side tracking — no extra tools that lose signal to browser blockers.', 'webmakerr'),
+              ),
+          );
+          ?>
+          <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <?php foreach ($webmakerr_pillars as $pillar) : ?>
+              <div class="group flex h-full flex-col gap-4 rounded-[10px] border border-zinc-200 bg-gradient-to-br from-white via-white to-light/60 p-6 text-left shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
+                <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php
+                  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon($pillar['icon'], 'h-6 w-6');
+                  ?>
+                </span>
+                <div class="flex flex-col gap-2">
+                  <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($pillar['title']); ?></p>
+                  <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($pillar['description']); ?></p>
+                </div>
+                <span class="mt-auto h-0.5 w-16 rounded-full bg-gradient-to-r from-primary via-primary/70 to-transparent opacity-0 transition duration-200 group-hover:opacity-100" aria-hidden="true"></span>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </section>
+
       <section id="demo" class="relative overflow-hidden bg-gradient-to-r from-primary/90 via-dark to-dark py-12 lg:py-20">
         <div class="relative mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-3xl flex-col gap-6 text-center text-white">
