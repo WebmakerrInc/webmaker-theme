@@ -1345,7 +1345,7 @@ if (! $marketing_business_demo_link) {
       <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-6">
               <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
                 Our Mission &amp; Mindset
               </h2>
@@ -1357,44 +1357,126 @@ if (! $marketing_business_demo_link) {
                   — [Founder Name], Creator of Webmakerr
                 </footer>
               </blockquote>
-              <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-                We believe technology should simplify growth — not slow it down. That’s why we handle infrastructure so you can focus on innovation, customers, and results.
-              </p>
+              <div class="flex flex-col gap-4">
+                <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                  <?php esc_html_e('Our platform exists so teams can spend their time on creative momentum instead of maintenance checklists.', 'webmakerr'); ?>
+                </p>
+                <ul class="grid gap-2 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                  <li class="flex items-start gap-3 rounded-[8px] border border-zinc-200 bg-white/80 px-4 py-3">
+                    <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                      ?>
+                    </span>
+                    <span><?php esc_html_e('No more juggling logins, dashboards, and disparate vendors.', 'webmakerr'); ?></span>
+                  </li>
+                  <li class="flex items-start gap-3 rounded-[8px] border border-zinc-200 bg-white/80 px-4 py-3">
+                    <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                      ?>
+                    </span>
+                    <span><?php esc_html_e('Updates, security, and scale are handled by specialists on your behalf.', 'webmakerr'); ?></span>
+                  </li>
+                  <li class="flex items-start gap-3 rounded-[8px] border border-zinc-200 bg-white/80 px-4 py-3">
+                    <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                      ?>
+                    </span>
+                    <span><?php esc_html_e('Every release is backed by measurable performance targets, not guesswork.', 'webmakerr'); ?></span>
+                  </li>
+                </ul>
+              </div>
+              <dl class="grid gap-4 rounded-[10px] border border-zinc-200 bg-white/80 p-5 sm:grid-cols-2">
+                <div>
+                  <dt class="text-xs font-semibold uppercase tracking-[0.32em] text-primary">
+                    <?php esc_html_e('Average response time', 'webmakerr'); ?>
+                  </dt>
+                  <dd class="mt-2 text-2xl font-semibold text-zinc-950">15m</dd>
+                  <p class="text-xs text-zinc-500 sm:text-sm">
+                    <?php esc_html_e('Support engineers resolve critical alerts before campaigns are affected.', 'webmakerr'); ?>
+                  </p>
+                </div>
+                <div>
+                  <dt class="text-xs font-semibold uppercase tracking-[0.32em] text-primary">
+                    <?php esc_html_e('Launch readiness score', 'webmakerr'); ?>
+                  </dt>
+                  <dd class="mt-2 text-2xl font-semibold text-zinc-950">99%</dd>
+                  <p class="text-xs text-zinc-500 sm:text-sm">
+                    <?php esc_html_e('Infrastructure reviews ensure every rollout meets enterprise benchmarks.', 'webmakerr'); ?>
+                  </p>
+                </div>
+              </dl>
             </div>
-            <div class="grid gap-4">
+            <div class="grid gap-4 sm:grid-cols-2">
               <?php
               $mission_values = array(
                   array(
                       'icon' => 'smile',
-                      'title' => 'People-first support',
-                      'description' => 'Our team actively monitors performance and steps in before issues impact your customers.',
+                      'title' => __('People-first support', 'webmakerr'),
+                      'summary' => __('Dedicated humans, proactive monitoring, and direct Slack channels keep teams informed.', 'webmakerr'),
+                      'details' => array(
+                          __('24/7 monitoring across sites, stores, and funnels.', 'webmakerr'),
+                          __('Escalation playbooks tailored to your launch calendar.', 'webmakerr'),
+                      ),
                   ),
                   array(
                       'icon' => 'check',
-                      'title' => 'Operational certainty',
-                      'description' => 'Predictable infrastructure and proactive maintenance eliminate guesswork around launches.',
+                      'title' => __('Operational certainty', 'webmakerr'),
+                      'summary' => __('Predictable infrastructure removes second-guessing before every drop.', 'webmakerr'),
+                      'details' => array(
+                          __('Managed updates, backups, and compliance reporting.', 'webmakerr'),
+                          __('Capacity planning that scales alongside campaign velocity.', 'webmakerr'),
+                      ),
                   ),
                   array(
                       'icon' => 'zap',
-                      'title' => 'Velocity with control',
-                      'description' => 'Ship new campaigns fast while knowing every module still performs at enterprise standards.',
+                      'title' => __('Velocity with control', 'webmakerr'),
+                      'summary' => __('Rapid experimentation without sacrificing performance standards.', 'webmakerr'),
+                      'details' => array(
+                          __('Reusable modules built for marketing, product, and ops teams.', 'webmakerr'),
+                          __('Performance budgets validated before each release hits production.', 'webmakerr'),
+                      ),
+                  ),
+                  array(
+                      'icon' => 'target',
+                      'title' => __('Evidence-driven outcomes', 'webmakerr'),
+                      'summary' => __('Every program is measured against agreed metrics to stay accountable.', 'webmakerr'),
+                      'details' => array(
+                          __('Quarterly growth reviews with transparent scorecards.', 'webmakerr'),
+                          __('Shared dashboards connect campaigns to revenue impact.', 'webmakerr'),
+                      ),
                   ),
               );
 
               foreach ($mission_values as $value) :
                   ?>
-                  <div class="flex items-start gap-4 rounded-[5px] border border-zinc-200 bg-slate-50 p-5 shadow-sm">
+                  <article class="flex h-full flex-col gap-4 rounded-[10px] border border-zinc-200 bg-white/90 p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30">
                     <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
                       <?php
                       // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                       echo marketing_business_render_icon($value['icon']);
                       ?>
                     </span>
-                    <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-2">
                       <p class="text-sm font-semibold text-zinc-950 sm:text-base"><?php echo esc_html($value['title']); ?></p>
-                      <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($value['description']); ?></p>
+                      <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                        <?php echo esc_html($value['summary']); ?>
+                      </p>
+                      <ul class="grid gap-2 text-xs leading-5 text-zinc-500 sm:text-sm">
+                        <?php foreach ($value['details'] as $detail) : ?>
+                          <li class="flex items-start gap-2">
+                            <span class="mt-1 inline-flex h-3 w-3 flex-none items-center justify-center rounded-full bg-primary/20"></span>
+                            <span><?php echo esc_html($detail); ?></span>
+                          </li>
+                        <?php endforeach; ?>
+                      </ul>
                     </div>
-                  </div>
+                  </article>
               <?php endforeach; ?>
             </div>
           </div>
