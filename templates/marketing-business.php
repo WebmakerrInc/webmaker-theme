@@ -398,9 +398,45 @@ if (! $marketing_business_demo_link) {
               The Real Cost of Managing Multiple Platforms vs Webmakerr
             </h2>
             <p class="mt-6 text-base leading-7 sm:text-lg">
-              Most businesses pay for different tools to do what Webmakerr delivers in one platform.
-              Here’s how your current stack compares with top industry tools — and what you get with Webmakerr.
+              Replace the patchwork of subscriptions with one managed platform built to scale with your team.
             </p>
+          </div>
+
+          <?php
+          $comparison_highlights = array(
+              array(
+                  'icon'        => 'zap',
+                  'title'       => __('Save $200+ every month', 'webmakerr'),
+                  'description' => __('Drop overlapping licenses and unpredictable plugin renewals.', 'webmakerr'),
+              ),
+              array(
+                  'icon'        => 'layers',
+                  'title'       => __('One login for every workflow', 'webmakerr'),
+                  'description' => __('Give marketing, sales, and service teams the same playbook.', 'webmakerr'),
+              ),
+              array(
+                  'icon'        => 'smile',
+                  'title'       => __('Launch-ready in weeks', 'webmakerr'),
+                  'description' => __('Our team manages hosting, security, and onboarding for you.', 'webmakerr'),
+              ),
+          );
+          ?>
+
+          <div class="mx-auto mt-10 grid max-w-5xl gap-4 text-left sm:grid-cols-2 lg:grid-cols-3">
+            <?php foreach ($comparison_highlights as $highlight) : ?>
+              <div class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white/80 p-5 shadow-sm">
+                <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php
+                  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon($highlight['icon']);
+                  ?>
+                </span>
+                <div class="flex flex-col gap-1 text-sm leading-6 text-zinc-600">
+                  <p class="text-base font-semibold text-zinc-900 sm:text-lg"><?php echo esc_html($highlight['title']); ?></p>
+                  <p><?php echo esc_html($highlight['description']); ?></p>
+                </div>
+              </div>
+            <?php endforeach; ?>
           </div>
 
           <?php
