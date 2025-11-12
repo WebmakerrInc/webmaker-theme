@@ -226,7 +226,7 @@ add_action(
     static function (): void {
         webmakerr();
     },
-    11
+    0
 );
 
 add_action(
