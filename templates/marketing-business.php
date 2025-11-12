@@ -465,6 +465,108 @@ get_header();
           </div>
         </div>
       </section>
+
+      <section class="border-t border-zinc-200 bg-light py-12 lg:py-20">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center">
+            <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+              How to Get Started with Webmakerr
+            </h2>
+            <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+              We keep onboarding simple and personal. Here’s how it works in four steps:
+            </p>
+          </div>
+          <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <?php
+            $onboarding_steps = array(
+                array(
+                    'number' => '1️⃣',
+                    'title'  => 'Connect',
+                    'body'   => 'Create your account and link your WordPress site.',
+                ),
+                array(
+                    'number' => '2️⃣',
+                    'title'  => 'Configure',
+                    'body'   => 'Choose modules and import your existing data automatically.',
+                ),
+                array(
+                    'number' => '3️⃣',
+                    'title'  => 'Launch',
+                    'body'   => 'Our team provisions your system on the Webmakerr Cloud and runs initial optimizations.',
+                ),
+                array(
+                    'number' => '4️⃣',
+                    'title'  => 'Scale',
+                    'body'   => 'Automate your workflows and watch your business run in sync.',
+                ),
+            );
+
+            foreach ($onboarding_steps as $step) :
+                ?>
+                <div class="flex h-full flex-col gap-3 rounded-[5px] border border-zinc-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                  <span class="text-3xl" aria-hidden="true"><?php echo esc_html($step['number']); ?></span>
+                  <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($step['title']); ?></p>
+                  <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($step['body']); ?></p>
+                </div>
+            <?php endforeach; ?>
+          </div>
+          <div class="mx-auto mt-10 flex max-w-3xl flex-col items-center gap-3 text-center">
+            <p class="text-sm font-medium uppercase tracking-[0.24em] text-primary">
+              Most users are fully operational within 48 hours.
+            </p>
+            <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#">
+              Start Free Setup →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="mx-auto flex max-w-3xl flex-col gap-6">
+            <div class="flex flex-col gap-3 text-center sm:text-left">
+              <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+                Our Mission &amp; Mindset
+              </h2>
+              <blockquote class="rounded-[6px] border border-zinc-200 bg-light px-6 py-6 text-left shadow-sm">
+                <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                  “We built Webmakerr after watching businesses waste hours managing tools that never talked to each other. Growth should be automatic — not exhausting.”
+                </p>
+                <footer class="mt-4 text-sm font-semibold text-zinc-950 sm:text-base">
+                  — [Founder Name], Creator of Webmakerr
+                </footer>
+              </blockquote>
+              <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                We believe technology should simplify growth — not slow it down. That’s why we handle infrastructure so you can focus on innovation, customers, and results.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-t border-zinc-200 bg-gradient-to-b from-white via-white to-light py-12 lg:py-20">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+            <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+              Ready to Run Your Entire Business on One Platform?
+            </h2>
+            <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+              Every Webmakerr setup is personalized, cloud-provisioned, and fully managed by our team. To guarantee performance and support quality, we onboard a limited number of businesses each month.
+            </p>
+            <div class="mt-2 flex flex-col items-center gap-3 sm:flex-row">
+              <a class="btn-main inline-flex w-full justify-center px-6 py-3 text-base font-medium sm:w-auto" href="#">
+                Start Free — No Credit Card Needed →
+              </a>
+              <a class="btn-outline inline-flex w-full justify-center px-6 py-3 text-base font-medium sm:w-auto" href="#">
+                Book a Demo →
+              </a>
+            </div>
+            <p class="text-sm font-medium leading-6 text-zinc-500 sm:text-base">
+              Join thousands of founders and teams who simplified their operations with Webmakerr. Fewer tools. Faster growth. Real control.
+            </p>
+          </div>
+        </div>
+      </section>
     </article>
   <?php endwhile; ?>
 </main>
