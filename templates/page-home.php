@@ -10,6 +10,8 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+$has_icon_helper = function_exists('marketing_business_render_icon');
+
 get_header();
 ?>
 
@@ -136,6 +138,22 @@ get_header();
               </div>
             </div>
             <div class="relative mx-auto w-full max-w-md">
+              <?php if ($has_icon_helper) : ?>
+                <div class="pointer-events-none absolute -top-10 right-6 z-10 flex items-center gap-3 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-white/80 shadow-[0_18px_50px_rgba(5,22,69,0.35)] backdrop-blur">
+                  <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-primary">
+                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('activity', 'h-4 w-4'); ?>
+                  </span>
+                  <?php esc_html_e('Active cohorts', 'webmakerr'); ?>
+                  <span class="text-sm font-semibold text-white">12</span>
+                </div>
+              <?php else : ?>
+                <div class="pointer-events-none absolute -top-10 right-6 z-10 flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-white/80 shadow-[0_18px_50px_rgba(5,22,69,0.35)] backdrop-blur">
+                  <span class="h-2.5 w-2.5 rounded-full bg-[#7fe6ff]"></span>
+                  <?php esc_html_e('Active cohorts', 'webmakerr'); ?>
+                  <span class="text-sm font-semibold text-white">12</span>
+                </div>
+              <?php endif; ?>
               <div class="absolute -right-6 -top-6 h-16 w-16 rounded-full bg-white/30 blur-xl"></div>
               <div class="absolute -bottom-10 left-12 h-20 w-20 rounded-full bg-[#ff6bd6]/40 blur-2xl"></div>
               <div class="relative overflow-hidden rounded-[5px] border border-white/20 bg-white/5 p-10 shadow-[0_24px_60px_rgba(3,19,63,0.35)] backdrop-blur">
@@ -146,6 +164,39 @@ get_header();
                     echo file_get_contents($hero_path);
                 }
                 ?>
+                <div class="mt-8 space-y-4 rounded-[5px] border border-white/20 bg-white/10 p-5 text-white/80">
+                  <div class="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.28em] text-white">
+                    <span class="flex items-center gap-2">
+                      <?php if ($has_icon_helper) : ?>
+                        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-[#7fe6ff]">
+                          <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                          echo marketing_business_render_icon('target', 'h-3.5 w-3.5'); ?>
+                        </span>
+                      <?php else : ?>
+                        <span class="flex h-2 w-2 items-center justify-center rounded-full bg-[#7fe6ff]"></span>
+                      <?php endif; ?>
+                      <?php esc_html_e('Completion rate', 'webmakerr'); ?>
+                    </span>
+                    <span class="text-sm font-semibold text-white">86%</span>
+                  </div>
+                  <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+                    <span class="block h-full w-[86%] rounded-full bg-gradient-to-r from-[#7fe6ff] via-white to-[#ff6bd6]"></span>
+                  </div>
+                  <div class="flex items-center justify-between text-[11px] text-white/70">
+                    <span><?php esc_html_e('Cohort progress', 'webmakerr'); ?></span>
+                    <span class="flex items-center gap-2 font-medium text-white/80">
+                      <?php if ($has_icon_helper) : ?>
+                        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-white/80">
+                          <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                          echo marketing_business_render_icon('repeat', 'h-3.5 w-3.5'); ?>
+                        </span>
+                      <?php else : ?>
+                        <span class="h-2 w-2 rounded-full bg-white/70"></span>
+                      <?php endif; ?>
+                      <?php esc_html_e('Live sync', 'webmakerr'); ?>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -154,6 +205,21 @@ get_header();
 
       <section class="relative z-[1] -mt-16 pb-16 sm:pb-20 lg:pb-24">
         <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto -mt-4 mb-10 flex w-full max-w-3xl items-center justify-center gap-3">
+            <span class="hidden h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent sm:block"></span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-white px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary/90 shadow-sm">
+              <?php if ($has_icon_helper) : ?>
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('activity', 'h-3.5 w-3.5'); ?>
+                </span>
+              <?php else : ?>
+                <span class="h-2.5 w-2.5 rounded-full bg-primary"></span>
+              <?php endif; ?>
+              <?php esc_html_e('Momentum insights', 'webmakerr'); ?>
+            </span>
+            <span class="hidden h-px flex-1 bg-gradient-to-l from-transparent via-primary/30 to-transparent sm:block"></span>
+          </div>
           <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
             <?php foreach ($discover_tiles as $tile) : ?>
             <a class="group flex h-full flex-col gap-5 rounded-[5px] border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg !no-underline" href="<?php echo esc_url($tile['url']); ?>">
@@ -188,6 +254,21 @@ get_header();
 
       <section class="bg-light py-20">
         <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto -mt-8 mb-10 flex w-full max-w-3xl items-center justify-center gap-3">
+            <span class="hidden h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent sm:block"></span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-white px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary/90 shadow-sm">
+              <?php if ($has_icon_helper) : ?>
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('trending-up', 'h-3.5 w-3.5'); ?>
+                </span>
+              <?php else : ?>
+                <span class="h-2.5 w-2.5 rounded-full bg-primary"></span>
+              <?php endif; ?>
+              <?php esc_html_e('Trending picks', 'webmakerr'); ?>
+            </span>
+            <span class="hidden h-px flex-1 bg-gradient-to-l from-transparent via-primary/30 to-transparent sm:block"></span>
+          </div>
           <h2 class="mb-10 text-3xl font-semibold text-zinc-950 sm:text-4xl">Trending courses</h2>
 
           <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -310,6 +391,21 @@ get_header();
 
       <section class="bg-white py-20">
         <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto -mt-6 mb-10 flex w-full max-w-3xl items-center justify-center gap-3">
+            <span class="hidden h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent sm:block"></span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary/90 shadow-sm">
+              <?php if ($has_icon_helper) : ?>
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('search', 'h-3.5 w-3.5'); ?>
+                </span>
+              <?php else : ?>
+                <span class="h-2.5 w-2.5 rounded-full bg-primary"></span>
+              <?php endif; ?>
+              <?php esc_html_e('Browse the catalog', 'webmakerr'); ?>
+            </span>
+            <span class="hidden h-px flex-1 bg-gradient-to-l from-transparent via-primary/20 to-transparent sm:block"></span>
+          </div>
           <h2 class="mb-6 text-3xl font-semibold text-zinc-950 sm:text-4xl">Explore categories</h2>
 
           <div class="mb-10 flex gap-3 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
@@ -379,6 +475,21 @@ get_header();
 
       <section class="bg-white py-20">
         <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto -mt-6 mb-10 flex w-full max-w-3xl items-center justify-center gap-3">
+            <span class="hidden h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent sm:block"></span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary/90 shadow-sm">
+              <?php if ($has_icon_helper) : ?>
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('layers', 'h-3.5 w-3.5'); ?>
+                </span>
+              <?php else : ?>
+                <span class="h-2.5 w-2.5 rounded-full bg-primary"></span>
+              <?php endif; ?>
+              <?php esc_html_e('Learning plans', 'webmakerr'); ?>
+            </span>
+            <span class="hidden h-px flex-1 bg-gradient-to-l from-transparent via-primary/20 to-transparent sm:block"></span>
+          </div>
           <div class="grid gap-6 md:grid-cols-2">
 
             <div class="relative flex h-full flex-col justify-between overflow-hidden rounded-[5px] border border-zinc-200 bg-gradient-to-br from-primary/10 via-white to-light p-8 text-left text-zinc-950 shadow-sm">
@@ -417,6 +528,21 @@ get_header();
 
       <section class="bg-light py-20">
         <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto -mt-8 mb-10 flex w-full max-w-3xl items-center justify-center gap-3">
+            <span class="hidden h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent sm:block"></span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-white px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary/90 shadow-sm">
+              <?php if ($has_icon_helper) : ?>
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('smile', 'h-3.5 w-3.5'); ?>
+                </span>
+              <?php else : ?>
+                <span class="h-2.5 w-2.5 rounded-full bg-primary"></span>
+              <?php endif; ?>
+              <?php esc_html_e('Learner stories', 'webmakerr'); ?>
+            </span>
+            <span class="hidden h-px flex-1 bg-gradient-to-l from-transparent via-primary/30 to-transparent sm:block"></span>
+          </div>
           <h2 class="mb-10 text-3xl font-semibold text-zinc-950 sm:text-4xl">Why people choose Webmakerr</h2>
 
           <div class="flex gap-6 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-4">
@@ -466,6 +592,21 @@ get_header();
 
       <section class="py-16 sm:py-20 lg:py-24">
         <div class="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto -mt-6 flex w-full max-w-3xl items-center justify-center gap-3">
+            <span class="hidden h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent sm:block"></span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary/90 shadow-sm">
+              <?php if ($has_icon_helper) : ?>
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('check', 'h-3.5 w-3.5'); ?>
+                </span>
+              <?php else : ?>
+                <span class="h-2.5 w-2.5 rounded-full bg-primary"></span>
+              <?php endif; ?>
+              <?php esc_html_e('Choose your format', 'webmakerr'); ?>
+            </span>
+            <span class="hidden h-px flex-1 bg-gradient-to-l from-transparent via-primary/20 to-transparent sm:block"></span>
+          </div>
           <div class="flex flex-col items-center gap-3 text-center">
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
               <?php esc_html_e('Explore content', 'webmakerr'); ?>
@@ -514,6 +655,21 @@ get_header();
       <section class="relative overflow-hidden py-16 sm:py-20 lg:py-24">
         <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-primary/20 to-transparent"></div>
         <div class="relative mx-auto flex w-full max-w-5xl flex-col items-center gap-8 overflow-hidden rounded-[5px] border border-zinc-200 bg-white px-6 py-14 text-center shadow-lg shadow-primary/10 sm:px-10">
+          <div class="mx-auto -mt-8 flex w-full max-w-3xl items-center justify-center gap-3">
+            <span class="hidden h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent sm:block"></span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary/90 shadow-sm">
+              <?php if ($has_icon_helper) : ?>
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('rocket', 'h-3.5 w-3.5'); ?>
+                </span>
+              <?php else : ?>
+                <span class="h-2.5 w-2.5 rounded-full bg-primary"></span>
+              <?php endif; ?>
+              <?php esc_html_e('Ready to begin', 'webmakerr'); ?>
+            </span>
+            <span class="hidden h-px flex-1 bg-gradient-to-l from-transparent via-primary/20 to-transparent sm:block"></span>
+          </div>
           <div class="absolute -right-14 -top-12 h-32 w-32 rounded-full bg-primary/10 blur-3xl"></div>
           <div class="absolute -left-12 bottom-0 h-36 w-36 rounded-full bg-primary/5 blur-3xl"></div>
           <div class="relative">
