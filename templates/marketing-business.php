@@ -20,6 +20,12 @@ if (! function_exists('marketing_business_render_icon')) {
             'zap' => '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
             'layers' => '<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline>',
             'check' => '<path d="M20 6 9 17l-5-5"></path>',
+            'activity' => '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>',
+            'database' => '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v6c0 1.7 4 3 9 3s9-1.3 9-3V5"></path><path d="M3 11v6c0 1.7 4 3 9 3s9-1.3 9-3v-6"></path>',
+            'shield-check' => '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path><path d="m9 11 2 2 4-4"></path>',
+            'repeat' => '<path d="m17 2 4 4-4 4"></path><path d="m7 22-4-4 4-4"></path><path d="M21 6H12a3 3 0 0 0-3 3v1"></path><path d="M3 18h9a3 3 0 0 0 3-3v-1"></path>',
+            'server' => '<rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect><path d="M6 6h.01"></path><path d="M6 18h.01"></path>',
+            'smile' => '<circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line>',
         );
 
         if (! isset($icons[$name])) {
@@ -109,17 +115,59 @@ if (! function_exists('marketing_business_render_icon')) {
 
       <section class="bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-3xl flex-col gap-6 text-zinc-600">
-            <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
-              Why Growth Feels Harder Than It Should
-            </h2>
-            <p class="text-base leading-7 sm:text-lg">You already know what makes your product powerful — but here’s what slows you down:</p>
-            <ul class="list-disc space-y-3 pl-6 text-base leading-7 sm:text-lg">
-              <li>Fact 1: Disjointed tools create data silos.</li>
-              <li>Fact 2: Manual updates risk downtime and errors.</li>
-              <li>Fact 3: Every plugin adds another monthly bill.</li>
-            </ul>
-            <p class="text-base leading-7 sm:text-lg">Your team spends hours fixing issues instead of serving customers.</p>
+          <div class="grid gap-12 text-zinc-600 lg:grid-cols-[0.9fr_1.1fr]">
+            <div class="flex flex-col gap-6">
+              <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+                Why Growth Feels Harder Than It Should
+              </h2>
+              <p class="text-base leading-7 sm:text-lg">You already know what makes your product powerful — but your infrastructure slows the momentum.</p>
+              <p class="text-base leading-7 sm:text-lg">Teams end up maintaining tools instead of building the experiences customers expect.</p>
+            </div>
+            <div class="grid gap-4">
+              <?php
+              $growth_friction = array(
+                  array(
+                      'icon' => 'layers',
+                      'title' => 'Disconnected systems',
+                      'description' => 'Every new plugin creates another silo, so data never moves cleanly between marketing, sales, and delivery.',
+                  ),
+                  array(
+                      'icon' => 'activity',
+                      'title' => 'Manual upkeep',
+                      'description' => 'Updates, patches, and performance tuning depend on your team’s spare time — and that time keeps shrinking.',
+                  ),
+                  array(
+                      'icon' => 'database',
+                      'title' => 'Hidden costs',
+                      'description' => 'Licenses, support retainers, and third-party add-ons stack up until the “simple” build becomes the priciest line item.',
+                  ),
+              );
+
+              foreach ($growth_friction as $item) :
+                  ?>
+                  <div class="flex items-start gap-4 rounded-[5px] border border-zinc-200 bg-white p-5 shadow-sm">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon($item['icon']);
+                      ?>
+                    </span>
+                    <div class="flex flex-col gap-1">
+                      <p class="text-sm font-semibold text-zinc-950 sm:text-base"><?php echo esc_html($item['title']); ?></p>
+                      <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($item['description']); ?></p>
+                    </div>
+                  </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center text-zinc-600">
+            <h3 class="text-2xl font-semibold text-zinc-950 sm:text-3xl">Growth accelerates when the foundation is managed.</h3>
+            <p class="text-base leading-7 sm:text-lg">Webmakerr removes the friction that keeps teams in reactive mode, so every launch, campaign, and customer touchpoint stays consistent.</p>
           </div>
         </div>
       </section>
@@ -249,23 +297,56 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section id="with-webmakerr" class="border-t border-zinc-200 bg-light py-12 lg:py-20">
+      <section id="with-webmakerr" class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-3xl flex-col gap-6 text-center">
-            <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
-              Everything You Need — in One Platform
-            </h2>
-            <div class="space-y-4 text-base leading-7 text-zinc-600 sm:text-lg">
-              <p>Cloud hosting, CRM, store, SEO, support, analytics — all included.</p>
-              <p>No plugin renewals.</p>
-              <p>No integration headaches.</p>
-              <p>No extra tools or tracking subscriptions.</p>
-              <p>Webmakerr plans start at just $29 / month — including hosting, SEO, automation, backups, and full support.</p>
+          <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+            <div class="flex flex-col gap-6 text-center text-zinc-600 lg:text-left">
+              <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+                Everything You Need — in One Platform
+              </h2>
+              <p class="text-base leading-7 sm:text-lg">Cloud hosting, CRM, store, SEO, support, analytics — managed, connected, and always up to date.</p>
+              <p class="text-base leading-7 sm:text-lg">Webmakerr plans start at just $29 / month, including automation, backups, and proactive support.</p>
+              <div class="mt-2 flex justify-center lg:justify-start">
+                <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#">
+                  See How Webmakerr Works →
+                </a>
+              </div>
             </div>
-            <div class="mt-6 flex justify-center">
-              <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#">
-                See How Webmakerr Works →
-              </a>
+            <div class="grid gap-4">
+              <?php
+              $platform_benefits = array(
+                  array(
+                      'icon' => 'server',
+                      'title' => 'Managed infrastructure',
+                      'description' => 'Global hosting, security, and monitoring handled by our team so yours can focus on customers.',
+                  ),
+                  array(
+                      'icon' => 'repeat',
+                      'title' => 'Automation everywhere',
+                      'description' => 'Lead capture, nurturing, and fulfillment flow across the same platform — no brittle integrations.',
+                  ),
+                  array(
+                      'icon' => 'shield-check',
+                      'title' => 'Predictable ownership',
+                      'description' => 'Transparent pricing, no surprise renewals, and full control of your data within the WordPress ecosystem.',
+                  ),
+              );
+
+              foreach ($platform_benefits as $benefit) :
+                  ?>
+                  <div class="flex items-start gap-4 rounded-[5px] border border-zinc-200 bg-white p-5 shadow-sm">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon($benefit['icon']);
+                      ?>
+                    </span>
+                    <div class="flex flex-col gap-1">
+                      <p class="text-sm font-semibold text-zinc-950 sm:text-base"><?php echo esc_html($benefit['title']); ?></p>
+                      <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($benefit['description']); ?></p>
+                    </div>
+                  </div>
+              <?php endforeach; ?>
             </div>
           </div>
         </div>
@@ -574,8 +655,8 @@ if (! function_exists('marketing_business_render_icon')) {
 
       <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-3xl flex-col gap-6">
-            <div class="flex flex-col gap-3 text-center sm:text-left">
+          <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+            <div class="flex flex-col gap-4">
               <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
                 Our Mission &amp; Mindset
               </h2>
@@ -590,6 +671,42 @@ if (! function_exists('marketing_business_render_icon')) {
               <p class="text-base leading-7 text-zinc-600 sm:text-lg">
                 We believe technology should simplify growth — not slow it down. That’s why we handle infrastructure so you can focus on innovation, customers, and results.
               </p>
+            </div>
+            <div class="grid gap-4">
+              <?php
+              $mission_values = array(
+                  array(
+                      'icon' => 'smile',
+                      'title' => 'People-first support',
+                      'description' => 'Our team actively monitors performance and steps in before issues impact your customers.',
+                  ),
+                  array(
+                      'icon' => 'check',
+                      'title' => 'Operational certainty',
+                      'description' => 'Predictable infrastructure and proactive maintenance eliminate guesswork around launches.',
+                  ),
+                  array(
+                      'icon' => 'zap',
+                      'title' => 'Velocity with control',
+                      'description' => 'Ship new campaigns fast while knowing every module still performs at enterprise standards.',
+                  ),
+              );
+
+              foreach ($mission_values as $value) :
+                  ?>
+                  <div class="flex items-start gap-4 rounded-[5px] border border-zinc-200 bg-slate-50 p-5 shadow-sm">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon($value['icon']);
+                      ?>
+                    </span>
+                    <div class="flex flex-col gap-1">
+                      <p class="text-sm font-semibold text-zinc-950 sm:text-base"><?php echo esc_html($value['title']); ?></p>
+                      <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($value['description']); ?></p>
+                    </div>
+                  </div>
+              <?php endforeach; ?>
             </div>
           </div>
         </div>
