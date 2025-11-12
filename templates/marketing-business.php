@@ -8,6 +8,31 @@ if (! defined('ABSPATH')) {
 }
 
 get_header();
+
+if (! function_exists('marketing_business_render_icon')) {
+    function marketing_business_render_icon($name, $class = 'h-5 w-5')
+    {
+        if (function_exists('webcommerce_render_icon')) {
+            return webcommerce_render_icon($name, $class);
+        }
+
+        $icons = array(
+            'zap' => '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
+            'layers' => '<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline>',
+            'check' => '<path d="M20 6 9 17l-5-5"></path>',
+        );
+
+        if (! isset($icons[$name])) {
+            return '';
+        }
+
+        return sprintf(
+            '<svg class="%1$s" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">%2$s</svg>',
+            esc_attr($class),
+            $icons[$name]
+        );
+    }
+}
 ?>
 
 <main id="primary" class="flex flex-col bg-white">
@@ -17,7 +42,10 @@ get_header();
         <div class="relative z-10 mx-auto max-w-screen-xl px-6 py-12 lg:px-8 lg:py-20">
           <div class="grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
             <div class="flex flex-col gap-6">
-              <h1 class="text-4xl font-medium tracking-tight [text-wrap:balance] text-zinc-950 sm:text-5xl">
+              <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
+                Managed Business Platform
+              </span>
+              <h1 class="h1-webs tracking-tight [text-wrap:balance] text-zinc-950">
                 Stop Managing Plugins. Start Scaling Your Business.
               </h1>
               <div class="flex flex-col gap-4 text-base leading-7 text-zinc-600 sm:text-lg">
@@ -26,11 +54,11 @@ get_header();
                 <p>You spend more time maintaining software than growing your business.</p>
                 <p>That ends here.</p>
               </div>
-              <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-4">
-                <a class="btn-main inline-flex w-full justify-center rounded bg-dark px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-dark/90 !no-underline sm:w-auto" href="#with-webmakerr">
+              <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:items-center">
+                <a class="inline-flex w-full justify-center rounded bg-dark px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-dark/90 !no-underline sm:w-auto" href="#with-webmakerr">
                   Start Free →
                 </a>
-                <a class="btn-outline inline-flex w-full justify-center rounded border border-zinc-200 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition hover:border-zinc-300 hover:text-zinc-950 !no-underline sm:w-auto" href="#with-webmakerr">
+                <a class="inline-flex w-full justify-center rounded border border-zinc-200 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition hover:border-zinc-300 hover:text-zinc-950 !no-underline sm:w-auto" href="#with-webmakerr">
                   Book a Demo →
                 </a>
               </div>
@@ -40,16 +68,39 @@ get_header();
             </div>
             <div class="relative isolate overflow-hidden rounded-[5px] border border-white/60 bg-white/80 p-8 shadow-xl shadow-primary/10 backdrop-blur">
               <div class="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl"></div>
-              <div class="relative flex flex-col gap-4">
-                <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-                  Webmakerr unifies everything — your website, CRM, store, projects, support, and analytics — into one managed business platform.
-                </p>
-                <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-                  Fully hosted. Lightning-fast. Designed to scale.
-                </p>
-                <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-                  Powered by our global cloud network (170+ edge locations) and maintained 24/7 by our dedicated team.
-                </p>
+              <div class="relative flex flex-col gap-6">
+                <?php if (has_post_thumbnail()) : ?>
+                  <figure class="overflow-hidden rounded-[8px] border border-zinc-200 bg-white/90">
+                    <?php echo wp_kses_post(get_the_post_thumbnail(null, 'large', array('class' => 'h-full w-full object-cover'))); ?>
+                  </figure>
+                <?php endif; ?>
+                <div class="rounded-[5px] border border-zinc-200 bg-white/80 p-6 shadow-sm">
+                  <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Unified growth stack</p>
+                  <p class="mt-2 text-sm text-zinc-600">Webmakerr brings your website, CRM, store, and analytics into one managed platform so you can grow without tech debt.</p>
+                </div>
+                <ul class="grid gap-3 text-sm text-zinc-600">
+                  <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
+                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon('zap', 'h-5 w-5'); ?>
+                    </span>
+                    Lightning-fast sites with enterprise uptime.
+                  </li>
+                  <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
+                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon('layers', 'h-5 w-5'); ?>
+                    </span>
+                    Managed updates, security, and performance.
+                  </li>
+                  <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
+                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon('check', 'h-5 w-5'); ?>
+                    </span>
+                    All-in-one tooling that scales with your business.
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
