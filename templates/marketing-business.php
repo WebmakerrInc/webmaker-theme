@@ -145,6 +145,64 @@ $marketing_business_inline_script = <<<'JS'
                 }
             });
 
+            var getRadioGroup = function (input) {
+                if (!input || input.type !== 'radio' || !input.name) {
+                    return [];
+                }
+
+                return Array.prototype.slice.call(
+                    simpleForm.querySelectorAll('input[type="radio"][name="' + input.name + '"]')
+                );
+            };
+
+            var getFieldValueInfo = function (input) {
+                var result = { value: '', label: '' };
+
+                if (!input) {
+                    return result;
+                }
+
+                if (input.type === 'checkbox') {
+                    result.value = input.checked ? (input.value || 'on') : '';
+                    return result;
+                }
+
+                if (input.type === 'radio') {
+                    var radios = getRadioGroup(input);
+
+                    for (var i = 0; i < radios.length; i += 1) {
+                        if (radios[i].checked) {
+                            result.value = radios[i].value || '';
+                            result.label = radios[i].dataset.label || '';
+                            break;
+                        }
+                    }
+
+                    return result;
+                }
+
+                var value = input.value || '';
+
+                if (input.tagName === 'SELECT') {
+                    var selectedLabel = '';
+
+                    if (input.selectedOptions && input.selectedOptions.length) {
+                        selectedLabel = input.selectedOptions[0].textContent || '';
+                    } else if (typeof input.selectedIndex === 'number' && input.options && input.options.length) {
+                        var selectedOption = input.options[input.selectedIndex];
+                        if (selectedOption) {
+                            selectedLabel = selectedOption.textContent || '';
+                        }
+                    }
+
+                    result.label = selectedLabel.trim();
+                }
+
+                result.value = value.trim ? value.trim() : value;
+
+                return result;
+            };
+
             var fieldInputs = {};
             Object.keys(fieldWrappers).forEach(function (key) {
                 var wrapper = fieldWrappers[key];
@@ -153,12 +211,23 @@ $marketing_business_inline_script = <<<'JS'
                 if (input) {
                     fieldInputs[key] = input;
 
-                    var eventName = input.tagName === 'SELECT' ? 'change' : 'input';
+                    if (input.type === 'radio') {
+                        var radios = getRadioGroup(input);
 
-                    input.addEventListener(eventName, function () {
-                        clearFieldError(key);
-                        clearGeneralAlert();
-                    });
+                        radios.forEach(function (radio) {
+                            radio.addEventListener('change', function () {
+                                clearFieldError(key);
+                                clearGeneralAlert();
+                            });
+                        });
+                    } else {
+                        var eventName = input.tagName === 'SELECT' ? 'change' : 'input';
+
+                        input.addEventListener(eventName, function () {
+                            clearFieldError(key);
+                            clearGeneralAlert();
+                        });
+                    }
                 }
             });
 
@@ -203,7 +272,13 @@ $marketing_business_inline_script = <<<'JS'
                 var input = fieldInputs[field];
 
                 if (input) {
-                    input.removeAttribute('aria-invalid');
+                    if (input.type === 'radio') {
+                        getRadioGroup(input).forEach(function (radio) {
+                            radio.removeAttribute('aria-invalid');
+                        });
+                    } else {
+                        input.removeAttribute('aria-invalid');
+                    }
                 }
             };
 
@@ -224,7 +299,13 @@ $marketing_business_inline_script = <<<'JS'
                 var input = fieldInputs[field];
 
                 if (input) {
-                    input.setAttribute('aria-invalid', 'true');
+                    if (input.type === 'radio') {
+                        getRadioGroup(input).forEach(function (radio) {
+                            radio.setAttribute('aria-invalid', 'true');
+                        });
+                    } else {
+                        input.setAttribute('aria-invalid', 'true');
+                    }
                 }
             };
 
@@ -240,17 +321,8 @@ $marketing_business_inline_script = <<<'JS'
                     var input = fieldInputs[key];
                     var wrapper = fieldWrappers[key];
                     var required = wrapper && wrapper.hasAttribute('data-required');
-                    var value = '';
-
-                    if (input.type === 'checkbox') {
-                        value = input.checked ? (input.value || 'on') : '';
-                    } else if (input.type === 'radio') {
-                        if (input.checked) {
-                            value = input.value;
-                        }
-                    } else {
-                        value = (input.value || '').trim();
-                    }
+                    var fieldInfo = getFieldValueInfo(input);
+                    var value = fieldInfo.value;
 
                     if (required && !value) {
                         valid = false;
@@ -314,28 +386,43 @@ $marketing_business_inline_script = <<<'JS'
                 submitButton.textContent = loadingSubmitLabel;
 
                 var payload = {
-                    name: fieldInputs.name ? (fieldInputs.name.value || '').trim() : '',
-                    email: fieldInputs.email ? (fieldInputs.email.value || '').trim() : '',
-                    company: fieldInputs.company ? (fieldInputs.company.value || '').trim() : '',
-                    company_size: fieldInputs.company_size ? (fieldInputs.company_size.value || '').trim() : '',
-                    website: fieldInputs.website ? (fieldInputs.website.value || '').trim() : ''
+                    name: '',
+                    email: '',
+                    company: '',
+                    company_size: '',
+                    website: '',
+                    primary_goal: ''
                 };
 
                 Object.keys(fieldInputs).forEach(function (key) {
                     var input = fieldInputs[key];
-                    var value = '';
+                    var fieldInfo = getFieldValueInfo(input);
+                    var value = fieldInfo.value;
+                    var label = fieldInfo.label;
 
-                    if (input.type === 'checkbox') {
-                        value = input.checked ? (input.value || 'on') : '';
-                    } else if (input.type === 'radio') {
-                        if (input.checked) {
-                            value = input.value;
+                    if (key === 'name') {
+                        payload.name = value;
+                    } else if (key === 'email') {
+                        payload.email = value;
+                    } else if (key === 'company') {
+                        payload.company = value;
+                    } else if (key === 'company_size') {
+                        payload.company_size = value;
+
+                        if (label) {
+                            payload.company_size_label = label;
                         }
-                    } else {
-                        value = (input.value || '').trim();
+                    } else if (key === 'website') {
+                        payload.website = value;
+                    } else if (key === 'primary_goal') {
+                        payload.primary_goal = value;
+
+                        if (label) {
+                            payload.primary_goal_label = label;
+                        }
                     }
 
-                    if (input.name && value) {
+                    if (input && input.name && value) {
                         payload[input.name] = value;
                     }
                 });
@@ -1523,6 +1610,42 @@ get_header();
                   <option value="large"><?php esc_html_e('26+ people', 'webmakerr'); ?></option>
                 </select>
                 <p class="hidden text-xs font-medium text-red-600" data-error="company_size"></p>
+              </div>
+              <div class="flex flex-col gap-2" data-field="primary_goal" data-required data-error-message="<?php esc_attr_e('Pick the goal that aligns with your next launch.', 'webmakerr'); ?>">
+                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                  <?php esc_html_e('Primary goal', 'webmakerr'); ?> <span class="text-red-500">*</span>
+                </span>
+                <div class="grid gap-2 sm:grid-cols-2">
+                  <label class="flex cursor-pointer items-start gap-3 rounded border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-700 transition hover:border-dark focus-within:border-dark">
+                    <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="launch" data-label="<?php esc_attr_e('Launch faster', 'webmakerr'); ?>" />
+                    <span class="leading-5">
+                      <span class="block font-semibold text-zinc-900"><?php esc_html_e('Launch faster', 'webmakerr'); ?></span>
+                      <span class="block text-xs text-zinc-500"><?php esc_html_e('Ship campaigns without the operational drag.', 'webmakerr'); ?></span>
+                    </span>
+                  </label>
+                  <label class="flex cursor-pointer items-start gap-3 rounded border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-700 transition hover:border-dark focus-within:border-dark">
+                    <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="migrate" data-label="<?php esc_attr_e('Migrate without downtime', 'webmakerr'); ?>" />
+                    <span class="leading-5">
+                      <span class="block font-semibold text-zinc-900"><?php esc_html_e('Migrate without downtime', 'webmakerr'); ?></span>
+                      <span class="block text-xs text-zinc-500"><?php esc_html_e('Stabilize infrastructure while you replatform.', 'webmakerr'); ?></span>
+                    </span>
+                  </label>
+                  <label class="flex cursor-pointer items-start gap-3 rounded border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-700 transition hover:border-dark focus-within:border-dark">
+                    <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="scale" data-label="<?php esc_attr_e('Scale conversions', 'webmakerr'); ?>" />
+                    <span class="leading-5">
+                      <span class="block font-semibold text-zinc-900"><?php esc_html_e('Scale conversions', 'webmakerr'); ?></span>
+                      <span class="block text-xs text-zinc-500"><?php esc_html_e('Keep every experience fast as traffic surges.', 'webmakerr'); ?></span>
+                    </span>
+                  </label>
+                  <label class="flex cursor-pointer items-start gap-3 rounded border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-700 transition hover:border-dark focus-within:border-dark">
+                    <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="integrations" data-label="<?php esc_attr_e('Automate workflows', 'webmakerr'); ?>" />
+                    <span class="leading-5">
+                      <span class="block font-semibold text-zinc-900"><?php esc_html_e('Automate workflows', 'webmakerr'); ?></span>
+                      <span class="block text-xs text-zinc-500"><?php esc_html_e('Connect tools and data without manual effort.', 'webmakerr'); ?></span>
+                    </span>
+                  </label>
+                </div>
+                <p class="hidden text-xs font-medium text-red-600" data-error="primary_goal"></p>
               </div>
               <div class="flex flex-col gap-2" data-field="website" data-error-message="<?php esc_attr_e('Share your main site so we can review the experience.', 'webmakerr'); ?>">
                 <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="stack-risk-url">
