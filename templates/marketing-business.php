@@ -106,6 +106,17 @@ if (! $marketing_business_demo_link) {
               <p class="max-w-2xl text-base leading-7 text-zinc-600 sm:text-lg">
                 <?php esc_html_e('Webmakerr keeps every experience fast, on-brand, and conversion-ready while it handles the updates, security, and integrations that usually slow teams down.', 'webmakerr'); ?>
               </p>
+              <div class="flex gap-3 mt-6">
+                <div class="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-[5px] shadow-sm text-sm font-medium">
+                  <?php esc_html_e('4.9/5 Satisfaction', 'webmakerr'); ?>
+                </div>
+                <div class="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-[5px] shadow-sm text-sm font-medium">
+                  <?php esc_html_e('3X Faster Onboarding', 'webmakerr'); ?>
+                </div>
+                <div class="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-[5px] shadow-sm text-sm font-medium">
+                  <?php esc_html_e('Trusted by 250+ Teams', 'webmakerr'); ?>
+                </div>
+              </div>
               <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:items-center">
                 <a class="inline-flex w-full justify-center rounded bg-dark px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-dark/90 !no-underline sm:w-auto" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
                   <?php esc_html_e('Schedule Your Launch Call →', 'webmakerr'); ?>
@@ -114,6 +125,9 @@ if (! $marketing_business_demo_link) {
                   <?php esc_html_e('See How the Platform Works →', 'webmakerr'); ?>
                 </a>
               </div>
+              <a class="inline-block mt-3 text-sm text-gray-600 underline hover:text-gray-800" href="#lead-magnet">
+                <?php esc_html_e('Download the Growth Playbook', 'webmakerr'); ?>
+              </a>
               <p class="mt-3 text-xs font-medium text-zinc-500 sm:text-sm">
                 <?php esc_html_e('Onboarding cohorts fill quickly—reserve your spot while availability lasts.', 'webmakerr'); ?>
               </p>
@@ -431,21 +445,28 @@ if (! $marketing_business_demo_link) {
           );
           ?>
 
-          <div class="mx-auto mt-10 grid max-w-5xl gap-4 text-left sm:grid-cols-2 lg:grid-cols-3">
-            <?php foreach ($comparison_highlights as $highlight) : ?>
-              <div class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white/80 p-5 shadow-sm">
-                <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                  <?php
-                  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                  echo marketing_business_render_icon($highlight['icon']);
-                  ?>
-                </span>
-                <div class="flex flex-col gap-1 text-sm leading-6 text-zinc-600">
-                  <p class="text-base font-semibold text-zinc-900 sm:text-lg"><?php echo esc_html($highlight['title']); ?></p>
-                  <p><?php echo esc_html($highlight['description']); ?></p>
-                </div>
+          <div x-data="{ open: true }" class="mt-10 border-b border-zinc-200 py-4">
+            <button type="button" @click="open = ! open" class="w-full text-left font-semibold text-gray-800">
+              <?php esc_html_e('Comparison Highlights', 'webmakerr'); ?>
+            </button>
+            <div x-show="open" class="mt-2 text-gray-600 text-sm leading-relaxed">
+              <div class="mx-auto mt-10 grid max-w-5xl gap-4 text-left sm:grid-cols-2 lg:grid-cols-3">
+                <?php foreach ($comparison_highlights as $highlight) : ?>
+                  <div class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white/80 p-5 shadow-sm">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon($highlight['icon']);
+                      ?>
+                    </span>
+                    <div class="flex flex-col gap-1 text-sm leading-6 text-zinc-600">
+                      <p class="text-base font-semibold text-zinc-900 sm:text-lg"><?php echo esc_html($highlight['title']); ?></p>
+                      <p><?php echo esc_html($highlight['description']); ?></p>
+                    </div>
+                  </div>
+                <?php endforeach; ?>
               </div>
-            <?php endforeach; ?>
+            </div>
           </div>
 
           <?php
@@ -608,96 +629,103 @@ if (! $marketing_business_demo_link) {
           );
           ?>
 
-          <div class="mt-16 flex flex-col gap-10 lg:flex-row">
-            <div class="hidden lg:block lg:w-64 xl:w-72">
-              <div class="sticky top-24 space-y-4">
-                <?php foreach ($comparison_features as $feature) : ?>
-                  <div class="rounded-[5px] border border-zinc-200 bg-white px-4 py-3 shadow-sm">
-                    <p class="flex items-center text-sm font-semibold text-zinc-700">
-                      <?php
-                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                      echo marketing_business_feature_icon($feature['icon']);
-                      ?>
-                      <span><?php echo esc_html($feature['label']); ?></span>
-                    </p>
-                  </div>
-                <?php endforeach; ?>
-              </div>
-            </div>
-            <div class="flex-1">
-              <div class="-mx-2 overflow-x-auto pb-6 lg:mx-0 lg:overflow-visible">
-                <div class="flex gap-4 px-2 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-6 lg:px-0">
-                  <?php foreach ($comparison_platforms as $key => $platform) : ?>
-                    <div class="min-w-[260px] snap-start <?php echo esc_attr($platform['card_border']); ?> rounded-xl bg-white shadow-md transition duration-200 hover:-translate-y-1 hover:shadow-xl lg:min-w-0">
-                      <div class="flex flex-col items-center gap-3 <?php echo esc_attr($platform['header_class']); ?> px-6 py-6 text-center">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full <?php echo esc_attr($platform['logo_bg']); ?>">
-                          <img src="<?php echo esc_url($platform['logo']); ?>" alt="<?php echo esc_attr($platform['logo_alt']); ?>" class="h-8 w-auto" />
-                        </div>
-                        <p class="text-base font-semibold">
-                          <?php echo esc_html($platform['name']); ?>
+          <div x-data="{ open: true }" class="border-b border-zinc-200 py-4">
+            <button type="button" @click="open = ! open" class="w-full text-left font-semibold text-gray-800">
+              <?php esc_html_e('Feature-by-Feature Breakdown', 'webmakerr'); ?>
+            </button>
+            <div x-show="open" class="mt-2 text-gray-600 text-sm leading-relaxed">
+              <div class="mt-16 flex flex-col gap-10 lg:flex-row">
+                <div class="hidden lg:block lg:w-64 xl:w-72">
+                  <div class="sticky top-24 space-y-4">
+                    <?php foreach ($comparison_features as $feature) : ?>
+                      <div class="rounded-[5px] border border-zinc-200 bg-white px-4 py-3 shadow-sm">
+                        <p class="flex items-center text-sm font-semibold text-zinc-700">
+                          <?php
+                          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                          echo marketing_business_feature_icon($feature['icon']);
+                          ?>
+                          <span><?php echo esc_html($feature['label']); ?></span>
                         </p>
                       </div>
-                      <div class="flex flex-col divide-y divide-zinc-100">
-                        <?php foreach ($comparison_features as $feature) : ?>
-                          <?php
-                          $value        = $feature['platforms'][$key];
-                          $icon_class   = ('check' === $value['status']) ? 'text-[#1877F2]' : 'text-zinc-300';
-                          $icon_state   = ('check' === $value['status']) ? 'check' : 'dash';
-                          $text_classes = trim($platform['font_weight'] . ' ' . $platform['text_class']);
-                          if (! empty($feature['emphasis'])) {
-                              if (! empty($platform['highlight'])) {
-                                  $text_classes = 'text-lg font-bold text-[#1877F2]';
-                              } else {
-                                  $text_classes = trim($text_classes . ' text-base font-semibold');
-                              }
-                          } else {
-                              $text_classes = trim($text_classes . ' text-sm');
-                          }
-                          ?>
-                          <div class="flex flex-col gap-2 px-6 py-4 text-left">
-                            <p class="flex items-center text-xs font-semibold uppercase tracking-[0.24em] text-zinc-400 lg:hidden">
-                              <?php
-                              // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                              echo marketing_business_feature_icon($feature['icon']);
-                              ?>
-                              <span><?php echo esc_html($feature['label']); ?></span>
-                            </p>
-                            <div class="flex items-start">
-                              <?php if ('check' === $icon_state) : ?>
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  class="inline-block align-middle mr-2 h-4 w-4 md:h-5 md:w-5 <?php echo esc_attr($icon_class); ?>"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                                >
-                                  <circle cx="12" cy="12" r="10"></circle>
-                                  <path d="M9 12l2 2 4-4"></path>
-                                </svg>
-                              <?php else : ?>
-                                <span class="inline-block align-middle mr-2 text-base <?php echo esc_attr($icon_class); ?>" aria-hidden="true">—</span>
-                              <?php endif; ?>
-                              <span class="leading-6 <?php echo esc_attr($text_classes); ?>"><?php echo esc_html($value['text']); ?></span>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <div class="-mx-2 overflow-x-auto pb-6 lg:mx-0 lg:overflow-visible">
+                    <div class="flex gap-4 px-2 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-6 lg:px-0">
+                      <?php foreach ($comparison_platforms as $key => $platform) : ?>
+                        <div class="min-w-[260px] snap-start <?php echo esc_attr($platform['card_border']); ?> rounded-xl bg-white shadow-md transition duration-200 hover:-translate-y-1 hover:shadow-xl lg:min-w-0">
+                          <div class="flex flex-col items-center gap-3 <?php echo esc_attr($platform['header_class']); ?> px-6 py-6 text-center">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full <?php echo esc_attr($platform['logo_bg']); ?>">
+                              <img src="<?php echo esc_url($platform['logo']); ?>" alt="<?php echo esc_attr($platform['logo_alt']); ?>" class="h-8 w-auto" />
                             </div>
+                            <p class="text-base font-semibold">
+                              <?php echo esc_html($platform['name']); ?>
+                            </p>
                           </div>
-                        <?php endforeach; ?>
-                      </div>
+                          <div class="flex flex-col divide-y divide-zinc-100">
+                            <?php foreach ($comparison_features as $feature) : ?>
+                              <?php
+                              $value        = $feature['platforms'][$key];
+                              $icon_class   = ('check' === $value['status']) ? 'text-[#1877F2]' : 'text-zinc-300';
+                              $icon_state   = ('check' === $value['status']) ? 'check' : 'dash';
+                              $text_classes = trim($platform['font_weight'] . ' ' . $platform['text_class']);
+                              if (! empty($feature['emphasis'])) {
+                                  if (! empty($platform['highlight'])) {
+                                      $text_classes = 'text-lg font-bold text-[#1877F2]';
+                                  } else {
+                                      $text_classes = trim($text_classes . ' text-base font-semibold');
+                                  }
+                              } else {
+                                  $text_classes = trim($text_classes . ' text-sm');
+                              }
+                              ?>
+                              <div class="flex flex-col gap-2 px-6 py-4 text-left">
+                                <p class="flex items-center text-xs font-semibold uppercase tracking-[0.24em] text-zinc-400 lg:hidden">
+                                  <?php
+                                  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                  echo marketing_business_feature_icon($feature['icon']);
+                                  ?>
+                                  <span><?php echo esc_html($feature['label']); ?></span>
+                                </p>
+                                <div class="flex items-start">
+                                  <?php if ('check' === $icon_state) : ?>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 24 24"
+                                      class="inline-block align-middle mr-2 h-4 w-4 md:h-5 md:w-5 <?php echo esc_attr($icon_class); ?>"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      stroke-width="2"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      aria-hidden="true"
+                                    >
+                                      <circle cx="12" cy="12" r="10"></circle>
+                                      <path d="M9 12l2 2 4-4"></path>
+                                    </svg>
+                                  <?php else : ?>
+                                    <span class="inline-block align-middle mr-2 text-base <?php echo esc_attr($icon_class); ?>" aria-hidden="true">—</span>
+                                  <?php endif; ?>
+                                  <span class="leading-6 <?php echo esc_attr($text_classes); ?>"><?php echo esc_html($value['text']); ?></span>
+                                </div>
+                              </div>
+                            <?php endforeach; ?>
+                          </div>
+                        </div>
+                      <?php endforeach; ?>
                     </div>
-                  <?php endforeach; ?>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="mt-10 rounded-[5px] bg-gradient-to-r from-primary/90 via-dark to-dark p-10 pb-10 text-center text-white md:p-14 md:pb-14">
-            <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-white">
-              Save hundreds every month — one platform, no plugins, no limits.
-            </h3>
-            <a href="#platform-overview" class="btn-main inline-flex items-center justify-center mt-3 px-8 py-3 font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105 !no-underline">See How Webmakerr Works →</a>
+              <div class="mt-10 rounded-[5px] bg-gradient-to-r from-primary/90 via-dark to-dark p-10 pb-10 text-center text-white md:p-14 md:pb-14">
+                <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-white">
+                  Save hundreds every month — one platform, no plugins, no limits.
+                </h3>
+                <a href="#platform-overview" class="btn-main inline-flex items-center justify-center mt-3 px-8 py-3 font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105 !no-underline">See How Webmakerr Works →</a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1206,62 +1234,71 @@ if (! $marketing_business_demo_link) {
             </p>
           </div>
           <div class="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <aside class="flex flex-col gap-6 rounded-[14px] border border-primary/15 bg-gradient-to-br from-primary/5 via-white to-white px-6 py-8 text-left shadow-sm lg:px-8">
-              <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-                <?php
-                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                echo marketing_business_render_icon('target', 'h-4 w-4 text-primary');
-                ?>
-                <span class="text-primary/80"><?php esc_html_e('Guided onboarding', 'webmakerr'); ?></span>
-              </span>
-              <h3 class="text-2xl font-semibold text-zinc-950 sm:text-3xl">
-                <?php esc_html_e('A phased rollout with your team at the center', 'webmakerr'); ?>
-              </h3>
-              <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-                <?php esc_html_e('Every customer pairs with a dedicated specialist who shapes the launch schedule around your timeline and tech stack.', 'webmakerr'); ?>
-              </p>
-              <ul class="grid gap-2 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
-                <li class="flex items-start gap-3 rounded-[10px] border border-white/60 bg-white/60 p-3 shadow-sm">
-                  <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <?php
-                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                    echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
-                    ?>
-                  </span>
-                  <span><?php esc_html_e('Dedicated onboarding specialist from day one.', 'webmakerr'); ?></span>
-                </li>
-                <li class="flex items-start gap-3 rounded-[10px] border border-white/60 bg-white/60 p-3 shadow-sm">
-                  <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <?php
-                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                    echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
-                    ?>
-                  </span>
-                  <span><?php esc_html_e('Weekly launch checkpoints tailored to your goals.', 'webmakerr'); ?></span>
-                </li>
-                <li class="flex items-start gap-3 rounded-[10px] border border-white/60 bg-white/60 p-3 shadow-sm">
-                  <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <?php
-                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                    echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
-                    ?>
-                  </span>
-                  <span><?php esc_html_e('Automation tune-ups continue after your site goes live.', 'webmakerr'); ?></span>
-                </li>
-              </ul>
-              <div class="flex items-center gap-4 rounded-[12px] border border-primary/20 bg-primary/5 px-4 py-4 text-left">
-                <span class="text-4xl font-semibold text-primary">48h</span>
-                <p class="text-sm font-medium uppercase tracking-[0.26em] text-primary/80">
-                  <?php esc_html_e('Most teams launch within 48 hours', 'webmakerr'); ?>
-                </p>
+            <div>
+              <div x-data="{ open: true }" class="border-b border-zinc-200 py-4">
+                <button type="button" @click="open = ! open" class="w-full text-left font-semibold text-gray-800">
+                  <?php esc_html_e('Guided Onboarding Overview', 'webmakerr'); ?>
+                </button>
+                <div x-show="open" class="mt-2 text-gray-600 text-sm leading-relaxed">
+                  <aside class="flex flex-col gap-6 rounded-[14px] border border-primary/15 bg-gradient-to-br from-primary/5 via-white to-white px-6 py-8 text-left shadow-sm lg:px-8">
+                    <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon('target', 'h-4 w-4 text-primary');
+                      ?>
+                      <span class="text-primary/80"><?php esc_html_e('Guided onboarding', 'webmakerr'); ?></span>
+                    </span>
+                    <h3 class="text-2xl font-semibold text-zinc-950 sm:text-3xl">
+                      <?php esc_html_e('A phased rollout with your team at the center', 'webmakerr'); ?>
+                    </h3>
+                    <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                      <?php esc_html_e('Every customer pairs with a dedicated specialist who shapes the launch schedule around your timeline and tech stack.', 'webmakerr'); ?>
+                    </p>
+                    <ul class="grid gap-2 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                      <li class="flex items-start gap-3 rounded-[10px] border border-white/60 bg-white/60 p-3 shadow-sm">
+                        <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                          <?php
+                          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                          echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                          ?>
+                        </span>
+                        <span><?php esc_html_e('Dedicated onboarding specialist from day one.', 'webmakerr'); ?></span>
+                      </li>
+                      <li class="flex items-start gap-3 rounded-[10px] border border-white/60 bg-white/60 p-3 shadow-sm">
+                        <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                          <?php
+                          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                          echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                          ?>
+                        </span>
+                        <span><?php esc_html_e('Weekly launch checkpoints tailored to your goals.', 'webmakerr'); ?></span>
+                      </li>
+                      <li class="flex items-start gap-3 rounded-[10px] border border-white/60 bg-white/60 p-3 shadow-sm">
+                        <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                          <?php
+                          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                          echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                          ?>
+                        </span>
+                        <span><?php esc_html_e('Automation tune-ups continue after your site goes live.', 'webmakerr'); ?></span>
+                      </li>
+                    </ul>
+                    <div class="flex items-center gap-4 rounded-[12px] border border-primary/20 bg-primary/5 px-4 py-4 text-left">
+                      <span class="text-4xl font-semibold text-primary">48h</span>
+                      <p class="text-sm font-medium uppercase tracking-[0.26em] text-primary/80">
+                        <?php esc_html_e('Most teams launch within 48 hours', 'webmakerr'); ?>
+                      </p>
+                    </div>
+                    <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
+                      <?php esc_html_e('Talk with Onboarding →', 'webmakerr'); ?>
+                    </a>
+                    <p class="text-xs text-zinc-500 sm:text-sm">
+                      <?php esc_html_e('Your onboarding team stays on-call to refine automations after go-live.', 'webmakerr'); ?>
+                    </p>
+                  </aside>
+                </div>
               </div>
-              <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
-                <?php esc_html_e('Talk with Onboarding →', 'webmakerr'); ?>
-              </a>
-              <p class="text-xs text-zinc-500 sm:text-sm">
-                <?php esc_html_e('Your onboarding team stays on-call to refine automations after go-live.', 'webmakerr'); ?>
-              </p>
-            </aside>
+            </div>
             <div class="relative flex flex-col gap-6">
               <span class="pointer-events-none absolute left-5 top-6 hidden h-[calc(100%-3rem)] w-px bg-gradient-to-b from-primary/40 via-primary/20 to-transparent lg:block"></span>
             <?php
@@ -1309,42 +1346,50 @@ if (! $marketing_business_demo_link) {
             );
 
             foreach ($onboarding_steps as $step) :
+                $is_first_step = (1 === (int) $step['step']);
                 ?>
-                <article class="relative flex h-full flex-col gap-4 rounded-[10px] border border-zinc-200 bg-white/95 p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg lg:pl-12">
-                  <span class="absolute -left-[26px] top-6 hidden h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-primary text-sm font-semibold text-white shadow-sm lg:flex">
-                    <?php echo esc_html(str_pad((string) $step['step'], 2, '0', STR_PAD_LEFT)); ?>
-                  </span>
-                  <div class="flex items-start justify-between gap-4">
-                    <span class="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <?php
-                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                      echo marketing_business_render_icon($step['icon'], 'h-6 w-6');
-                      ?>
-                    </span>
-                    <div class="flex flex-col">
-                      <span class="text-xs font-semibold uppercase tracking-[0.32em] text-primary">
-                        <?php echo esc_html(sprintf(__('Step %s', 'webmakerr'), str_pad((string) $step['step'], 2, '0', STR_PAD_LEFT))); ?>
+                <div x-data="{ open: <?php echo $is_first_step ? 'true' : 'false'; ?> }" class="border-b border-zinc-200 py-4 last:border-b-0">
+                  <button type="button" @click="open = ! open" class="w-full text-left font-semibold text-gray-800">
+                    <?php echo esc_html(sprintf(__('Step %1$s — %2$s', 'webmakerr'), str_pad((string) $step['step'], 2, '0', STR_PAD_LEFT), $step['title'])); ?>
+                  </button>
+                  <div x-show="open" class="mt-2 text-gray-600 text-sm leading-relaxed">
+                    <article class="relative flex h-full flex-col gap-4 rounded-[10px] border border-zinc-200 bg-white/95 p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg lg:pl-12">
+                      <span class="absolute -left-[26px] top-6 hidden h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-primary text-sm font-semibold text-white shadow-sm lg:flex">
+                        <?php echo esc_html(str_pad((string) $step['step'], 2, '0', STR_PAD_LEFT)); ?>
                       </span>
-                      <p class="mt-1 text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($step['title']); ?></p>
-                      <p class="text-sm font-medium text-primary sm:text-base">
-                        <?php echo esc_html($step['summary']); ?>
-                      </p>
-                    </div>
-                  </div>
-                  <ul class="grid gap-2 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
-                    <?php foreach ($step['highlights'] as $highlight) : ?>
-                      <li class="flex items-start gap-3 rounded-[10px] bg-slate-50/70 p-3">
-                        <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <div class="flex items-start justify-between gap-4">
+                        <span class="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
                           <?php
                           // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                          echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                          echo marketing_business_render_icon($step['icon'], 'h-6 w-6');
                           ?>
                         </span>
-                        <span><?php echo esc_html($highlight); ?></span>
-                      </li>
-                    <?php endforeach; ?>
-                  </ul>
-                </article>
+                        <div class="flex flex-col">
+                          <span class="text-xs font-semibold uppercase tracking-[0.32em] text-primary">
+                            <?php echo esc_html(sprintf(__('Step %s', 'webmakerr'), str_pad((string) $step['step'], 2, '0', STR_PAD_LEFT))); ?>
+                          </span>
+                          <p class="mt-1 text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($step['title']); ?></p>
+                          <p class="text-sm font-medium text-primary sm:text-base">
+                            <?php echo esc_html($step['summary']); ?>
+                          </p>
+                        </div>
+                      </div>
+                      <ul class="grid gap-2 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                        <?php foreach ($step['highlights'] as $highlight) : ?>
+                          <li class="flex items-start gap-3 rounded-[10px] bg-slate-50/70 p-3">
+                            <span class="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                              <?php
+                              // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                              echo marketing_business_render_icon('check', 'h-3.5 w-3.5');
+                              ?>
+                            </span>
+                            <span><?php echo esc_html($highlight); ?></span>
+                          </li>
+                        <?php endforeach; ?>
+                      </ul>
+                    </article>
+                  </div>
+                </div>
             <?php endforeach; ?>
             </div>
           </div>
