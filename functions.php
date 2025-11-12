@@ -222,6 +222,80 @@ add_filter(
 );
 
 add_action(
+    'webmakerr_crm_lead_captured',
+    static function (array $payload): void {
+        if (! function_exists('FluentCrmApi')) {
+            return;
+        }
+
+        $email = isset($payload['email']) ? sanitize_email((string) $payload['email']) : '';
+
+        if ($email === '' || ! is_email($email)) {
+            return;
+        }
+
+        $contactData = [
+            'email'  => $email,
+            'status' => 'subscribed',
+        ];
+
+        if (! empty($payload['first_name'])) {
+            $contactData['first_name'] = sanitize_text_field((string) $payload['first_name']);
+        }
+
+        if (! empty($payload['last_name'])) {
+            $contactData['last_name'] = sanitize_text_field((string) $payload['last_name']);
+        }
+
+        if (! empty($payload['full_name'])) {
+            $contactData['full_name'] = sanitize_text_field((string) $payload['full_name']);
+        } elseif (! empty($payload['name'])) {
+            $contactData['full_name'] = sanitize_text_field((string) $payload['name']);
+        }
+
+        if (! empty($payload['prefix'])) {
+            $contactData['prefix'] = sanitize_text_field((string) $payload['prefix']);
+        }
+
+        if (! empty($payload['source'])) {
+            $contactData['source'] = sanitize_text_field((string) $payload['source']);
+        }
+
+        $listIds = [];
+
+        if (class_exists('\\FluentCrm\\App\\Models\\Lists')) {
+            $list = \FluentCrm\App\Models\Lists::where('slug', 'database')->first();
+
+            if ($list && isset($list->id)) {
+                $listIds[] = (int) $list->id;
+            }
+        }
+
+        $tagIds = [];
+
+        if (class_exists('\\FluentCrm\\App\\Models\\Tag')) {
+            $tag = \FluentCrm\App\Models\Tag::where('slug', 'download_request')->first();
+
+            if ($tag && isset($tag->id)) {
+                $tagIds[] = (int) $tag->id;
+            }
+        }
+
+        if ($listIds) {
+            $contactData['lists'] = $listIds;
+        }
+
+        if ($tagIds) {
+            $contactData['tags'] = $tagIds;
+        }
+
+        FluentCrmApi('contacts')->createOrUpdate($contactData, true);
+    },
+    10,
+    1
+);
+
+add_action(
     'after_setup_theme',
     static function (): void {
         webmakerr();
