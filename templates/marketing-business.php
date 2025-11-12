@@ -769,24 +769,24 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-gradient-to-b from-white via-white to-light py-12 lg:py-20">
-        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
-            <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+      <section class="relative overflow-hidden bg-gradient-to-r from-primary/90 via-dark to-dark py-12 lg:py-20">
+        <div class="relative mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="mx-auto flex max-w-3xl flex-col gap-6 text-center text-white">
+            <h2 class="text-3xl font-semibold text-white sm:text-4xl">
               Ready to Run Your Entire Business on One Platform?
             </h2>
-            <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+            <p class="text-base leading-7 text-white/80 sm:text-lg">
               Every Webmakerr setup is personalized, cloud-provisioned, and fully managed by our team. To guarantee performance and support quality, we onboard a limited number of businesses each month.
             </p>
-            <div class="mt-2 flex flex-col items-center gap-3 sm:flex-row">
-              <a class="btn-main inline-flex w-full justify-center px-6 py-3 text-base font-medium sm:w-auto" href="#">
+            <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a class="inline-flex items-center justify-center rounded bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="#">
                 Start Free — No Credit Card Needed →
               </a>
-              <a class="btn-outline inline-flex w-full justify-center px-6 py-3 text-base font-medium sm:w-auto" href="#">
+              <a class="inline-flex items-center justify-center rounded border border-white/70 bg-transparent px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="#">
                 Book a Demo →
               </a>
             </div>
-            <p class="text-sm font-medium leading-6 text-zinc-500 sm:text-base">
+            <p class="text-sm text-white/70">
               Join thousands of founders and teams who simplified their operations with Webmakerr. Fewer tools. Faster growth. Real control.
             </p>
           </div>
