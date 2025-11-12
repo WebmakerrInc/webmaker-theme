@@ -26,6 +26,7 @@ if (! function_exists('marketing_business_render_icon')) {
             'smile' => '<circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line>',
             'cloud' => '<path d="M17.5 19a4.5 4.5 0 0 0-.5-9 7 7 0 0 0-13.5 1 4.5 4.5 0 0 0 .5 9Z"></path>',
             'target' => '<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>',
+            'play' => '<polygon points="5 3 19 12 5 21 5 3"></polygon>',
             'search' => '<circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path>',
             'user-plus' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line>',
             'sliders' => '<line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line>',
@@ -909,6 +910,159 @@ $marketing_business_inline_script = <<<'JS'
             focusStep(currentStep);
         }
 
+        var productTourModal = document.getElementById('product-tour-modal');
+
+        if (productTourModal) {
+            var productTourTriggers = document.querySelectorAll('[data-tour-modal-open]');
+
+            if (productTourTriggers.length) {
+                var productTourCard = productTourModal.querySelector('[data-tour-modal-card]');
+                var productTourCloseButtons = productTourModal.querySelectorAll('[data-tour-modal-close]');
+                var productTourVideo = productTourModal.querySelector('[data-tour-video]');
+                var previousTourFocus = null;
+                var productTourTransition = 200;
+
+                var dispatchProductTourPlay = function () {
+                    if (!productTourVideo || productTourVideo.__webmakerrPlayLogged) {
+                        return;
+                    }
+
+                    productTourVideo.__webmakerrPlayLogged = true;
+
+                    window.dispatchEvent(new CustomEvent('webmakerr:productTourPlay', {
+                        detail: {
+                            source: 'marketing-business',
+                            medium: 'video',
+                            currentTime: Math.round(productTourVideo.currentTime || 0)
+                        }
+                    }));
+                };
+
+                var resetProductTourVideo = function () {
+                    if (!productTourVideo) {
+                        return;
+                    }
+
+                    try {
+                        productTourVideo.pause();
+                    } catch (error) {
+                        // Ignore pause errors.
+                    }
+
+                    try {
+                        productTourVideo.currentTime = 0;
+                    } catch (error) {
+                        // Ignore seek errors.
+                    }
+
+                    productTourVideo.muted = false;
+                    productTourVideo.__webmakerrPlayLogged = false;
+                };
+
+                var closeProductTour = function () {
+                    if (productTourModal.classList.contains('hidden')) {
+                        return;
+                    }
+
+                    productTourModal.classList.add('opacity-0');
+
+                    window.setTimeout(function () {
+                        productTourModal.classList.add('hidden');
+                        productTourModal.setAttribute('aria-hidden', 'true');
+                        productTourModal.classList.remove('opacity-0');
+                        document.body.classList.remove('overflow-hidden');
+                        document.removeEventListener('keydown', handleProductTourKeydown);
+                        resetProductTourVideo();
+
+                        if (previousTourFocus && typeof previousTourFocus.focus === 'function') {
+                            previousTourFocus.focus();
+                        }
+                    }, productTourTransition);
+                };
+
+                var handleProductTourKeydown = function (event) {
+                    if (event.key === 'Escape') {
+                        closeProductTour();
+                    }
+                };
+
+                var openProductTour = function (event) {
+                    if (event) {
+                        event.preventDefault();
+                    }
+
+                    if (!productTourModal.classList.contains('hidden')) {
+                        return;
+                    }
+
+                    previousTourFocus = document.activeElement;
+
+                    productTourModal.classList.remove('hidden');
+                    productTourModal.setAttribute('aria-hidden', 'false');
+                    document.body.classList.add('overflow-hidden');
+
+                    window.requestAnimationFrame(function () {
+                        productTourModal.classList.remove('opacity-0');
+                    });
+
+                    if (productTourCard && typeof productTourCard.focus === 'function') {
+                        window.requestAnimationFrame(function () {
+                            productTourCard.focus();
+                        });
+                    }
+
+                    document.addEventListener('keydown', handleProductTourKeydown);
+
+                    if (productTourVideo) {
+                        resetProductTourVideo();
+
+                        var playPromise = productTourVideo.play();
+
+                        if (playPromise && typeof playPromise.then === 'function') {
+                            playPromise.then(function () {
+                                dispatchProductTourPlay();
+                            }).catch(function () {
+                                productTourVideo.muted = true;
+
+                                var mutedPromise = productTourVideo.play();
+
+                                if (mutedPromise && typeof mutedPromise.then === 'function') {
+                                    mutedPromise.then(function () {
+                                        dispatchProductTourPlay();
+                                    }).catch(function () {
+                                        // Autoplay failed; rely on the play event when the user interacts.
+                                    });
+                                }
+                            });
+                        } else {
+                            dispatchProductTourPlay();
+                        }
+                    }
+                };
+
+                productTourTriggers.forEach(function (trigger) {
+                    trigger.addEventListener('click', openProductTour);
+                });
+
+                productTourCloseButtons.forEach(function (button) {
+                    button.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        closeProductTour();
+                    });
+                });
+
+                productTourModal.addEventListener('click', function (event) {
+                    if (event.target === productTourModal) {
+                        closeProductTour();
+                    }
+                });
+
+                if (productTourVideo) {
+                    productTourVideo.addEventListener('play', dispatchProductTourPlay);
+                }
+            }
+        }
+
         var modal = document.getElementById('platform-explainer-modal');
 
         if (modal) {
@@ -1093,6 +1247,12 @@ get_header();
 
 <main id="primary" class="flex flex-col bg-white">
   <?php while (have_posts()) : the_post(); ?>
+    <?php
+    $marketing_business_tour_video_url      = apply_filters('webmakerr_marketing_business_tour_video_url', 'https://cdn.webmakerr.com/media/product-tour-90.mp4');
+    $marketing_business_tour_caption_url    = apply_filters('webmakerr_marketing_business_tour_caption_url', '');
+    $marketing_business_tour_caption_label  = apply_filters('webmakerr_marketing_business_tour_caption_label', __('Product tour captions', 'webmakerr'));
+    $marketing_business_tour_poster         = get_the_post_thumbnail_url(null, 'large');
+    ?>
     <article <?php post_class('flex flex-col'); ?>>
       <section class="relative overflow-hidden border-b border-zinc-200 bg-gradient-to-br from-[#F5F9FF] via-[#ECF3FF] to-[#D9E8FF]">
         <div class="relative z-10 mx-auto max-w-screen-xl px-6 py-12 lg:px-8 lg:py-20">
@@ -1107,7 +1267,7 @@ get_header();
               <p class="max-w-2xl text-base leading-7 text-zinc-600 sm:text-lg">
                 <?php esc_html_e('Webmakerr keeps every experience fast, on-brand, and conversion-ready while it handles the updates, security, and integrations that usually slow teams down.', 'webmakerr'); ?>
               </p>
-            <div class="flex gap-3 mt-6">
+              <div class="flex gap-3 mt-6">
                 <div class="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-[5px] shadow-sm text-sm font-medium">
                   <?php esc_html_e('4.9/5 Satisfaction', 'webmakerr'); ?>
                 </div>
@@ -1303,11 +1463,62 @@ get_header();
               </div>
               <div class="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl"></div>
               <div class="relative flex flex-col gap-6">
-                <?php if (has_post_thumbnail()) : ?>
-                  <figure class="overflow-hidden rounded-[8px] border border-zinc-200 bg-white/90">
-                    <?php echo wp_kses_post(get_the_post_thumbnail(null, 'large', array('class' => 'h-full w-full object-cover'))); ?>
-                  </figure>
-                <?php endif; ?>
+                <div class="relative">
+                  <button
+                    type="button"
+                    class="group relative block w-full overflow-hidden rounded-[8px] border border-zinc-200 bg-white/90 text-left shadow-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark"
+                    data-tour-modal-open
+                    aria-controls="product-tour-modal"
+                    aria-label="<?php esc_attr_e('Watch the 90-second product tour (opens modal)', 'webmakerr'); ?>"
+                    data-analytics-event="marketing-top-tour-open"
+                    data-analytics-funnel="top"
+                  >
+                    <?php if ($marketing_business_tour_poster) : ?>
+                      <img
+                        src="<?php echo esc_url($marketing_business_tour_poster); ?>"
+                        alt="<?php esc_attr_e('Preview frame from the product tour video', 'webmakerr'); ?>"
+                        class="h-full w-full object-cover transition duration-300 ease-out group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    <?php else : ?>
+                      <span class="block h-full w-full bg-gradient-to-br from-zinc-900 via-primary/60 to-primary/40"></span>
+                    <?php endif; ?>
+                    <span class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-zinc-950/30 to-transparent transition duration-300 ease-out group-hover:from-zinc-950/70" aria-hidden="true"></span>
+                    <span class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full bg-zinc-950/70 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-white shadow-sm" aria-hidden="true">
+                      <span class="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-white">
+                        <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                        echo marketing_business_render_icon('play', 'h-3 w-3');
+                        ?>
+                      </span>
+                      <?php esc_html_e('90 sec tour', 'webmakerr'); ?>
+                    </span>
+                    <span class="absolute bottom-4 left-4 right-4 flex flex-col gap-3 text-left" aria-hidden="true">
+                      <span class="flex items-center gap-3 text-sm font-semibold text-white">
+                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white">
+                          <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                          echo marketing_business_render_icon('play', 'h-5 w-5');
+                          ?>
+                        </span>
+                        <span class="leading-snug"><?php esc_html_e('Watch the 90-second tour', 'webmakerr'); ?></span>
+                      </span>
+                      <span class="flex flex-col gap-2 text-xs text-white/80">
+                        <span class="flex items-center gap-2">
+                          <span class="block h-1.5 w-1.5 rounded-full bg-white/70"></span>
+                          <span><span class="font-semibold text-white">00:18</span> <?php esc_html_e('Launch control walkthrough', 'webmakerr'); ?></span>
+                        </span>
+                        <span class="flex items-center gap-2">
+                          <span class="block h-1.5 w-1.5 rounded-full bg-white/70"></span>
+                          <span><span class="font-semibold text-white">00:44</span> <?php esc_html_e('CRM + commerce sync in action', 'webmakerr'); ?></span>
+                        </span>
+                        <span class="flex items-center gap-2">
+                          <span class="block h-1.5 w-1.5 rounded-full bg-white/70"></span>
+                          <span><span class="font-semibold text-white">01:12</span> <?php esc_html_e('Performance intelligence recap', 'webmakerr'); ?></span>
+                        </span>
+                      </span>
+                    </span>
+                    <span class="sr-only"><?php esc_html_e('Opens a modal with the product tour video.', 'webmakerr'); ?></span>
+                  </button>
+                </div>
                 <div class="bg-white shadow-sm rounded-[5px] p-6 mb-6">
                   <div class="inline-flex items-center px-3 py-1 bg-blue-50 text-blue-600 text-[12px] font-medium rounded-full mb-3">
                     LAUNCH-READY IN 60 DAYS
@@ -1368,6 +1579,78 @@ get_header();
           </div>
         </div>
       </section>
+
+      <div
+        id="product-tour-modal"
+        class="fixed inset-0 z-[85] hidden flex items-center justify-center bg-zinc-950/70 px-6 py-8 transition-opacity duration-200 opacity-0"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="product-tour-modal-title"
+        aria-describedby="product-tour-modal-description"
+        aria-hidden="true"
+      >
+        <div class="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-white/20 bg-zinc-900 shadow-2xl focus:outline-none" data-tour-modal-card tabindex="-1">
+          <button type="button" class="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/80 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" data-tour-modal-close>
+            <span class="sr-only"><?php esc_html_e('Close product tour video', 'webmakerr'); ?></span>
+            &times;
+          </button>
+          <div class="flex flex-col gap-6 p-6 text-white sm:p-8">
+            <span class="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/80">
+              <?php
+              // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+              echo marketing_business_render_icon('play', 'h-4 w-4');
+              ?>
+              <?php esc_html_e('Product tour', 'webmakerr'); ?>
+            </span>
+            <div class="space-y-3 text-left">
+              <h2 id="product-tour-modal-title" class="text-2xl font-semibold sm:text-3xl">
+                <?php esc_html_e('See the managed stack in 90 seconds', 'webmakerr'); ?>
+              </h2>
+              <p id="product-tour-modal-description" class="text-sm leading-6 text-white/80 sm:text-base sm:leading-7">
+                <?php esc_html_e('Follow the guided walkthrough to understand how Webmakerr orchestrates launches, customer routing, and performance intelligence without extra plugins.', 'webmakerr'); ?>
+              </p>
+            </div>
+            <div class="overflow-hidden rounded-xl border border-white/10 bg-black shadow-inner">
+              <video
+                class="aspect-video w-full"
+                controls
+                playsinline
+                preload="metadata"
+                data-tour-video
+                <?php if ($marketing_business_tour_poster) : ?>poster="<?php echo esc_url($marketing_business_tour_poster); ?>"<?php endif; ?>
+                aria-describedby="product-tour-modal-description"
+              >
+                <?php if (! empty($marketing_business_tour_video_url)) : ?>
+                  <source src="<?php echo esc_url($marketing_business_tour_video_url); ?>" type="video/mp4" />
+                <?php endif; ?>
+                <?php if (! empty($marketing_business_tour_caption_url)) : ?>
+                  <track kind="captions" src="<?php echo esc_url($marketing_business_tour_caption_url); ?>" srclang="en" label="<?php echo esc_attr($marketing_business_tour_caption_label); ?>" default />
+                <?php endif; ?>
+                <?php esc_html_e('Your browser does not support the video element.', 'webmakerr'); ?>
+              </video>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-white/5 p-5 text-sm text-white/80">
+              <p class="text-xs font-semibold uppercase tracking-[0.3em] text-white/60">
+                <?php esc_html_e('Tour highlights', 'webmakerr'); ?>
+              </p>
+              <ul class="mt-3 space-y-2">
+                <li class="flex items-start gap-3">
+                  <span class="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-white/15 text-[0.7rem] font-semibold text-white/80">00:18</span>
+                  <span><?php esc_html_e('Launch control workspace sets the foundation for every campaign.', 'webmakerr'); ?></span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-white/15 text-[0.7rem] font-semibold text-white/80">00:44</span>
+                  <span><?php esc_html_e('CRM and commerce sync keep lifecycle automations aligned.', 'webmakerr'); ?></span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-white/15 text-[0.7rem] font-semibold text-white/80">01:12</span>
+                  <span><?php esc_html_e('Performance intelligence surfaces proactive recommendations.', 'webmakerr'); ?></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div
         id="platform-explainer-modal"
