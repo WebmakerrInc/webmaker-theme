@@ -732,123 +732,123 @@ if (! function_exists('marketing_business_feature_icon')) {
                 array(
                     'number'      => 1,
                     'title'       => 'WebBuilder: Where It All Begins',
-                    'summary'     => 'Launch high-performing, ultra-responsive sites without touching a pile of plugins.',
+                    'summary'     => 'Launch conversion-ready experiences without inheriting plugin sprawl.',
                     'highlights'  => array(
-                        'Custom designs or industry-grade templates that stay on brand.',
-                        'SEO-ready architecture with global caching by default.',
-                        'Native CRM and analytics integrations on day one.',
+                        'Industry-specific blueprints accelerate go-live while staying on brand.',
+                        'SEO architecture and global caching keep pages fast under enterprise load.',
+                        'Native CRM, analytics, and consent tools connected from day one.',
                     ),
                 ),
                 array(
                     'number'      => 2,
                     'title'       => 'WebCRM: Turn Visitors into Relationships',
-                    'summary'     => 'Capture every interaction and automate the follow-up that moves deals forward.',
+                    'summary'     => 'Turn every visitor touchpoint into pipeline insight that drives predictable revenue.',
                     'highlights'  => array(
-                        'Forms, chats, and lead sources sync instantly to unified records.',
-                        'Engagement scoring reveals intent across the entire journey.',
-                        'Automated sequences launch the moment interest is detected.',
+                        'Forms, chat, and ad sources consolidate into unified profiles in real time.',
+                        'Engagement scoring surfaces ready-to-buy accounts for sales prioritization.',
+                        'Adaptive sequences trigger instantly to progress deals without manual effort.',
                     ),
                 ),
                 array(
                     'number'      => 3,
                     'title'       => 'WebBooking: From Interest to Interaction',
-                    'summary'     => 'Let prospects pick a time that works — while your team stays focused on delivery.',
+                    'summary'     => 'Let prospects schedule next steps instantly so teams stay focused on delivery.',
                     'highlights'  => array(
-                        'Self-serve booking for demos, consultations, and services.',
-                        'Calendar availability syncs with pipelines and team schedules.',
-                        'Reminders and confirmations go out automatically.',
+                        'Self-serve scheduling for demos, consultations, and services in any time zone.',
+                        'Calendar intelligence syncs with pipelines and resource plans automatically.',
+                        'Automated reminders and confirmations protect every revenue moment.',
                     ),
                 ),
                 array(
                     'number'      => 4,
                     'title'       => 'WebCart + WebCommerce: From Offer to Order',
-                    'summary'     => 'Sell products, subscriptions, or licenses with transactions tied to every customer profile.',
+                    'summary'     => 'Monetize any offer with checkout, billing, and fulfillment tied to every customer record.',
                     'highlights'  => array(
-                        'Unified checkout for physical, digital, and recurring offers.',
-                        'Revenue, analytics, and support data stay perfectly in sync.',
-                        'Subscription management without add-on maintenance.',
+                        'Unified checkout supports physical, digital, and recurring revenue models.',
+                        'Revenue analytics, billing, and support data stay synchronized in one view.',
+                        'Subscription stewardship runs without add-on maintenance or scripts.',
                     ),
                 ),
                 array(
                     'number'      => 5,
                     'title'       => 'WebBoard: From Sale to Delivery',
-                    'summary'     => 'Projects launch the moment payment clears, keeping delivery teams ahead of schedule.',
+                    'summary'     => 'Activate delivery the moment payment clears and keep teams accountable to client outcomes.',
                     'highlights'  => array(
-                        'Automated task assignments for every new engagement.',
-                        'Progress, files, and communication live on the same record.',
-                        'Clear deadlines keep clients confident in your process.',
+                        'Automated task plans launch for each new engagement with role-based ownership.',
+                        'Progress, files, and conversations remain linked to the originating deal.',
+                        'Predictive milestones and alerts keep clients confident in every stage.',
                     ),
                 ),
                 array(
                     'number'      => 6,
                     'title'       => 'WebSupport: From Questions to Loyalty',
-                    'summary'     => 'Delight customers with responses backed by full context from sales to delivery.',
+                    'summary'     => 'Deliver proactive, context-rich support that strengthens retention and expansion.',
                     'highlights'  => array(
-                        'Tickets, chats, and conversations link to orders instantly.',
-                        'Agents see history, sentiment, and open tasks in one view.',
-                        'Knowledge sharing turns support into a retention engine.',
+                        'Tickets, chats, and conversations map to orders and subscriptions instantly.',
+                        'Agents see lifecycle history, sentiment, and open actions in one workspace.',
+                        'Knowledge assets and automations turn support into a loyalty engine.',
                     ),
                 ),
                 array(
                     'number'      => 7,
                     'title'       => 'WebAffiliate: Turn Customers into Promoters',
-                    'summary'     => 'Empower satisfied clients to drive new growth with hands-free partner management.',
+                    'summary'     => 'Transform satisfied customers into a scalable growth channel with transparent partner management.',
                     'highlights'  => array(
-                        'Automated referral tracking and performance dashboards.',
-                        'Custom commission structures with transparent payouts.',
-                        'Campaign assets and messaging ready for partners to deploy.',
+                        'Automated referral tracking and performance dashboards motivate partners.',
+                        'Flexible commission programs align incentives with revenue targets.',
+                        'Ready-to-use assets and messaging accelerate campaign launches.',
                     ),
                 ),
                 array(
                     'number'      => 8,
                     'title'       => 'WebSEO: Always Found, Always Fast',
-                    'summary'     => 'Blend AI-driven optimization with edge delivery for visibility that never lags.',
+                    'summary'     => 'Command search visibility with AI guidance and edge delivery tuned for speed.',
                     'highlights'  => array(
-                        'Real-time audits surface technical and on-page wins.',
-                        'Global edge network (170+ nodes) keeps load times instant.',
-                        'Actionable recommendations feed directly into WebBuilder.',
+                        'Real-time diagnostics uncover technical, on-page, and content wins.',
+                        'Global edge network (170+ nodes) sustains instant load times worldwide.',
+                        'Actionable recommendations feed directly into WebBuilder for rapid execution.',
                     ),
                 ),
                 array(
                     'number'      => 9,
                     'title'       => 'WebPixel: Every Click, Accurately Counted',
-                    'summary'     => 'Trust your reporting with server-side tracking that beats browser blocks.',
+                    'summary'     => 'Trust every attribution decision with privacy-conscious, server-side tracking.',
                     'highlights'  => array(
-                        'First-party data capture preserves campaign attribution.',
-                        'Conversion events sync automatically with WebCRM records.',
-                        'Privacy-compliant measurement for every channel.',
+                        'First-party data capture preserves campaign accuracy despite browser limits.',
+                        'Conversion events sync automatically with WebCRM and downstream automation.',
+                        'Compliant measurement keeps multi-channel reporting audit-ready.',
                     ),
                 ),
                 array(
                     'number'      => 10,
                     'title'       => 'Managed Cloud: Always Secure, Always Updated',
-                    'summary'     => 'Enterprise-grade infrastructure is monitored, patched, and backed up for you.',
+                    'summary'     => 'Rely on enterprise-grade infrastructure that is continuously optimized and protected.',
                     'highlights'  => array(
-                        '24/7 monitoring with proactive performance tuning.',
-                        'Automated updates and daily backups built into the service.',
-                        'Layered security reduces downtime and maintenance costs.',
+                        '24/7 monitoring delivers proactive performance tuning and anomaly response.',
+                        'Automated updates and encrypted backups run without interrupting operations.',
+                        'Layered security hardens uptime while reducing in-house maintenance costs.',
                     ),
                 ),
                 array(
                     'number'      => 11,
                     'title'       => 'Custom Solutions: Built for You',
-                    'summary'     => 'Scale beyond the standard stack with engineering support priced for predictability.',
+                    'summary'     => 'Extend the platform with dedicated engineering designed for predictable investment.',
                     'highlights'  => array(
-                        'Flat-rate development for bespoke features and integrations.',
-                        'Quality assurance and launch handled by the Webmakerr team.',
-                        'Future-ready architecture that evolves with your roadmap.',
+                        'Flat-rate delivery for bespoke features, integrations, and migrations.',
+                        'QA, release management, and change control handled by Webmakerr experts.',
+                        'Future-ready architecture evolves with your strategic roadmap.',
                     ),
                 ),
             );
 
             foreach ($ecosystem_modules as $module) :
                 ?>
-                <article class="group flex h-full flex-col justify-between rounded-[5px] border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
+                <article class="group flex h-full flex-col justify-between rounded-[5px] border border-zinc-200 bg-white p-6 shadow-sm transition transition-transform hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
                   <div class="flex items-start justify-between gap-4">
                     <span class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
                       <?php echo esc_html(sprintf(__('Module %s', 'webmakerr'), str_pad((string) $module['number'], 2, '0', STR_PAD_LEFT))); ?>
                     </span>
-                    <span class="text-sm font-semibold text-zinc-400"><?php echo esc_html(__('Full flow coverage', 'webmakerr')); ?></span>
+                    <span class="text-sm font-semibold text-zinc-400"><?php echo esc_html__('Unified revenue journey', 'webmakerr'); ?></span>
                   </div>
                   <div class="mt-4 flex flex-col gap-3">
                     <h3 class="text-lg font-semibold text-zinc-950 sm:text-xl"><?php echo esc_html($module['title']); ?></h3>
