@@ -368,10 +368,13 @@ if (! function_exists('marketing_business_render_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
-        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+      <section class="border-t border-zinc-200 bg-white py-16">
+        <div class="container mx-auto px-6 lg:px-8">
           <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div class="flex flex-col gap-6 text-zinc-600">
+              <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
+                <?php esc_html_e('Trusted by growing teams', 'webmakerr'); ?>
+              </span>
               <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
                 Growth should be automatic — not exhausting.
               </h2>
@@ -387,7 +390,7 @@ if (! function_exists('marketing_business_render_icon')) {
                 Webmakerr removes the friction that keeps teams in reactive mode, so every launch, campaign, and customer touchpoint stays consistent.
               </p>
             </div>
-            <div class="grid gap-4 sm:grid-cols-3">
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <?php
               $marketing_stats = array(
                   array(
