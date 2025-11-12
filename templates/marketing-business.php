@@ -89,6 +89,7 @@ $marketing_business_lead_endpoint      = esc_url_raw(rest_url('webmakerr/v1/crm-
 $marketing_business_lead_nonce         = wp_create_nonce('wp_rest');
 $marketing_business_progress_template  = __('Step {current} of {total}', 'webmakerr');
 $marketing_business_script_handle      = 'webmakerr-build-assets-app-js';
+$marketing_business_customer_stories   = home_url('/customer-stories/');
 
 $marketing_business_inline_script = <<<'JS'
 (function () {
@@ -1183,29 +1184,53 @@ get_header();
     <article <?php post_class('flex flex-col'); ?>>
       <section class="relative overflow-hidden border-b border-zinc-200 bg-gradient-to-br from-[#F5F9FF] via-[#ECF3FF] to-[#D9E8FF]">
         <div class="relative z-10 mx-auto max-w-screen-xl px-6 py-12 lg:px-8 lg:py-20">
-          <div class="grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+          <div class="grid items-start gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]">
             <div class="flex flex-col gap-6">
-              <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
-                <?php esc_html_e('Managed Business Platform', 'webmakerr'); ?>
-              </span>
-              <h1 class="mt-4 text-4xl font-medium tracking-tight [text-wrap:balance] text-zinc-950 sm:text-5xl">
-                <?php esc_html_e('Turn your digital journey into a revenue engine—without the upkeep.', 'webmakerr'); ?>
-              </h1>
-              <p class="max-w-2xl text-base leading-7 text-zinc-600 sm:text-lg">
-                <?php esc_html_e('Webmakerr keeps every experience fast, on-brand, and conversion-ready while it handles the updates, security, and integrations that usually slow teams down.', 'webmakerr'); ?>
-              </p>
-            <div class="flex gap-3 mt-6">
-                <div class="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-[5px] shadow-sm text-sm font-medium">
-                  <?php esc_html_e('4.9/5 Satisfaction', 'webmakerr'); ?>
-                </div>
-                <div class="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-[5px] shadow-sm text-sm font-medium">
-                  <?php esc_html_e('3X Faster Onboarding', 'webmakerr'); ?>
-                </div>
-                <div class="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-[5px] shadow-sm text-sm font-medium">
-                  <?php esc_html_e('Trusted by 250+ Teams', 'webmakerr'); ?>
-                </div>
+              <div class="max-w-xl space-y-6">
+                <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-primary">
+                  <?php esc_html_e('Managed Business Platform', 'webmakerr'); ?>
+                </span>
+                <h1 class="text-4xl font-medium tracking-tight [text-wrap:balance] text-zinc-950 sm:text-5xl">
+                  <?php esc_html_e('Revenue marketing leaders launch conversion-ready journeys without owning the stack.', 'webmakerr'); ?>
+                </h1>
+                <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                  <?php esc_html_e('Webmakerr pairs a managed WordPress + CRM platform with a specialist team so every campaign stays fast, secure, and on-brand while we run the operations.', 'webmakerr'); ?>
+                </p>
               </div>
-              <div class="mt-10 w-full max-w-xl rounded-[8px] border border-white/70 bg-white/90 p-6 shadow-lg shadow-primary/10 backdrop-blur-sm">
+              <div class="mt-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+                <button type="button" class="inline-flex w-full justify-start text-sm font-semibold text-zinc-600 underline decoration-dashed underline-offset-4 transition hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:w-auto" data-platform-modal-open aria-controls="platform-explainer-modal" data-analytics-event="marketing-top-platform-preview" data-analytics-funnel="top">
+                  <?php esc_html_e('Preview the Platform Tour →', 'webmakerr'); ?>
+                </button>
+                <a class="inline-block text-sm text-zinc-500 underline decoration-dashed underline-offset-4 transition hover:text-zinc-700 sm:text-zinc-600" href="#lead-magnet" data-analytics-event="marketing-mid-blueprint-scroll" data-analytics-funnel="mid">
+                  <?php esc_html_e('Get the Blueprint', 'webmakerr'); ?>
+                </a>
+              </div>
+              <p class="mt-4 text-xs font-medium text-zinc-500 sm:text-sm">
+                <?php esc_html_e('Onboarding cohorts fill quickly—reserve your spot while availability lasts.', 'webmakerr'); ?>
+              </p>
+            </div>
+            <div class="relative w-full max-w-lg rounded-2xl border border-white/60 bg-white/95 p-8 shadow-2xl shadow-primary/10 backdrop-blur lg:ml-auto">
+              <ul class="flex flex-col gap-2 text-sm text-zinc-600">
+                <li class="flex items-center gap-2 font-medium text-zinc-700">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('check', 'h-4 w-4 text-primary');
+                  ?>
+                  <span><?php esc_html_e('4.9/5 satisfaction from growth marketing teams', 'webmakerr'); ?></span>
+                </li>
+                <li class="flex items-center gap-2 font-medium text-zinc-700">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('activity', 'h-4 w-4 text-primary');
+                  ?>
+                  <span><?php esc_html_e('Onboards 3× faster than typical replatforms', 'webmakerr'); ?></span>
+                </li>
+                <li class="flex items-center gap-2 font-medium text-zinc-700">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('target', 'h-4 w-4 text-primary');
+                  ?>
+                  <span><?php esc_html_e('Chosen by 250+ multi-brand operators', 'webmakerr'); ?></span>
+                </li>
+              </ul>
+              <div class="mt-6 rounded-xl border border-zinc-200/80 bg-white p-6 shadow-lg shadow-primary/10">
                 <div class="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
                   <span><?php esc_html_e('Plan Your Demo', 'webmakerr'); ?></span>
                   <span data-progress-label><?php echo esc_html(sprintf(__('Step %1$s of %2$s', 'webmakerr'), 1, $marketing_business_steps_total)); ?></span>
@@ -1356,6 +1381,11 @@ get_header();
                         <?php esc_html_e('Confirm My Demo Plan', 'webmakerr'); ?>
                       </button>
                     </div>
+                    <div class="text-center text-xs text-zinc-500 sm:text-sm">
+                      <a class="font-semibold text-primary transition hover:text-primary/80" href="<?php echo esc_url($marketing_business_customer_stories); ?>" data-analytics-event="marketing-top-customer-stories" data-analytics-funnel="mid">
+                        <?php esc_html_e('See customer stories', 'webmakerr'); ?>
+                      </a>
+                    </div>
                   </div>
                   <div class="hidden rounded border border-red-200 bg-red-50 px-4 py-3 text-xs font-medium text-red-700" data-form-alert role="alert"></div>
                 </form>
@@ -1368,88 +1398,6 @@ get_header();
                     <?php esc_html_e('Choose your time →', 'webmakerr'); ?>
                   </a>
                 </div>
-              </div>
-              <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <button type="button" class="inline-flex w-full justify-center rounded border border-zinc-200 bg-transparent px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:border-zinc-300 hover:bg-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 sm:w-auto" data-platform-modal-open aria-controls="platform-explainer-modal" data-analytics-event="marketing-top-platform-preview" data-analytics-funnel="top">
-                  <?php esc_html_e('Preview the Platform Tour →', 'webmakerr'); ?>
-                </button>
-                <a class="inline-block text-sm text-gray-600 underline transition hover:text-gray-800 sm:ml-4" href="#lead-magnet" data-analytics-event="marketing-mid-blueprint-scroll" data-analytics-funnel="mid">
-                  <?php esc_html_e('Get the Blueprint', 'webmakerr'); ?>
-                </a>
-              </div>
-              <p class="mt-3 text-xs font-medium text-zinc-500 sm:text-sm">
-                <?php esc_html_e('Onboarding cohorts fill quickly—reserve your spot while availability lasts.', 'webmakerr'); ?>
-              </p>
-            </div>
-            <div class="relative isolate overflow-hidden rounded-[5px] border border-white/60 bg-white/80 p-8 shadow-xl shadow-primary/10 backdrop-blur">
-              <div class="absolute right-4 top-4 flex items-center gap-2 rounded-full border border-primary/20 bg-white/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary shadow-sm">
-                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                echo marketing_business_render_icon('target', 'h-4 w-4 text-primary');
-                ?>
-                <span class="text-primary/80"><?php esc_html_e('Launch-ready in 60 days', 'webmakerr'); ?></span>
-              </div>
-              <div class="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl"></div>
-              <div class="relative flex flex-col gap-6">
-                <?php if (has_post_thumbnail()) : ?>
-                  <figure class="overflow-hidden rounded-[8px] border border-zinc-200 bg-white/90">
-                    <?php echo wp_kses_post(get_the_post_thumbnail(null, 'large', array('class' => 'h-full w-full object-cover'))); ?>
-                  </figure>
-                <?php endif; ?>
-                <div class="bg-white shadow-sm rounded-[5px] p-6 mb-6">
-                  <div class="inline-flex items-center px-3 py-1 bg-blue-50 text-blue-600 text-[12px] font-medium rounded-full mb-3">
-                    LAUNCH-READY IN 60 DAYS
-                  </div>
-
-                  <h3 class="text-[24px] font-semibold text-gray-900 mb-2">
-                    Unified Growth Stack
-                  </h3>
-
-                  <p class="text-[15px] text-gray-600 leading-relaxed">
-                    Webmakerr brings your website, CRM, store, and analytics into one managed platform so you can grow without tech debt.
-                  </p>
-                </div>
-                <div class="rounded-[6px] border border-primary/20 bg-gradient-to-r from-primary/5 via-primary/10 to-transparent p-6 shadow-sm">
-                  <div class="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
-                    <span class="flex items-center gap-2">
-                      <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                      echo marketing_business_render_icon('trending-up', 'h-4 w-4 text-primary');
-                      ?>
-                      <?php esc_html_e('Adoption momentum', 'webmakerr'); ?>
-                    </span>
-                    <span class="text-primary/70"><?php esc_html_e('Customer cohorts', 'webmakerr'); ?></span>
-                  </div>
-                  <div class="mt-4 flex items-center justify-between text-sm font-medium text-zinc-700">
-                    <span><?php esc_html_e('Teams fully onboarded', 'webmakerr'); ?></span>
-                    <span class="text-lg font-semibold text-zinc-950">78%</span>
-                  </div>
-                  <div class="mt-3 h-2 w-full overflow-hidden rounded-full bg-white/70">
-                    <span class="block h-full w-[78%] rounded-full bg-gradient-to-r from-primary via-primary/80 to-primary/60"></span>
-                  </div>
-                  <p class="mt-3 text-xs text-zinc-500"><?php esc_html_e('Average adoption within the first 60 days of launch.', 'webmakerr'); ?></p>
-                </div>
-                <ul class="grid gap-3 text-sm text-zinc-600">
-                  <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
-                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                      echo marketing_business_render_icon('zap', 'h-5 w-5'); ?>
-                    </span>
-                    <?php esc_html_e('Lightning-fast sites with enterprise uptime.', 'webmakerr'); ?>
-                  </li>
-                  <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
-                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                      echo marketing_business_render_icon('layers', 'h-5 w-5'); ?>
-                    </span>
-                    <?php esc_html_e('Managed updates, security, and performance.', 'webmakerr'); ?>
-                  </li>
-                  <li class="flex items-center gap-3 rounded-[5px] border border-zinc-200 bg-white px-4 py-3">
-                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                      echo marketing_business_render_icon('check', 'h-5 w-5'); ?>
-                    </span>
-                    <?php esc_html_e('All-in-one tooling that scales with your business.', 'webmakerr'); ?>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
