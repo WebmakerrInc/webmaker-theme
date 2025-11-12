@@ -1535,26 +1535,87 @@ if (! $marketing_business_demo_link) {
         </div>
       </section>
 
+      <?php
+      $marketing_business_commitments = array(
+          array(
+              'icon'        => 'shield-check',
+              'title'       => __('Personalized launch plan', 'webmakerr'),
+              'description' => __('We map Webmakerr to your workflows, data, and integrations before day one.', 'webmakerr'),
+          ),
+          array(
+              'icon'        => 'server',
+              'title'       => __('Managed cloud infrastructure', 'webmakerr'),
+              'description' => __('Global edge delivery, security patching, and 24/7 monitoring handled for you.', 'webmakerr'),
+          ),
+          array(
+              'icon'        => 'repeat',
+              'title'       => __('Ongoing success partnership', 'webmakerr'),
+              'description' => __('Monthly strategy reviews and priority support keep momentum after launch.', 'webmakerr'),
+          ),
+          array(
+              'icon'        => 'rocket',
+              'title'       => __('Faster revenue experiments', 'webmakerr'),
+              'description' => __('Deploy new funnels and automations without juggling plugins or vendors.', 'webmakerr'),
+          ),
+      );
+      ?>
       <section id="demo" class="relative overflow-hidden bg-gradient-to-r from-primary/90 via-dark to-dark py-12 lg:py-20">
         <div class="relative mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div class="mx-auto flex max-w-3xl flex-col gap-6 text-center text-white">
-            <h2 class="text-3xl font-semibold text-white sm:text-4xl">
-              <?php esc_html_e('Ready to Run Your Entire Business on One Platform?', 'webmakerr'); ?>
-            </h2>
-            <p class="text-base leading-7 text-white/80 sm:text-lg">
-              <?php esc_html_e('Every Webmakerr setup is personalized, cloud-provisioned, and fully managed by our team. To guarantee performance and support quality, we onboard a limited number of businesses each month.', 'webmakerr'); ?>
-            </p>
-            <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a class="inline-flex items-center justify-center rounded border border-transparent bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="<?php echo esc_url($marketing_business_demo_link); ?>">
-                <?php esc_html_e('Book a Demo →', 'webmakerr'); ?>
-              </a>
-              <a class="inline-flex items-center justify-center rounded border border-white/70 bg-transparent px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="#platform-overview">
-                <?php esc_html_e('Explore the Platform →', 'webmakerr'); ?>
-              </a>
+          <div class="grid gap-12 text-white lg:grid-cols-[1fr_0.95fr] lg:items-center">
+            <div class="flex flex-col gap-6 text-center lg:text-left">
+              <h2 class="text-3xl font-semibold text-white sm:text-4xl">
+                <?php esc_html_e('Ready to Run Your Entire Business on One Platform?', 'webmakerr'); ?>
+              </h2>
+              <p class="text-base leading-7 text-white/80 sm:text-lg">
+                <?php esc_html_e('Every Webmakerr setup is personalized, cloud-provisioned, and fully managed by our team.', 'webmakerr'); ?>
+              </p>
+              <div class="inline-flex items-center justify-center gap-2 self-center rounded-full border border-white/30 bg-white/10 px-4 py-1 text-[0.75rem] font-semibold uppercase tracking-[0.3em] text-white/80 shadow-sm lg:self-start">
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo marketing_business_render_icon('target', 'h-4 w-4 text-white/80');
+                ?>
+                <span><?php esc_html_e('Limited onboarding each month', 'webmakerr'); ?></span>
+              </div>
+              <div class="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
+                <a class="inline-flex w-full items-center justify-center rounded border border-transparent bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline sm:w-auto" href="<?php echo esc_url($marketing_business_demo_link); ?>">
+                  <?php esc_html_e('Book a Demo →', 'webmakerr'); ?>
+                </a>
+                <a class="inline-flex w-full items-center justify-center rounded border border-white/70 bg-transparent px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline sm:w-auto" href="#platform-overview">
+                  <?php esc_html_e('Explore the Platform →', 'webmakerr'); ?>
+                </a>
+              </div>
+              <p class="text-sm text-white/70">
+                <?php esc_html_e('Join thousands of founders and teams who simplified their operations with Webmakerr. Fewer tools. Faster growth. Real control.', 'webmakerr'); ?>
+              </p>
             </div>
-            <p class="text-sm text-white/70">
-              <?php esc_html_e('Join thousands of founders and teams who simplified their operations with Webmakerr. Fewer tools. Faster growth. Real control.', 'webmakerr'); ?>
-            </p>
+            <div class="flex flex-col gap-6">
+              <div class="rounded-[12px] border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur">
+                <p class="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">
+                  <?php esc_html_e('What to expect after you schedule', 'webmakerr'); ?>
+                </p>
+                <p class="mt-3 text-base text-white/80">
+                  <?php esc_html_e('We reserve a discovery call to understand your growth goals, design a build-and-launch plan, and align the team that will manage it for you.', 'webmakerr'); ?>
+                </p>
+              </div>
+              <ul class="grid gap-4 sm:grid-cols-2">
+                <?php foreach ($marketing_business_commitments as $commitment) : ?>
+                  <li class="group flex h-full flex-col gap-3 rounded-[12px] border border-white/10 bg-white/5 p-5 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10">
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_render_icon($commitment['icon'], 'h-5 w-5');
+                      ?>
+                    </span>
+                    <p class="text-base font-semibold text-white">
+                      <?php echo esc_html($commitment['title']); ?>
+                    </p>
+                    <p class="text-sm leading-6 text-white/70">
+                      <?php echo esc_html($commitment['description']); ?>
+                    </p>
+                    <span class="mt-auto h-px w-14 rounded-full bg-gradient-to-r from-white/70 via-white/30 to-transparent opacity-0 transition duration-200 group-hover:opacity-100" aria-hidden="true"></span>
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
