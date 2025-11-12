@@ -39,6 +39,35 @@ if (! function_exists('marketing_business_render_icon')) {
         );
     }
 }
+
+if (! function_exists('marketing_business_feature_icon')) {
+    function marketing_business_feature_icon($name, $class = 'h-4 w-4 md:h-5 md:w-5 inline-block mr-2 shrink-0')
+    {
+        $icons = array(
+            'monitor'   => '<rect x="3" y="4" width="18" height="12" rx="2" fill="none"></rect><path d="M9 20h6" fill="none" stroke-width="1.5" stroke-linecap="round"></path><path d="M12 16v4" fill="none" stroke-width="1.5" stroke-linecap="round"></path>',
+            'cloud'     => '<path d="M7 18a5 5 0 1 1 1.1-9.87A6 6 0 1 1 17 18Z" fill="none" stroke-width="1.5"></path>',
+            'loop'      => '<path d="M15 3h6v6" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 21H3v-6" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 9A6 6 0 0 0 10.5 4.5L9 3" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 15A6 6 0 0 0 13.5 19.5L15 21" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>',
+            'cart'      => '<path d="M4 5h2l1.2 8.4A2 2 0 0 0 9.2 15h7.6a2 2 0 0 0 2-1.6L20 8H7" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="9" cy="19" r="1.5" fill="none"></circle><circle cx="17" cy="19" r="1.5" fill="none"></circle>',
+            'calendar'  => '<rect x="4" y="5" width="16" height="15" rx="2" fill="none"></rect><path d="M8 3v4" fill="none" stroke-width="1.5" stroke-linecap="round"></path><path d="M16 3v4" fill="none" stroke-width="1.5" stroke-linecap="round"></path><path d="M4 10h16" fill="none" stroke-width="1.5"></path>',
+            'search'    => '<circle cx="11" cy="11" r="6" fill="none"></circle><path d="m16 16 4 4" fill="none" stroke-width="1.5" stroke-linecap="round"></path>',
+            'chat'      => '<path d="M20 15a3 3 0 0 1-3 3H9l-5 3V6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3Z" fill="none"></path><path d="M8 8h8" fill="none" stroke-width="1.5" stroke-linecap="round"></path><path d="M8 12h5" fill="none" stroke-width="1.5" stroke-linecap="round"></path>',
+            'checklist' => '<path d="M9 6h12" fill="none" stroke-width="1.5" stroke-linecap="round"></path><path d="M9 12h12" fill="none" stroke-width="1.5" stroke-linecap="round"></path><path d="M9 18h12" fill="none" stroke-width="1.5" stroke-linecap="round"></path><path d="m4 6 1.5 1.5L8 5" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="m4 12 1.5 1.5L8 11" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="m4 18 1.5 1.5L8 17" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>',
+            'target'    => '<circle cx="12" cy="12" r="8" fill="none"></circle><circle cx="12" cy="12" r="4" fill="none"></circle><circle cx="12" cy="12" r="1.5"></circle>',
+            'lock'      => '<rect x="5" y="11" width="14" height="10" rx="2" fill="none"></rect><path d="M9 11V8a3 3 0 0 1 6 0v3" fill="none" stroke-width="1.5" stroke-linecap="round"></path><path d="M12 15v3" fill="none" stroke-width="1.5" stroke-linecap="round"></path>',
+            'coins'     => '<ellipse cx="12" cy="6" rx="6" ry="2.5" fill="none"></ellipse><path d="M6 6v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V6" fill="none" stroke-width="1.5"></path><path d="M6 12v6c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-6" fill="none" stroke-width="1.5"></path>'
+        );
+
+        if (! isset($icons[$name])) {
+            return '';
+        }
+
+        return sprintf(
+            '<svg class="%1$s" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">%2$s</svg>',
+            esc_attr($class),
+            $icons[$name]
+        );
+    }
+}
 ?>
 
 <main id="primary" class="flex flex-col bg-white">
@@ -282,6 +311,7 @@ if (! function_exists('marketing_business_render_icon')) {
           $comparison_features = array(
               array(
                   'label'     => 'Website + Store Setup',
+                  'icon'      => 'monitor',
                   'platforms' => array(
                       'typical'   => array('text' => '$149 one-time (basic setup)', 'status' => 'dash'),
                       'shopify'   => array('text' => '$29 / mo minimum + design fees', 'status' => 'dash'),
@@ -291,6 +321,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'Cloud Hosting + CDN',
+                  'icon'      => 'cloud',
                   'platforms' => array(
                       'typical'   => array('text' => '$15 / mo + $15 CDN add-on', 'status' => 'dash'),
                       'shopify'   => array('text' => 'Hosting included, CDN extra', 'status' => 'dash'),
@@ -300,6 +331,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'CRM &amp; Automation',
+                  'icon'      => 'loop',
                   'platforms' => array(
                       'typical'   => array('text' => '$39 / mo (standalone CRM)', 'status' => 'dash'),
                       'shopify'   => array('text' => 'Needs app integration', 'status' => 'dash'),
@@ -309,6 +341,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'eCommerce / Checkout',
+                  'icon'      => 'cart',
                   'platforms' => array(
                       'typical'   => array('text' => '$29 / mo + plugins', 'status' => 'dash'),
                       'shopify'   => array('text' => '$29–$79 / mo + 2–3 % fees', 'status' => 'dash'),
@@ -318,6 +351,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'Booking / Scheduling',
+                  'icon'      => 'calendar',
                   'platforms' => array(
                       'typical'   => array('text' => '$15 / mo (Calendly, etc.)', 'status' => 'dash'),
                       'shopify'   => array('text' => 'Requires app', 'status' => 'dash'),
@@ -327,6 +361,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'SEO Tools',
+                  'icon'      => 'search',
                   'platforms' => array(
                       'typical'   => array('text' => '$12 / mo (Yoast Pro)', 'status' => 'dash'),
                       'shopify'   => array('text' => 'Basic SEO built-in', 'status' => 'dash'),
@@ -336,6 +371,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'Customer Support',
+                  'icon'      => 'chat',
                   'platforms' => array(
                       'typical'   => array('text' => '$49 / mo (Crisp, Intercom)', 'status' => 'dash'),
                       'shopify'   => array('text' => 'App integrations', 'status' => 'dash'),
@@ -345,6 +381,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'Project Management',
+                  'icon'      => 'checklist',
                   'platforms' => array(
                       'typical'   => array('text' => '$25 / mo (Asana, ClickUp)', 'status' => 'dash'),
                       'shopify'   => array('text' => 'Not included', 'status' => 'dash'),
@@ -354,6 +391,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'Server-Side Tracking',
+                  'icon'      => 'target',
                   'platforms' => array(
                       'typical'   => array('text' => '$19 / mo (Stape)', 'status' => 'dash'),
                       'shopify'   => array('text' => 'Third-party integration', 'status' => 'dash'),
@@ -363,6 +401,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'Backup &amp; Security',
+                  'icon'      => 'lock',
                   'platforms' => array(
                       'typical'   => array('text' => '$5 / mo plugin', 'status' => 'dash'),
                       'shopify'   => array('text' => 'Basic included, advanced extra', 'status' => 'dash'),
@@ -372,6 +411,7 @@ if (! function_exists('marketing_business_render_icon')) {
               ),
               array(
                   'label'     => 'Total Monthly Cost',
+                  'icon'      => 'coins',
                   'platforms' => array(
                       'typical'   => array('text' => '$253 / mo + $149 setup', 'status' => 'dash'),
                       'shopify'   => array('text' => '$100–$200 / mo (avg)', 'status' => 'dash'),
@@ -387,8 +427,14 @@ if (! function_exists('marketing_business_render_icon')) {
             <div class="hidden lg:block lg:w-64 xl:w-72">
               <div class="sticky top-24 space-y-4">
                 <?php foreach ($comparison_features as $feature) : ?>
-                  <div class="rounded-xl border border-zinc-200 bg-white px-4 py-3 shadow-sm">
-                    <p class="text-sm font-semibold text-zinc-700"><?php echo esc_html($feature['label']); ?></p>
+                  <div class="rounded-[5px] border border-zinc-200 bg-white px-4 py-3 shadow-sm">
+                    <p class="flex items-center text-sm font-semibold text-zinc-700">
+                      <?php
+                      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                      echo marketing_business_feature_icon($feature['icon']);
+                      ?>
+                      <span><?php echo esc_html($feature['label']); ?></span>
+                    </p>
                   </div>
                 <?php endforeach; ?>
               </div>
@@ -424,7 +470,13 @@ if (! function_exists('marketing_business_render_icon')) {
                           }
                           ?>
                           <div class="flex flex-col gap-2 px-6 py-4 text-left">
-                            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-400 lg:hidden"><?php echo esc_html($feature['label']); ?></p>
+                            <p class="flex items-center text-xs font-semibold uppercase tracking-[0.24em] text-zinc-400 lg:hidden">
+                              <?php
+                              // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                              echo marketing_business_feature_icon($feature['icon']);
+                              ?>
+                              <span><?php echo esc_html($feature['label']); ?></span>
+                            </p>
                             <div class="flex items-start gap-2">
                               <span class="mt-0.5 text-base <?php echo esc_attr($icon_class); ?>" aria-hidden="true"><?php echo $icon_symbol; ?></span>
                               <span class="leading-6 <?php echo esc_attr($text_classes); ?>"><?php echo esc_html($value['text']); ?></span>
@@ -439,11 +491,11 @@ if (! function_exists('marketing_business_render_icon')) {
             </div>
           </div>
 
-          <div class="mt-16 rounded-2xl border border-[#01C468] bg-white px-8 py-10 text-center shadow-lg">
-            <p class="text-2xl font-semibold text-zinc-950">
-              <span class="text-[#01C468]">💰 Save hundreds every month — one platform, no plugins, no limits.</span>
-            </p>
-            <a href="#" class="btn-main mt-4 inline-flex items-center justify-center px-6 py-3 text-base font-medium">See How Webmakerr Works →</a>
+          <div class="mt-10 rounded-[5px] bg-gradient-to-r from-[#01C468] to-[#00B7A5] p-10 pb-10 text-center text-white md:p-14 md:pb-14">
+            <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-white">
+              💰 Save hundreds every month — one platform, no plugins, no limits.
+            </h3>
+            <a href="#" class="btn-main inline-block mt-3 px-8 py-3 bg-white text-[#01C468] font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105">See How Webmakerr Works →</a>
           </div>
         </div>
       </section>
