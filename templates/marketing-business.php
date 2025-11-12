@@ -997,6 +997,130 @@ $marketing_business_inline_script = <<<'JS'
             focusStep(currentStep);
         }
 
+        var testimonialCarousels = document.querySelectorAll('[data-testimonial-carousel]');
+
+        if (testimonialCarousels.length) {
+            testimonialCarousels.forEach(function (carousel) {
+                if (!carousel || carousel.__webmakerrInitialized) {
+                    return;
+                }
+
+                carousel.__webmakerrInitialized = true;
+
+                var slides = Array.prototype.slice.call(carousel.querySelectorAll('[data-carousel-slide]'));
+
+                if (!slides.length) {
+                    return;
+                }
+
+                var dots = Array.prototype.slice.call(carousel.querySelectorAll('[data-carousel-dot]'));
+                var prev = carousel.querySelector('[data-carousel-prev]');
+                var next = carousel.querySelector('[data-carousel-next]');
+                var status = carousel.querySelector('[data-carousel-status]');
+                var announcer = carousel.querySelector('[data-carousel-announcer]');
+                var totalSlides = slides.length;
+                var currentIndex = 0;
+
+                var updateStatus = function () {
+                    if (status) {
+                        status.textContent = (currentIndex + 1) + ' / ' + totalSlides;
+                    }
+                };
+
+                var updateAnnouncer = function () {
+                    if (announcer) {
+                        var message = slides[currentIndex] ? (slides[currentIndex].getAttribute('data-announcement') || '') : '';
+                        announcer.textContent = message;
+                    }
+                };
+
+                var setActiveDot = function () {
+                    if (!dots.length) {
+                        return;
+                    }
+
+                    dots.forEach(function (dot, idx) {
+                        if (idx === currentIndex) {
+                            dot.classList.add('bg-primary');
+                            dot.classList.remove('bg-primary/10');
+                            dot.setAttribute('aria-pressed', 'true');
+                        } else {
+                            dot.classList.remove('bg-primary');
+                            dot.classList.add('bg-primary/10');
+                            dot.setAttribute('aria-pressed', 'false');
+                        }
+                    });
+                };
+
+                var showSlide = function (index) {
+                    if (!slides.length) {
+                        return;
+                    }
+
+                    if (index < 0) {
+                        index = totalSlides - 1;
+                    } else if (index >= totalSlides) {
+                        index = 0;
+                    }
+
+                    currentIndex = index;
+
+                    slides.forEach(function (slide, idx) {
+                        if (idx === currentIndex) {
+                            slide.classList.remove('hidden');
+                            slide.setAttribute('aria-hidden', 'false');
+                        } else {
+                            slide.classList.add('hidden');
+                            slide.setAttribute('aria-hidden', 'true');
+                        }
+                    });
+
+                    setActiveDot();
+                    updateStatus();
+                    updateAnnouncer();
+                };
+
+                if (prev) {
+                    prev.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        showSlide(currentIndex - 1);
+                    });
+                }
+
+                if (next) {
+                    next.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        showSlide(currentIndex + 1);
+                    });
+                }
+
+                if (dots.length) {
+                    dots.forEach(function (dot) {
+                        dot.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            var targetIndex = parseInt(dot.getAttribute('data-carousel-dot'), 10);
+
+                            if (!isNaN(targetIndex)) {
+                                showSlide(targetIndex);
+                            }
+                        });
+                    });
+                }
+
+                carousel.addEventListener('keydown', function (event) {
+                    if (event.key === 'ArrowRight') {
+                        event.preventDefault();
+                        showSlide(currentIndex + 1);
+                    } else if (event.key === 'ArrowLeft') {
+                        event.preventDefault();
+                        showSlide(currentIndex - 1);
+                    }
+                });
+
+                showSlide(currentIndex);
+            });
+        }
+
         var modal = document.getElementById('platform-explainer-modal');
 
         if (modal) {
@@ -1397,6 +1521,85 @@ get_header();
                   <a class="mt-4 inline-flex items-center justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark !no-underline" href="<?php echo esc_url($marketing_business_demo_link); ?>" data-confirmation-link>
                     <?php esc_html_e('Choose your time →', 'webmakerr'); ?>
                   </a>
+                  <div class="mt-5 border-t border-green-200 pt-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-green-700">
+                      <?php esc_html_e('What happens after you book?', 'webmakerr'); ?>
+                    </p>
+                    <ol class="mt-3 space-y-3 text-left text-sm text-green-900 sm:text-base">
+                      <li class="flex items-start gap-3">
+                        <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800">1</span>
+                        <div class="space-y-1">
+                          <span class="block font-semibold"><?php esc_html_e('Calendar invite + prep checklist', 'webmakerr'); ?></span>
+                          <span class="block text-xs text-green-800 sm:text-sm"><?php esc_html_e('Receive a meeting link, agenda, and stakeholder checklist in minutes.', 'webmakerr'); ?></span>
+                        </div>
+                      </li>
+                      <li class="flex items-start gap-3">
+                        <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800">2</span>
+                        <div class="space-y-1">
+                          <span class="block font-semibold"><?php esc_html_e('Data readiness review', 'webmakerr'); ?></span>
+                          <span class="block text-xs text-green-800 sm:text-sm"><?php esc_html_e('Our specialists audit your current stack and flag integration or compliance needs.', 'webmakerr'); ?></span>
+                        </div>
+                      </li>
+                      <li class="flex items-start gap-3">
+                        <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800">3</span>
+                        <div class="space-y-1">
+                          <span class="block font-semibold"><?php esc_html_e('Launch plan delivered', 'webmakerr'); ?></span>
+                          <span class="block text-xs text-green-800 sm:text-sm"><?php esc_html_e('You’ll leave with a 30-60-90 day rollout timeline tailored to your goals.', 'webmakerr'); ?></span>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+                <div class="mt-6 space-y-4">
+                  <div class="rounded-xl border border-zinc-200 bg-white/80 px-5 py-4 shadow-sm">
+                    <p class="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-zinc-500">
+                      <?php esc_html_e('Trusted by growth teams at', 'webmakerr'); ?>
+                    </p>
+                    <div class="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-semibold text-zinc-400 sm:text-base">
+                      <span class="text-zinc-500">Playwright Commerce</span>
+                      <span class="text-zinc-500">Northbeam Studios</span>
+                      <span class="text-zinc-500">Brightline Collective</span>
+                      <span class="text-zinc-500">Atlas &amp; Co.</span>
+                    </div>
+                  </div>
+                  <div class="rounded-xl border border-primary/20 bg-primary/5 p-5 text-left">
+                    <div class="flex items-start gap-3">
+                      <span class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white/80 text-primary">
+                        <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                        echo marketing_business_render_icon('shield-check', 'h-5 w-5');
+                        ?>
+                      </span>
+                      <div class="space-y-2 text-sm text-primary/80 sm:text-base">
+                        <p class="font-semibold text-primary"><?php esc_html_e('Security &amp; support you can rely on', 'webmakerr'); ?></p>
+                        <ul class="space-y-1 text-sm leading-6 text-primary/90 sm:text-base sm:leading-7">
+                          <li class="flex items-start gap-2">
+                            <span class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                              <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                              echo marketing_business_render_icon('check', 'h-3 w-3');
+                              ?>
+                            </span>
+                            <span><?php esc_html_e('24/7 managed support desk with sub-30 minute response times.', 'webmakerr'); ?></span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                              <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                              echo marketing_business_render_icon('cloud', 'h-3 w-3');
+                              ?>
+                            </span>
+                            <span><?php esc_html_e('99.95% uptime SLA backed by global monitoring and failover.', 'webmakerr'); ?></span>
+                          </li>
+                          <li class="flex items-start gap-2">
+                            <span class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-full bg-primary/10 text-primary">
+                              <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                              echo marketing_business_render_icon('lock', 'h-3 w-3');
+                              ?>
+                            </span>
+                            <span><?php esc_html_e('GDPR-ready data handling and quarterly compliance reviews.', 'webmakerr'); ?></span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1643,6 +1846,129 @@ get_header();
           </div>
         </div>
       </div>
+
+      <?php
+      $marketing_business_testimonials = array(
+          array(
+              'quote'           => __('Webmakerr centralized our launches and removed three agencies from the process.', 'webmakerr'),
+              'metric'          => __('67% lift in marketing-qualified pipeline in 90 days', 'webmakerr'),
+              'metric_detail'   => __('Playwright Commerce scaled from 8 to 24 coordinated releases per quarter.', 'webmakerr'),
+              'name'            => 'Ava Rollins',
+              'role'            => __('VP Growth, Playwright Commerce', 'webmakerr'),
+          ),
+          array(
+              'quote'           => __('Our replatform finished weeks faster and support tickets dropped overnight.', 'webmakerr'),
+              'metric'          => __('38% faster funnel velocity across paid and partner channels', 'webmakerr'),
+              'metric_detail'   => __('Northbeam Studios reclaimed 120 engineering hours per month.', 'webmakerr'),
+              'name'            => 'Jordan Vega',
+              'role'            => __('Head of Lifecycle, Northbeam Studios', 'webmakerr'),
+          ),
+          array(
+              'quote'           => __('Compliance reviews became a formality because the environment stays audit ready.', 'webmakerr'),
+              'metric'          => __('99.96% uptime maintained through peak launches', 'webmakerr'),
+              'metric_detail'   => __('Brightline Collective doubled campaign volume without additional admins.', 'webmakerr'),
+              'name'            => 'Priya Patel',
+              'role'            => __('Director of Marketing Ops, Brightline Collective', 'webmakerr'),
+          ),
+      );
+      ?>
+
+      <section class="border-y border-zinc-200 bg-white py-12 lg:py-20">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="flex flex-col gap-8" data-testimonial-carousel>
+            <div class="flex flex-col gap-3 text-left sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('smile', 'h-4 w-4 text-primary');
+                  ?>
+                  <span class="text-primary/80"><?php esc_html_e('Customer proof', 'webmakerr'); ?></span>
+                </span>
+                <h2 class="mt-4 text-3xl font-semibold text-zinc-950 sm:text-4xl">
+                  <?php esc_html_e('Operators see measurable lift with Webmakerr', 'webmakerr'); ?>
+                </h2>
+                <p class="mt-3 max-w-2xl text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                  <?php esc_html_e('Hear how marketing, revenue, and lifecycle teams cut manual work while hitting pipeline targets.', 'webmakerr'); ?>
+                </p>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                <span data-carousel-status><?php echo esc_html('1 / ' . count($marketing_business_testimonials)); ?></span>
+              </div>
+            </div>
+            <div class="relative">
+              <div class="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+                <div class="relative overflow-hidden">
+                  <?php foreach ($marketing_business_testimonials as $index => $testimonial) :
+                      $is_active      = (0 === $index);
+                      $slide_classes  = 'flex h-full flex-col justify-between gap-6 rounded-[14px] border border-primary/20 bg-white/95 p-6 text-left shadow-lg shadow-primary/10';
+                      if (! $is_active) {
+                          $slide_classes .= ' hidden';
+                      }
+                      $announcement = sprintf(
+                          /* translators: 1: testimonial metric, 2: customer name */
+                          __('Showing %1$s from %2$s', 'webmakerr'),
+                          $testimonial['metric'],
+                          $testimonial['name']
+                      );
+                      ?>
+                      <figure
+                        class="<?php echo esc_attr($slide_classes); ?>"
+                        data-carousel-slide
+                        data-announcement="<?php echo esc_attr($announcement); ?>"
+                        aria-hidden="<?php echo $is_active ? 'false' : 'true'; ?>"
+                      >
+                        <div class="flex flex-col gap-4 text-zinc-600 sm:text-lg sm:leading-8">
+                          <blockquote class="text-base font-medium leading-7 text-zinc-700 sm:text-xl sm:leading-8">
+                            &ldquo;<?php echo esc_html($testimonial['quote']); ?>&rdquo;
+                          </blockquote>
+                          <p class="text-sm font-semibold text-primary sm:text-base">
+                            <?php echo esc_html($testimonial['metric']); ?>
+                          </p>
+                          <p class="text-xs text-zinc-500 sm:text-sm">
+                            <?php echo esc_html($testimonial['metric_detail']); ?>
+                          </p>
+                        </div>
+                        <figcaption class="border-t border-zinc-100 pt-4 text-sm text-zinc-500">
+                          <p class="font-semibold text-zinc-900"><?php echo esc_html($testimonial['name']); ?></p>
+                          <p><?php echo esc_html($testimonial['role']); ?></p>
+                        </figcaption>
+                      </figure>
+                  <?php endforeach; ?>
+                </div>
+                <div class="flex flex-col items-center gap-3 sm:items-end">
+                  <div class="flex gap-3">
+                    <button type="button" class="inline-flex items-center justify-center rounded-full border border-primary/20 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-primary shadow-sm transition hover:border-primary/30 hover:text-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" data-carousel-prev>
+                      &larr; <?php esc_html_e('Prev', 'webmakerr'); ?>
+                    </button>
+                    <button type="button" class="inline-flex items-center justify-center rounded-full border border-primary/20 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-primary shadow-sm transition hover:border-primary/30 hover:text-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" data-carousel-next>
+                      <?php esc_html_e('Next', 'webmakerr'); ?> &rarr;
+                    </button>
+                  </div>
+                  <div class="flex items-center gap-2" role="tablist">
+                    <?php foreach ($marketing_business_testimonials as $index => $testimonial) :
+                        $dot_classes = 'h-2.5 w-2.5 rounded-full border border-primary/30 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
+                        if (0 === $index) {
+                            $dot_classes .= ' bg-primary';
+                        } else {
+                            $dot_classes .= ' bg-primary/10';
+                        }
+                        ?>
+                        <button
+                          type="button"
+                          class="<?php echo esc_attr($dot_classes); ?>"
+                          data-carousel-dot="<?php echo esc_attr((string) $index); ?>"
+                          aria-label="<?php echo esc_attr(sprintf(__('Show testimonial %d', 'webmakerr'), $index + 1)); ?>"
+                          aria-pressed="<?php echo 0 === $index ? 'true' : 'false'; ?>"
+                        ></button>
+                    <?php endforeach; ?>
+                  </div>
+                  <div class="sr-only" aria-live="polite" data-carousel-announcer></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="border-y border-zinc-200 bg-slate-50/80 py-10">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
