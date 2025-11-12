@@ -243,6 +243,256 @@ get_header();
         </div>
       </section>
 
+      <section class="wm-container mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-center">
+          The Real Cost of Managing Multiple Platforms vs Webmakerr
+        </h2>
+        <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-12">
+          Most businesses pay for different tools to do what Webmakerr delivers in one platform.  
+          Here’s how your current stack compares with top industry tools — and what you get with Webmakerr.
+        </p>
+
+        <!-- DESKTOP TABLE -->
+        <div class="hidden md:block overflow-x-auto rounded-xl shadow-lg bg-white">
+          <table class="min-w-[960px] w-full border-collapse text-left">
+            <thead>
+              <tr class="text-xs font-semibold uppercase tracking-[0.24em] text-gray-500">
+                <th scope="col" class="px-6 py-5 align-bottom text-left">Category</th>
+                <th scope="col" class="px-6 py-5 align-bottom text-left">
+                  <div class="flex items-center gap-3">
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+                      <svg class="h-6 w-6 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 7.5 12 3l8 4.5-8 4.5-8-4.5Z"></path>
+                        <path d="m4 12 8 4.5 8-4.5"></path>
+                        <path d="m4 16.5 8 4.5 8-4.5"></path>
+                      </svg>
+                    </span>
+                    <span class="text-sm font-semibold text-gray-900">Typical Stack</span>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-5 align-bottom text-left">
+                  <div class="flex items-center gap-3">
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#95BF47]/10">
+                      <svg class="h-6 w-6 text-[#5E8E3E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M7 7h10l2 4-7 10-7-10 2-4Z"></path>
+                        <path d="M9 7c0-1.657 1.343-3 3-3s3 1.343 3 3"></path>
+                      </svg>
+                    </span>
+                    <span class="text-sm font-semibold text-gray-900">Shopify</span>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-5 align-bottom text-left">
+                  <div class="flex items-center gap-3">
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#F97316]/10">
+                      <svg class="h-6 w-6 text-[#EA580C]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="8" cy="12" r="3"></circle>
+                        <circle cx="16" cy="9" r="2"></circle>
+                        <circle cx="16" cy="15" r="2"></circle>
+                        <path d="M10.5 11c1.3-1.6 3.2-2.5 5.2-2.4"></path>
+                        <path d="M10.5 13c1.3 1.6 3.2 2.5 5.2 2.4"></path>
+                      </svg>
+                    </span>
+                    <span class="text-sm font-semibold text-gray-900">HubSpot / Salesforce</span>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-5 align-bottom text-left">
+                  <div class="flex items-center gap-3">
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#01C468]/10">
+                      <svg class="h-6 w-6 text-[#01C468]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 16V8l8-5 8 5v8l-8 5-8-5Z"></path>
+                        <path d="M8 13V9l4-2.5L16 9v4l-4 2.5L8 13Z"></path>
+                      </svg>
+                    </span>
+                    <span class="text-sm font-semibold text-[#01C468]">Webmakerr</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="text-sm text-gray-700">
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">Website + Store Setup</th>
+                <td class="px-6 py-4">$149 one-time (basic setup)</td>
+                <td class="px-6 py-4">$29 / mo + design fees</td>
+                <td class="px-6 py-4">Requires CMS integration</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">Included with WebBuilder</span></td>
+              </tr>
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">Cloud Hosting + CDN</th>
+                <td class="px-6 py-4">$15 / mo + $15 CDN add-on</td>
+                <td class="px-6 py-4">Hosting included, CDN extra</td>
+                <td class="px-6 py-4">Not included — separate hosting</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">Included — 170 edge servers, &lt;1.5 s load</span></td>
+              </tr>
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">CRM + Automations</th>
+                <td class="px-6 py-4">$39 / mo for CRM + $25 automation add-ons</td>
+                <td class="px-6 py-4">Needs third-party CRM + app fees</td>
+                <td class="px-6 py-4">$99+ / mo for automation tiers</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">WebCRM with automations included</span></td>
+              </tr>
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">Checkout &amp; Subscriptions</th>
+                <td class="px-6 py-4">$29 / mo cart + transaction fees</td>
+                <td class="px-6 py-4">$39 / mo + 2.9 % + 30¢ per sale</td>
+                <td class="px-6 py-4">Requires commerce add-on suites</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">WebCart + WebCommerce included</span></td>
+              </tr>
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">Booking &amp; Calendars</th>
+                <td class="px-6 py-4">$15 / mo per seat</td>
+                <td class="px-6 py-4">Requires third-party booking apps</td>
+                <td class="px-6 py-4">Scheduling add-ons billed separately</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">WebBooking with calendar sync included</span></td>
+              </tr>
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">SEO Tools &amp; Audits</th>
+                <td class="px-6 py-4">$12 / mo for premium plugins</td>
+                <td class="px-6 py-4">$20 / mo for SEO apps</td>
+                <td class="px-6 py-4">SEO not native — needs CMS Hub</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">AI SEO Suite with live audits included</span></td>
+              </tr>
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">Support Desk &amp; Chat</th>
+                <td class="px-6 py-4">$49 / mo for helpdesk SaaS</td>
+                <td class="px-6 py-4">Requires Zendesk / Gorgias integrations</td>
+                <td class="px-6 py-4">Service Hub starts at $50 / agent</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">WebSupport inbox included</span></td>
+              </tr>
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">Project Delivery &amp; Portals</th>
+                <td class="px-6 py-4">$25 / mo for project tools</td>
+                <td class="px-6 py-4">No native project delivery</td>
+                <td class="px-6 py-4">Requires PSA integrations</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">WebBoard client portals included</span></td>
+              </tr>
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">Server-Side Tracking &amp; Analytics</th>
+                <td class="px-6 py-4">$19 / mo for pixel tracking</td>
+                <td class="px-6 py-4">Server-side pixel via paid app</td>
+                <td class="px-6 py-4">Requires marketing ops suite</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">WebPixel analytics included</span></td>
+              </tr>
+              <tr class="odd:bg-gray-50 even:bg-white transition-colors duration-150 hover:bg-gray-100">
+                <th scope="row" class="px-6 py-4 text-base font-semibold text-gray-900">Maintenance &amp; Support</th>
+                <td class="px-6 py-4">$99+ / mo for retainers</td>
+                <td class="px-6 py-4">Experts network at $75+ / hr</td>
+                <td class="px-6 py-4">Enterprise support billed separately</td>
+                <td class="px-6 py-4"><span class="font-semibold text-[#01C468]">Managed cloud + support included</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- MOBILE STACK -->
+        <div class="md:hidden space-y-6">
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">Website + Store Setup</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $149 one-time (basic setup)</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> $29 / mo + design fees</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> Requires CMS integration</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> Included with WebBuilder</p>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">Cloud Hosting + CDN</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $15 / mo + $15 CDN add-on</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> Hosting included, CDN extra</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> Not included — separate hosting</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> Included — 170 edge servers, &lt;1.5 s load</p>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">CRM + Automations</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $39 / mo for CRM + $25 automation add-ons</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> Needs third-party CRM + app fees</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> $99+ / mo for automation tiers</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> WebCRM with automations included</p>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">Checkout &amp; Subscriptions</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $29 / mo cart + transaction fees</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> $39 / mo + 2.9 % + 30¢ per sale</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> Requires commerce add-on suites</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> WebCart + WebCommerce included</p>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">Booking &amp; Calendars</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $15 / mo per seat</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> Requires third-party booking apps</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> Scheduling add-ons billed separately</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> WebBooking with calendar sync included</p>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">SEO Tools &amp; Audits</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $12 / mo for premium plugins</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> $20 / mo for SEO apps</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> SEO not native — needs CMS Hub</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> AI SEO Suite with live audits included</p>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">Support Desk &amp; Chat</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $49 / mo for helpdesk SaaS</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> Requires Zendesk / Gorgias integrations</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> Service Hub starts at $50 / agent</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> WebSupport inbox included</p>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">Project Delivery &amp; Portals</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $25 / mo for project tools</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> No native project delivery</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> Requires PSA integrations</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> WebBoard client portals included</p>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">Server-Side Tracking &amp; Analytics</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $19 / mo for pixel tracking</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> Server-side pixel via paid app</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> Requires marketing ops suite</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> WebPixel analytics included</p>
+            </div>
+          </div>
+
+          <div class="bg-white border rounded-xl shadow-sm p-5">
+            <h3 class="text-xl font-semibold mb-2">Maintenance &amp; Support</h3>
+            <div class="space-y-1 text-sm text-gray-700">
+              <p><span class="font-semibold text-gray-900">Typical Stack:</span> $99+ / mo for retainers</p>
+              <p><span class="font-semibold text-gray-900">Shopify:</span> Experts network at $75+ / hr</p>
+              <p><span class="font-semibold text-gray-900">CRM (HubSpot / Salesforce):</span> Enterprise support billed separately</p>
+              <p><span class="font-semibold text-[#01C468]">Webmakerr:</span> Managed cloud + support included</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-10">
+          <p class="text-lg font-semibold">
+            💰 <span class="text-[#01C468] font-bold">Save hundreds every month</span> — one platform, no plugins, no limits.
+          </p>
+        </div>
+      </section>
+
       <div class="wm-container mx-auto px-6 md:px-12 lg:px-24">
 
         <section id="ecosystem" class="py-16 md:py-24 border-b border-gray-100">
