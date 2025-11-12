@@ -183,6 +183,27 @@ add_action(
     }
 );
 
+add_action(
+    'wp_enqueue_scripts',
+    static function (): void {
+        $handle = 'webmakerr-alpinejs';
+
+        if (wp_script_is($handle, 'enqueued')) {
+            return;
+        }
+
+        wp_enqueue_script(
+            $handle,
+            'https://cdn.jsdelivr.net/npm/alpinejs@3.13.10/dist/cdn.min.js',
+            [],
+            '3.13.10',
+            true
+        );
+
+        wp_script_add_data($handle, 'defer', true);
+    }
+);
+
 add_filter(
     'template_include',
     static function ($template) {
