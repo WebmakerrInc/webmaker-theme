@@ -77,6 +77,19 @@ if (! function_exists('marketing_business_feature_icon')) {
 }
 ?>
 
+<?php
+$marketing_business_demo_anchor = '#demo';
+$marketing_business_demo_link   = get_permalink(get_page_by_path('book-a-demo'));
+
+if (! $marketing_business_demo_link) {
+    $marketing_business_demo_link = get_permalink(get_page_by_path('contact'));
+}
+
+if (! $marketing_business_demo_link) {
+    $marketing_business_demo_link = home_url('/contact/');
+}
+?>
+
 <main id="primary" class="flex flex-col bg-white">
   <?php while (have_posts()) : the_post(); ?>
     <article <?php post_class('flex flex-col'); ?>>
@@ -94,11 +107,11 @@ if (! function_exists('marketing_business_feature_icon')) {
                 <?php esc_html_e('Keep journeys fast, consistent, and conversion-ready while Webmakerr handles the updates, security, and integrations that usually derail growth.', 'webmakerr'); ?>
               </p>
               <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:items-center">
-                <a class="inline-flex w-full justify-center rounded bg-dark px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-dark/90 !no-underline sm:w-auto" href="#with-webmakerr">
-                  <?php esc_html_e('Start Free →', 'webmakerr'); ?>
-                </a>
-                <a class="inline-flex w-full justify-center rounded border border-zinc-200 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition hover:border-zinc-300 hover:text-zinc-950 !no-underline sm:w-auto" href="#with-webmakerr">
+                <a class="inline-flex w-full justify-center rounded bg-dark px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-dark/90 !no-underline sm:w-auto" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
                   <?php esc_html_e('Book a Demo →', 'webmakerr'); ?>
+                </a>
+                <a class="inline-flex w-full justify-center rounded border border-zinc-200 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition hover:border-zinc-300 hover:text-zinc-950 !no-underline sm:w-auto" href="#platform-overview">
+                  <?php esc_html_e('Explore the Platform →', 'webmakerr'); ?>
                 </a>
               </div>
               <p class="mt-3 text-xs font-medium text-zinc-500 sm:text-sm">
@@ -257,7 +270,7 @@ if (! function_exists('marketing_business_feature_icon')) {
         </div>
       </div>
 
-      <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
+      <section id="managed-foundation" class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center text-zinc-600">
             <h3 class="text-2xl font-semibold text-zinc-950 sm:text-3xl">Visitors convert faster when the foundation is managed.</h3>
@@ -593,11 +606,11 @@ if (! function_exists('marketing_business_feature_icon')) {
             <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-white">
               Save hundreds every month — one platform, no plugins, no limits.
             </h3>
-            <a href="#" class="btn-main inline-flex items-center justify-center mt-3 px-8 py-3 font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105 !no-underline">See How Webmakerr Works →</a>
+            <a href="#platform-overview" class="btn-main inline-flex items-center justify-center mt-3 px-8 py-3 font-semibold rounded-[5px] shadow transition transform hover:shadow-lg hover:scale-105 !no-underline">See How Webmakerr Works →</a>
           </div>
         </div>
       </section>
-      <section id="with-webmakerr" class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
+      <section id="platform-overview" class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div class="flex flex-col gap-6 text-center text-zinc-600 lg:text-left">
@@ -607,8 +620,8 @@ if (! function_exists('marketing_business_feature_icon')) {
               <p class="text-base leading-7 sm:text-lg">Cloud hosting, CRM, store, SEO, support, analytics — managed, connected, and always up to date.</p>
               <p class="text-base leading-7 sm:text-lg">Webmakerr plans start at just $29 / month, including automation, backups, and proactive support.</p>
               <div class="mt-2 flex justify-center lg:justify-start">
-                <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#">
-                  See How Webmakerr Works →
+                <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#ecosystem">
+                  Discover the Managed Platform →
                 </a>
               </div>
             </div>
@@ -765,6 +778,23 @@ if (! function_exists('marketing_business_feature_icon')) {
         </div>
       </section>
 
+      <section class="border-t border-zinc-200 bg-white py-10">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="flex flex-col gap-4 rounded-[6px] border border-primary/20 bg-primary/5 px-6 py-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+            <div class="flex flex-col gap-2 text-zinc-700">
+              <span class="text-xs font-semibold uppercase tracking-[0.24em] text-primary"><?php esc_html_e('Next step', 'webmakerr'); ?></span>
+              <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php esc_html_e('See Webmakerr tailored to your team in a live walkthrough.', 'webmakerr'); ?></p>
+              <p class="text-sm text-zinc-600 sm:text-base"><?php esc_html_e('Meet with our specialists to map your workflows and success plan.', 'webmakerr'); ?></p>
+            </div>
+            <div class="flex justify-center sm:justify-end">
+              <a class="inline-flex items-center justify-center rounded bg-dark px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-dark/90 !no-underline" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
+                <?php esc_html_e('Book a Demo', 'webmakerr'); ?>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="border-t border-zinc-200 bg-white py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center">
@@ -843,7 +873,7 @@ if (! function_exists('marketing_business_feature_icon')) {
         </div>
       </section>
 
-      <section class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
+      <section id="ecosystem" class="border-t border-zinc-200 bg-slate-50 py-12 lg:py-20">
         <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-4xl flex-col gap-6 text-center">
             <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
@@ -993,8 +1023,8 @@ if (! function_exists('marketing_business_feature_icon')) {
             <?php endforeach; ?>
           </div>
           <div class="mt-12 flex justify-center">
-            <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#">
-              Explore the Webmakerr Ecosystem →
+            <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
+              Book a Demo to See It in Action →
             </a>
           </div>
         </div>
@@ -1065,8 +1095,8 @@ if (! function_exists('marketing_business_feature_icon')) {
             <p class="text-sm font-medium uppercase tracking-[0.24em] text-primary">
               Most users are fully operational within 48 hours.
             </p>
-            <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="#">
-              Start Free Setup →
+            <a class="btn-main inline-flex items-center justify-center px-6 py-3 text-base font-medium" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
+              Talk with Onboarding →
             </a>
             <p class="text-xs text-zinc-500 sm:text-sm">
               <?php esc_html_e('Your onboarding team remains on-call to fine-tune automations after go-live.', 'webmakerr'); ?>
@@ -1134,7 +1164,7 @@ if (! function_exists('marketing_business_feature_icon')) {
         </div>
       </section>
 
-      <section class="relative overflow-hidden bg-gradient-to-r from-primary/90 via-dark to-dark py-12 lg:py-20">
+      <section id="demo" class="relative overflow-hidden bg-gradient-to-r from-primary/90 via-dark to-dark py-12 lg:py-20">
         <div class="relative mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-3xl flex-col gap-6 text-center text-white">
             <h2 class="text-3xl font-semibold text-white sm:text-4xl">
@@ -1144,11 +1174,11 @@ if (! function_exists('marketing_business_feature_icon')) {
               <?php esc_html_e('Every Webmakerr setup is personalized, cloud-provisioned, and fully managed by our team. To guarantee performance and support quality, we onboard a limited number of businesses each month.', 'webmakerr'); ?>
             </p>
             <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a class="inline-flex items-center justify-center rounded border border-transparent bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="#">
-                <?php esc_html_e('Start Free — No Credit Card Needed →', 'webmakerr'); ?>
-              </a>
-              <a class="inline-flex items-center justify-center rounded border border-white/70 bg-transparent px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="#">
+              <a class="inline-flex items-center justify-center rounded border border-transparent bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="<?php echo esc_url($marketing_business_demo_link); ?>">
                 <?php esc_html_e('Book a Demo →', 'webmakerr'); ?>
+              </a>
+              <a class="inline-flex items-center justify-center rounded border border-white/70 bg-transparent px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="#platform-overview">
+                <?php esc_html_e('Explore the Platform →', 'webmakerr'); ?>
               </a>
             </div>
             <p class="text-sm text-white/70">
