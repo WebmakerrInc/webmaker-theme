@@ -184,6 +184,52 @@ if (! $marketing_business_demo_link) {
         </div>
       </section>
 
+      <section class="border-y border-zinc-200 bg-slate-50/80 py-10">
+        <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+          <div class="flex flex-col gap-6 rounded-[10px] border border-primary/15 bg-white/90 p-6 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex flex-col gap-4 sm:max-w-md">
+              <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo marketing_business_render_icon('coins', 'h-4 w-4 text-primary');
+                ?>
+                <span class="text-primary/80"><?php esc_html_e('Predictable pricing', 'webmakerr'); ?></span>
+              </span>
+              <div class="flex items-baseline gap-3 text-zinc-950">
+                <span class="text-4xl font-semibold sm:text-5xl">$29</span>
+                <span class="text-sm font-semibold uppercase tracking-[0.26em] text-primary/70 sm:text-base"><?php esc_html_e('per month', 'webmakerr'); ?></span>
+              </div>
+              <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php esc_html_e('One managed plan covers your site, store, security, and analytics — no surprise add-ons.', 'webmakerr'); ?></p>
+            </div>
+            <ul class="grid gap-3 text-sm text-zinc-600 sm:max-w-md sm:text-base">
+              <li class="flex items-center gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 shadow-sm">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('check', 'h-4 w-4');
+                  ?>
+                </span>
+                <span><?php esc_html_e('Managed hosting and daily monitoring', 'webmakerr'); ?></span>
+              </li>
+              <li class="flex items-center gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 shadow-sm">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('layers', 'h-4 w-4');
+                  ?>
+                </span>
+                <span><?php esc_html_e('Unlimited platform updates handled for you', 'webmakerr'); ?></span>
+              </li>
+              <li class="flex items-center gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 shadow-sm">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                  echo marketing_business_render_icon('target', 'h-4 w-4');
+                  ?>
+                </span>
+                <span><?php esc_html_e('Launch concierge to keep go-lives on track', 'webmakerr'); ?></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <div class="bg-white">
         <div class="mx-auto flex max-w-screen-xl items-center gap-3 px-6 py-6 lg:px-8">
           <div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
