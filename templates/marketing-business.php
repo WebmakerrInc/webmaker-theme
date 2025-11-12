@@ -823,21 +823,21 @@ if (! function_exists('marketing_business_render_icon')) {
         <div class="relative mx-auto max-w-screen-xl px-6 lg:px-8">
           <div class="mx-auto flex max-w-3xl flex-col gap-6 text-center text-white">
             <h2 class="text-3xl font-semibold text-white sm:text-4xl">
-              Ready to Run Your Entire Business on One Platform?
+              <?php esc_html_e('Ready to Run Your Entire Business on One Platform?', 'webmakerr'); ?>
             </h2>
             <p class="text-base leading-7 text-white/80 sm:text-lg">
-              Every Webmakerr setup is personalized, cloud-provisioned, and fully managed by our team. To guarantee performance and support quality, we onboard a limited number of businesses each month.
+              <?php esc_html_e('Every Webmakerr setup is personalized, cloud-provisioned, and fully managed by our team. To guarantee performance and support quality, we onboard a limited number of businesses each month.', 'webmakerr'); ?>
             </p>
             <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a class="inline-flex items-center justify-center rounded bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="#">
-                Start Free — No Credit Card Needed →
+              <a class="inline-flex items-center justify-center rounded border border-transparent bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="#">
+                <?php esc_html_e('Start Free — No Credit Card Needed →', 'webmakerr'); ?>
               </a>
               <a class="inline-flex items-center justify-center rounded border border-white/70 bg-transparent px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white !no-underline" href="#">
-                Book a Demo →
+                <?php esc_html_e('Book a Demo →', 'webmakerr'); ?>
               </a>
             </div>
             <p class="text-sm text-white/70">
-              Join thousands of founders and teams who simplified their operations with Webmakerr. Fewer tools. Faster growth. Real control.
+              <?php esc_html_e('Join thousands of founders and teams who simplified their operations with Webmakerr. Fewer tools. Faster growth. Real control.', 'webmakerr'); ?>
             </p>
           </div>
         </div>
