@@ -88,6 +88,12 @@ $marketing_business_steps_total = 3;
 $marketing_business_lead_endpoint      = esc_url_raw(rest_url('webmakerr/v1/crm-lead'));
 $marketing_business_lead_nonce         = wp_create_nonce('wp_rest');
 $marketing_business_progress_template  = __('Step {current} of {total}', 'webmakerr');
+$marketing_business_progress_messages  = array(
+    sprintf(__('Step %1$s of %2$s: Share your details', 'webmakerr'), 1, $marketing_business_steps_total),
+    sprintf(__('Step %1$s of %2$s: Tailor your rollout plan', 'webmakerr'), 2, $marketing_business_steps_total),
+    sprintf(__('Step %1$s of %2$s: Confirm & schedule', 'webmakerr'), 3, $marketing_business_steps_total),
+);
+$marketing_business_progress_estimate  = __('≈2 minutes to finish', 'webmakerr');
 $marketing_business_script_handle      = 'webmakerr-build-assets-app-js';
 $marketing_business_customer_stories   = home_url('/customer-stories/');
 
@@ -107,6 +113,29 @@ $marketing_business_inline_script = <<<'JS'
     };
 
     ready(function () {
+        var searchParams = null;
+
+        try {
+            searchParams = new URLSearchParams(window.location.search || '');
+        } catch (error) {
+            searchParams = null;
+        }
+
+        var parseDataList = function (value) {
+            if (!value) {
+                return [];
+            }
+
+            return value
+                .split('|')
+                .map(function (item) {
+                    return item.trim();
+                })
+                .filter(function (item) {
+                    return item.length > 0;
+                });
+        };
+
         var initializeSimpleLeadForm = function (simpleForm) {
             if (!simpleForm || simpleForm.__webmakerrInitialized) {
                 return;
@@ -127,6 +156,36 @@ $marketing_business_inline_script = <<<'JS'
             var submitButton = simpleForm.querySelector('[data-submit]');
             var defaultSubmitLabel = submitButton ? (submitButton.getAttribute('data-default-label') || submitButton.textContent) : '';
             var loadingSubmitLabel = submitButton ? (submitButton.getAttribute('data-loading-label') || defaultSubmitLabel) : defaultSubmitLabel;
+
+            var prefillHiddenInputs = function () {
+                Array.prototype.forEach.call(simpleForm.querySelectorAll('input[type="hidden"][data-prefill]'), function (hiddenInput) {
+                    var key = hiddenInput.dataset.prefill;
+
+                    if (!key) {
+                        return;
+                    }
+
+                    var value = '';
+
+                    if (searchParams && searchParams.has(key)) {
+                        value = searchParams.get(key) || '';
+                    }
+
+                    if (!value && simpleForm.dataset && Object.prototype.hasOwnProperty.call(simpleForm.dataset, key)) {
+                        value = simpleForm.dataset[key] || '';
+                    }
+
+                    if (!value && hiddenInput.dataset.defaultValue) {
+                        value = hiddenInput.dataset.defaultValue;
+                    }
+
+                    if (value) {
+                        hiddenInput.value = value;
+                    }
+                });
+            };
+
+            prefillHiddenInputs();
 
             var fieldWrappers = {};
             Array.prototype.forEach.call(simpleForm.querySelectorAll('[data-field]'), function (wrapper) {
@@ -562,6 +621,10 @@ $marketing_business_inline_script = <<<'JS'
             }
 
             var progressLabel = form.querySelector('[data-progress-label]');
+            var progressEstimateNode = form.querySelector('[data-progress-estimate-target]');
+            var progressMessages = parseDataList(form.dataset.progressLabels);
+            var progressEstimateOptions = parseDataList(form.dataset.progressEstimates);
+            var progressEstimateFallback = form.dataset.progressEstimate || (progressEstimateNode ? (progressEstimateNode.dataset.defaultEstimate || '') : '');
             var alertBox = form.querySelector('[data-form-alert]');
             var successPanel = document.getElementById('marketing-demo-success');
             var successMessage = successPanel ? successPanel.querySelector('[data-success-message]') : null;
@@ -601,9 +664,40 @@ $marketing_business_inline_script = <<<'JS'
                 primary_goal: primaryGoalInputs.length ? primaryGoalInputs[0] : null
             };
 
+            var prefillHiddenInputsForForm = function () {
+                Array.prototype.forEach.call(form.querySelectorAll('input[type="hidden"][data-prefill]'), function (hiddenInput) {
+                    var key = hiddenInput.dataset.prefill;
+
+                    if (!key) {
+                        return;
+                    }
+
+                    var value = '';
+
+                    if (searchParams && searchParams.has(key)) {
+                        value = searchParams.get(key) || '';
+                    }
+
+                    if (!value && Object.prototype.hasOwnProperty.call(form.dataset, key)) {
+                        value = form.dataset[key] || '';
+                    }
+
+                    if (!value && hiddenInput.dataset.defaultValue) {
+                        value = hiddenInput.dataset.defaultValue;
+                    }
+
+                    if (value) {
+                        hiddenInput.value = value;
+                    }
+                });
+            };
+
+            prefillHiddenInputsForForm();
+
             var totalSteps = steps.length;
             var currentStep = 0;
             var isSubmitting = false;
+            var submitButton = form.querySelector('[data-submit]');
 
             clearGeneralAlert = function () {
                 if (alertBox) {
@@ -679,12 +773,36 @@ $marketing_business_inline_script = <<<'JS'
             };
 
             var updateProgress = function (index) {
-                if (!progressLabel) {
-                    return;
+                if (progressLabel) {
+                    var message = '';
+
+                    if (progressMessages.length) {
+                        message = progressMessages[Math.min(index, progressMessages.length - 1)] || '';
+                    }
+
+                    if (!message) {
+                        var template = form.dataset.progressTemplate || 'Step {current} of {total}';
+                        message = template.replace('{current}', String(index + 1)).replace('{total}', String(totalSteps));
+                    }
+
+                    progressLabel.textContent = message;
                 }
 
-                var template = form.dataset.progressTemplate || 'Step {current} of {total}';
-                progressLabel.textContent = template.replace('{current}', String(index + 1)).replace('{total}', String(totalSteps));
+                if (progressEstimateNode) {
+                    var estimate = '';
+
+                    if (progressEstimateOptions.length) {
+                        estimate = progressEstimateOptions[Math.min(index, progressEstimateOptions.length - 1)] || '';
+                    }
+
+                    if (!estimate) {
+                        estimate = progressEstimateFallback || progressEstimateNode.dataset.defaultEstimate || '';
+                    }
+
+                    if (estimate) {
+                        progressEstimateNode.textContent = estimate;
+                    }
+                }
             };
 
             var focusStep = function (index) {
@@ -823,6 +941,56 @@ $marketing_business_inline_script = <<<'JS'
                 return valid;
             };
 
+            form.addEventListener('keydown', function (event) {
+                if (event.key !== 'Enter' || event.shiftKey) {
+                    return;
+                }
+
+                var target = event.target;
+
+                if (!target) {
+                    return;
+                }
+
+                if (target.isContentEditable) {
+                    return;
+                }
+
+                var tagName = (target.tagName || '').toLowerCase();
+
+                if (tagName === 'textarea' || tagName === 'button') {
+                    return;
+                }
+
+                var type = (target.type || '').toLowerCase();
+
+                if (type === 'button' || type === 'submit') {
+                    return;
+                }
+
+                var currentStepElement = steps[currentStep];
+
+                if (currentStepElement && !currentStepElement.contains(target)) {
+                    return;
+                }
+
+                event.preventDefault();
+                clearGeneralAlert();
+
+                if (!validateStep(currentStep)) {
+                    return;
+                }
+
+                if (currentStep < totalSteps - 1) {
+                    goToStep(Math.min(currentStep + 1, totalSteps - 1));
+                    return;
+                }
+
+                if (submitButton) {
+                    submitButton.click();
+                }
+            });
+
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
             });
@@ -874,8 +1042,6 @@ $marketing_business_inline_script = <<<'JS'
                     clearFieldError('primary_goal');
                 });
             });
-
-            var submitButton = form.querySelector('[data-submit]');
 
             if (submitButton) {
                 var defaultSubmitLabel = submitButton.getAttribute('data-default-label') || submitButton.textContent;
@@ -1355,9 +1521,12 @@ get_header();
                 </li>
               </ul>
               <div class="mt-6 rounded-xl border border-zinc-200/80 bg-white p-6 shadow-lg shadow-primary/10">
-                <div class="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
+                <div class="flex items-start justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
                   <span><?php esc_html_e('Plan Your Demo', 'webmakerr'); ?></span>
-                  <span data-progress-label><?php echo esc_html(sprintf(__('Step %1$s of %2$s', 'webmakerr'), 1, $marketing_business_steps_total)); ?></span>
+                  <div class="flex flex-col items-end text-right">
+                    <span class="normal-case" data-progress-label><?php echo esc_html($marketing_business_progress_messages[0]); ?></span>
+                    <span class="mt-0.5 text-[0.55rem] font-medium tracking-[0.08em] text-primary/80 normal-case" data-progress-estimate-target data-default-estimate="<?php echo esc_attr($marketing_business_progress_estimate); ?>"><?php echo esc_html($marketing_business_progress_estimate); ?></span>
+                  </div>
                 </div>
                 <form
                   id="marketing-demo-scheduler"
@@ -1366,10 +1535,15 @@ get_header();
                   data-endpoint="<?php echo esc_url($marketing_business_lead_endpoint); ?>"
                   data-nonce="<?php echo esc_attr($marketing_business_lead_nonce); ?>"
                   data-source="marketing-business-hero"
+                  data-intent="marketing-demo-plan"
                   data-error-message="<?php esc_attr_e('We couldn’t send your request. Please try again.', 'webmakerr'); ?>"
                   data-progress-template="<?php echo esc_attr($marketing_business_progress_template); ?>"
                   data-progress-complete="<?php esc_attr_e('Complete', 'webmakerr'); ?>"
+                  data-progress-labels="<?php echo esc_attr(implode('|', $marketing_business_progress_messages)); ?>"
+                  data-progress-estimate="<?php echo esc_attr($marketing_business_progress_estimate); ?>"
                 >
+                  <input type="hidden" name="source" data-prefill="source" />
+                  <input type="hidden" name="intent" data-prefill="intent" />
                   <div class="flex flex-col gap-4" data-step="0">
                     <div class="flex flex-col gap-2" data-field="name" data-error-message="<?php esc_attr_e('Please enter your name.', 'webmakerr'); ?>">
                       <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="marketing-demo-name">
@@ -1505,6 +1679,9 @@ get_header();
                         <?php esc_html_e('Confirm My Demo Plan', 'webmakerr'); ?>
                       </button>
                     </div>
+                    <p class="text-center text-xs text-zinc-500 sm:text-left">
+                      <?php esc_html_e('No sales spam. Just a tailored plan.', 'webmakerr'); ?>
+                    </p>
                     <div class="text-center text-xs text-zinc-500 sm:text-sm">
                       <a class="font-semibold text-primary transition hover:text-primary/80" href="<?php echo esc_url($marketing_business_customer_stories); ?>" data-analytics-event="marketing-top-customer-stories" data-analytics-funnel="mid">
                         <?php esc_html_e('See customer stories', 'webmakerr'); ?>
@@ -1667,7 +1844,8 @@ get_header();
               data-download-url="<?php echo esc_url(home_url('/resources/stack-risk-brief/')); ?>"
               data-error-message="<?php esc_attr_e('We couldn’t score your stack. Please try again in a moment.', 'webmakerr'); ?>"
             >
-              <input type="hidden" name="intent" value="stack_risk_score" />
+              <input type="hidden" name="intent" value="stack_risk_score" data-prefill="intent" data-default-value="stack_risk_score" />
+              <input type="hidden" name="source" data-prefill="source" />
               <div class="flex flex-col gap-2" data-field="name" data-required data-error-message="<?php esc_attr_e('Share your name so we can personalize the results.', 'webmakerr'); ?>">
                 <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="stack-risk-name">
                   <?php esc_html_e('Full name', 'webmakerr'); ?> <span class="text-red-500">*</span>
@@ -2206,7 +2384,8 @@ get_header();
                 data-download-url="<?php echo esc_url(home_url('/resources/managed-growth-blueprint/')); ?>"
                 data-error-message="<?php esc_attr_e('We couldn’t send the blueprint. Please try again shortly.', 'webmakerr'); ?>"
               >
-                <input type="hidden" name="intent" value="managed_growth_blueprint" />
+                <input type="hidden" name="intent" value="managed_growth_blueprint" data-prefill="intent" data-default-value="managed_growth_blueprint" />
+                <input type="hidden" name="source" data-prefill="source" />
                 <div class="flex flex-col gap-2" data-field="name" data-required data-error-message="<?php esc_attr_e('Please share your name so we can personalize the asset.', 'webmakerr'); ?>">
                   <label class="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500" for="managed-blueprint-name">
                     <?php esc_html_e('Full name', 'webmakerr'); ?> <span class="text-red-500">*</span>
