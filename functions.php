@@ -1,6 +1,7 @@
 <?php
 
 use Webmakerr\Framework\Assets\ViteCompiler;
+use Webmakerr\Framework\Features\LeadCapture;
 use Webmakerr\Framework\Features\MenuOptions;
 use Webmakerr\Framework\Theme;
 
@@ -91,7 +92,10 @@ function webmakerr(): Theme
             )
             ->enqueueAssets()
         )
-        ->features(static fn ($manager) => $manager->add(MenuOptions::class))
+        ->features(static fn ($manager) => $manager
+            ->add(MenuOptions::class)
+            ->add(LeadCapture::class)
+        )
         ->menus(static fn ($manager) => $manager
             ->add('primary', __('Primary Menu', 'webmakerr'))
             ->add('footer', __('Footer Menu', 'webmakerr'))
