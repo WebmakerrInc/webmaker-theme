@@ -728,3 +728,17 @@ if (! function_exists('webmakerr_rest_check_license')) {
         );
     }
 }
+
+// Disable Gutenberg everywhere
+add_filter('use_block_editor_for_post', '__return_false', 10);
+add_filter('use_block_editor_for_post_type', '__return_false', 10);
+
+// Disable Gutenberg widgets
+add_filter('use_widgets_block_editor', '__return_false');
+
+// Remove Gutenberg stylesheet
+add_action('wp_enqueue_scripts', function() {
+    wp_dequeue_style('wp-block-library');
+    wp_dequeue_style('wp-block-library-theme');
+    wp_dequeue_style('wc-block-style');
+}, 100);
