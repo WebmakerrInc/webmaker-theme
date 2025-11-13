@@ -97,6 +97,185 @@ $marketing_business_progress_estimate  = __('≈2 minutes to finish', 'webmakerr
 $marketing_business_script_handle      = 'webmakerr-build-assets-app-js';
 $marketing_business_customer_stories   = home_url('/customer-stories/');
 
+$marketing_business_primary_goals = array(
+    'launch' => array(
+        'value'       => 'launch',
+        'label'       => __('Launch faster', 'webmakerr'),
+        'description' => __('Ship campaigns without the checklist chaos.', 'webmakerr'),
+        'nav_label'   => __('Launch teams', 'webmakerr'),
+        'card'        => array(
+            'eyebrow' => __('For launch teams', 'webmakerr'),
+            'title'   => __('Ship campaigns without the checklist chaos', 'webmakerr'),
+            'summary' => __('Staging, QA, and approvals are handled by a managed launch pod before every drop.', 'webmakerr'),
+            'bullets' => array(
+                __('Dedicated launch pods prep staging and production cutovers for every campaign.', 'webmakerr'),
+                __('Pre-flight scorecards keep brand, legal, and compliance stakeholders aligned.', 'webmakerr'),
+            ),
+        ),
+        'section'     => array(
+            'id'          => 'goal-launch',
+            'headline'    => __('Launch teams keep campaigns on schedule', 'webmakerr'),
+            'description' => __('Run weekly drops with release management, QA automation, and conversion tuning handled by Webmakerr specialists.', 'webmakerr'),
+            'proof_points' => array(
+                array(
+                    'icon'  => 'rocket',
+                    'title' => __('Managed go-live playbooks', 'webmakerr'),
+                    'body'  => __('Dedicated release engineers prepare environments, rollback plans, and launch comms for every drop.', 'webmakerr'),
+                ),
+                array(
+                    'icon'  => 'check',
+                    'title' => __('QA and compliance baked in', 'webmakerr'),
+                    'body'  => __('Automated regression suites and consent reviews run before campaigns ship.', 'webmakerr'),
+                ),
+                array(
+                    'icon'  => 'target',
+                    'title' => __('Conversion experiments stay fast', 'webmakerr'),
+                    'body'  => __('Performance budgets and CRO modules keep landing pages quick even under peak spend.', 'webmakerr'),
+                ),
+            ),
+        ),
+        'comparison'  => array(
+            'features' => array(
+                __('Launch runbooks and go/no-go scoring', 'webmakerr'),
+                __('Dual-environment QA with automated rollbacks', 'webmakerr'),
+            ),
+            'outcome'  => __('Launch weekly without firefighting post-release issues.', 'webmakerr'),
+        ),
+    ),
+    'migrate' => array(
+        'value'       => 'migrate',
+        'label'       => __('Migrate without downtime', 'webmakerr'),
+        'description' => __('Replatform with zero customer disruption.', 'webmakerr'),
+        'nav_label'   => __('Migration leads', 'webmakerr'),
+        'card'        => array(
+            'eyebrow' => __('For replatform leads', 'webmakerr'),
+            'title'   => __('Move stacks without losing sleep', 'webmakerr'),
+            'summary' => __('Data integrity, redirects, and integrations are orchestrated for you.', 'webmakerr'),
+            'bullets' => array(
+                __('Parallel environments keep storefronts and funnels online during cutover.', 'webmakerr'),
+                __('Migration QA ensures analytics, auth, and checkout stay synced.', 'webmakerr'),
+            ),
+        ),
+        'section'     => array(
+            'id'          => 'goal-migrate',
+            'headline'    => __('Migration owners eliminate downtime risk', 'webmakerr'),
+            'description' => __('Run side-by-side environments, data QA, and integration hardening until every system is ready.', 'webmakerr'),
+            'proof_points' => array(
+                array(
+                    'icon'  => 'layers',
+                    'title' => __('Dual-run environments', 'webmakerr'),
+                    'body'  => __('Content, commerce, and CRM stay in sync while we rehearse the cutover.', 'webmakerr'),
+                ),
+                array(
+                    'icon'  => 'database',
+                    'title' => __('Data fidelity assurance', 'webmakerr'),
+                    'body'  => __('Automated checks validate redirects, customer data, and order history before switchover.', 'webmakerr'),
+                ),
+                array(
+                    'icon'  => 'shield-check',
+                    'title' => __('Compliance-friendly handover', 'webmakerr'),
+                    'body'  => __('Access policies, audit trails, and documentation are delivered for your stakeholders.', 'webmakerr'),
+                ),
+            ),
+        ),
+        'comparison'  => array(
+            'features' => array(
+                __('Content and data rehearsal environments', 'webmakerr'),
+                __('Automated redirect and integration validation', 'webmakerr'),
+            ),
+            'outcome'  => __('Cut over without revenue dips or compliance surprises.', 'webmakerr'),
+        ),
+    ),
+    'scale' => array(
+        'value'       => 'scale',
+        'label'       => __('Scale conversions', 'webmakerr'),
+        'description' => __('Protect speed and attribution as traffic surges.', 'webmakerr'),
+        'nav_label'   => __('Growth teams', 'webmakerr'),
+        'card'        => array(
+            'eyebrow' => __('For growth teams', 'webmakerr'),
+            'title'   => __('Keep every funnel fast as spend scales', 'webmakerr'),
+            'summary' => __('Webmakerr tunes performance budgets, experiment velocity, and reporting.', 'webmakerr'),
+            'bullets' => array(
+                __('Server-side tracking keeps attribution honest as channels expand.', 'webmakerr'),
+                __('Capacity planning prevents slowdowns during promotions.', 'webmakerr'),
+            ),
+        ),
+        'section'     => array(
+            'id'          => 'goal-scale',
+            'headline'    => __('Growth teams prove ROI with speed', 'webmakerr'),
+            'description' => __('Scale traffic-heavy launches while conversion data and site performance stay reliable.', 'webmakerr'),
+            'proof_points' => array(
+                array(
+                    'icon'  => 'activity',
+                    'title' => __('Performance governance', 'webmakerr'),
+                    'body'  => __('Real-time monitoring and budget alerts keep pages blazing fast under load.', 'webmakerr'),
+                ),
+                array(
+                    'icon'  => 'target',
+                    'title' => __('Conversion intelligence', 'webmakerr'),
+                    'body'  => __('Server-side attribution feeds dashboards teams actually trust.', 'webmakerr'),
+                ),
+                array(
+                    'icon'  => 'repeat',
+                    'title' => __('Experiment velocity', 'webmakerr'),
+                    'body'  => __('Reusable CRO components launch tests without developer bottlenecks.', 'webmakerr'),
+                ),
+            ),
+        ),
+        'comparison'  => array(
+            'features' => array(
+                __('Performance budgets and load tuning', 'webmakerr'),
+                __('Server-side attribution with CRO kits', 'webmakerr'),
+            ),
+            'outcome'  => __('Scale spend confidently while conversion rates climb.', 'webmakerr'),
+        ),
+    ),
+    'integrations' => array(
+        'value'       => 'integrations',
+        'label'       => __('Automate workflows', 'webmakerr'),
+        'description' => __('Unify data flows across marketing, sales, and service.', 'webmakerr'),
+        'nav_label'   => __('Ops & RevOps', 'webmakerr'),
+        'card'        => array(
+            'eyebrow' => __('For ops architects', 'webmakerr'),
+            'title'   => __('Connect every tool without duct tape', 'webmakerr'),
+            'summary' => __('Our engineers build and maintain the integrations your teams rely on.', 'webmakerr'),
+            'bullets' => array(
+                __('API and webhook builds are delivered as flat-rate managed work.', 'webmakerr'),
+                __('Ongoing monitoring keeps workflows firing with every update.', 'webmakerr'),
+            ),
+        ),
+        'section'     => array(
+            'id'          => 'goal-integrations',
+            'headline'    => __('Operations leaders orchestrate every system', 'webmakerr'),
+            'description' => __('Unify lifecycle automations, data syncs, and governance across marketing, sales, and service.', 'webmakerr'),
+            'proof_points' => array(
+                array(
+                    'icon'  => 'server',
+                    'title' => __('Integration factory', 'webmakerr'),
+                    'body'  => __('We design, build, and maintain the API and middleware connections you need.', 'webmakerr'),
+                ),
+                array(
+                    'icon'  => 'loop',
+                    'title' => __('Automation coverage', 'webmakerr'),
+                    'body'  => __('Lifecycle journeys and handoffs run on scheduled, monitored workflows.', 'webmakerr'),
+                ),
+                array(
+                    'icon'  => 'lock',
+                    'title' => __('Governed access', 'webmakerr'),
+                    'body'  => __('Role-based controls and audit logs keep stakeholders aligned.', 'webmakerr'),
+                ),
+            ),
+        ),
+        'comparison'  => array(
+            'features' => array(
+                __('Managed API and middleware builds', 'webmakerr'),
+                __('Lifecycle automation orchestration', 'webmakerr'),
+            ),
+            'outcome'  => __('Automations stay reliable without hiring an internal platform team.', 'webmakerr'),
+        ),
+    ),
+);
+
 $marketing_business_inline_script = <<<'JS'
 (function () {
     if (window.__webmakerrMarketingDemoSchedulerInitialized) {
@@ -609,6 +788,160 @@ $marketing_business_inline_script = <<<'JS'
             });
         }
 
+        var goalCardGroups = Array.prototype.slice.call(document.querySelectorAll('[data-goal-card-group]'));
+        var goalCardButtons = [];
+
+        goalCardGroups.forEach(function (group) {
+            goalCardButtons = goalCardButtons.concat(Array.prototype.slice.call(group.querySelectorAll('[data-goal-card]')));
+        });
+
+        var updateGoalCardState = function (value) {
+            if (!goalCardButtons.length) {
+                return;
+            }
+
+            goalCardButtons.forEach(function (button) {
+                var isActive = value && button.dataset.goalCard === value;
+
+                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+
+                if (isActive) {
+                    button.classList.add('border-primary/60', 'bg-primary/5', 'shadow-lg', 'shadow-primary/20');
+                    button.classList.remove('border-zinc-200');
+                } else {
+                    button.classList.remove('border-primary/60', 'bg-primary/5', 'shadow-lg', 'shadow-primary/20');
+                    button.classList.add('border-zinc-200');
+                }
+            });
+        };
+
+        if (goalCardButtons.length) {
+            goalCardButtons.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    var value = button.dataset.goalCard || '';
+
+                    if (!value) {
+                        return;
+                    }
+
+                    var targetSelector = button.dataset.goalCardTarget || '';
+                    var targetForm = targetSelector ? document.querySelector(targetSelector) : null;
+                    var radios = [];
+
+                    if (targetForm) {
+                        radios = Array.prototype.slice.call(targetForm.querySelectorAll('input[name="primary_goal"]'));
+                    }
+
+                    if (!radios.length) {
+                        radios = Array.prototype.slice.call(document.querySelectorAll('input[name="primary_goal"]'));
+                    }
+
+                    var matched = null;
+
+                    for (var i = 0; i < radios.length; i += 1) {
+                        if (radios[i].value === value) {
+                            matched = radios[i];
+                            break;
+                        }
+                    }
+
+                    if (matched) {
+                        matched.checked = true;
+
+                        try {
+                            matched.dispatchEvent(new Event('change', { bubbles: true }));
+                        } catch (error) {
+                            var fallbackEvent = document.createEvent('Event');
+                            fallbackEvent.initEvent('change', true, true);
+                            matched.dispatchEvent(fallbackEvent);
+                        }
+
+                        if (typeof matched.focus === 'function') {
+                            matched.focus();
+                        }
+                    }
+
+                    updateGoalCardState(value);
+                });
+            });
+        }
+
+        var allPrimaryGoalInputs = Array.prototype.slice.call(document.querySelectorAll('input[name="primary_goal"]'));
+
+        if (allPrimaryGoalInputs.length) {
+            allPrimaryGoalInputs.forEach(function (input) {
+                input.addEventListener('change', function () {
+                    if (input.checked) {
+                        updateGoalCardState(input.value);
+                    }
+                });
+            });
+
+            var initiallySelected = '';
+
+            for (var idx = 0; idx < allPrimaryGoalInputs.length; idx += 1) {
+                if (allPrimaryGoalInputs[idx].checked) {
+                    initiallySelected = allPrimaryGoalInputs[idx].value;
+                    break;
+                }
+            }
+
+            updateGoalCardState(initiallySelected);
+        }
+
+        var goalNav = document.querySelector('[data-goal-nav]');
+
+        if (goalNav) {
+            var goalNavLinks = Array.prototype.slice.call(goalNav.querySelectorAll('[data-goal-link]'));
+            var goalSections = Array.prototype.slice.call(document.querySelectorAll('[data-goal-section]'));
+
+            var setActiveNavLink = function (sectionId) {
+                if (!goalNavLinks.length) {
+                    return;
+                }
+
+                goalNavLinks.forEach(function (link) {
+                    var isActive = sectionId && link.dataset.goalLink === sectionId;
+
+                    if (isActive) {
+                        link.classList.add('border-primary/50', 'bg-primary/10', 'text-primary', 'shadow-sm');
+                        link.setAttribute('aria-current', 'true');
+                    } else {
+                        link.classList.remove('border-primary/50', 'bg-primary/10', 'text-primary', 'shadow-sm');
+                        link.setAttribute('aria-current', 'false');
+                    }
+                });
+            };
+
+            if (goalNavLinks.length) {
+                goalNavLinks.forEach(function (link) {
+                    link.addEventListener('click', function () {
+                        if (link.dataset.goalLink) {
+                            setActiveNavLink(link.dataset.goalLink);
+                        }
+                    });
+                });
+            }
+
+            if ('IntersectionObserver' in window && goalSections.length) {
+                var observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            setActiveNavLink(entry.target.getAttribute('data-goal-section'));
+                        }
+                    });
+                }, { rootMargin: '-45% 0px -45% 0px', threshold: 0.25 });
+
+                goalSections.forEach(function (section) {
+                    observer.observe(section);
+                });
+            } else if (goalNavLinks.length) {
+                setActiveNavLink(goalNavLinks[0].dataset.goalLink || '');
+            }
+        }
+
         var form = document.getElementById('marketing-demo-scheduler');
         var clearGeneralAlert = function () {};
         var showGeneralAlert = function () {};
@@ -1040,8 +1373,17 @@ $marketing_business_inline_script = <<<'JS'
             primaryGoalInputs.forEach(function (input) {
                 input.addEventListener('change', function () {
                     clearFieldError('primary_goal');
+
+                    if (typeof updateGoalCardState === 'function' && input.checked) {
+                        updateGoalCardState(input.value);
+                    }
                 });
             });
+
+            if (typeof updateGoalCardState === 'function') {
+                var initialGoal = getSelectedGoal();
+                updateGoalCardState(initialGoal ? initialGoal.value : '');
+            }
 
             if (submitButton) {
                 var defaultSubmitLabel = submitButton.getAttribute('data-default-label') || submitButton.textContent;
@@ -1520,6 +1862,46 @@ get_header();
                   <span><?php esc_html_e('Chosen by 250+ multi-brand operators', 'webmakerr'); ?></span>
                 </li>
               </ul>
+              <?php if (! empty($marketing_business_primary_goals)) : ?>
+                <div class="mt-6 space-y-3" data-goal-card-group>
+                  <p class="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-primary/80">
+                    <?php esc_html_e('Where do you fit?', 'webmakerr'); ?>
+                  </p>
+                  <div class="grid gap-3 sm:grid-cols-2">
+                    <?php foreach ($marketing_business_primary_goals as $goal) :
+                        $card = isset($goal['card']) ? $goal['card'] : array();
+                        ?>
+                        <button
+                          type="button"
+                          class="flex h-full w-full flex-col gap-3 rounded-[12px] border border-zinc-200 bg-white px-4 py-4 text-left transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                          data-goal-card="<?php echo esc_attr($goal['value']); ?>"
+                          data-goal-card-target="#marketing-demo-scheduler"
+                          aria-pressed="false"
+                        >
+                          <?php if (! empty($card['eyebrow'])) : ?>
+                            <span class="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-primary/70"><?php echo esc_html($card['eyebrow']); ?></span>
+                          <?php endif; ?>
+                          <div class="flex flex-col gap-2">
+                            <p class="text-sm font-semibold text-zinc-950 sm:text-base"><?php echo esc_html($card['title']); ?></p>
+                            <?php if (! empty($card['summary'])) : ?>
+                              <p class="text-xs leading-5 text-zinc-500 sm:text-sm sm:leading-6"><?php echo esc_html($card['summary']); ?></p>
+                            <?php endif; ?>
+                            <?php if (! empty($card['bullets'])) : ?>
+                              <ul class="grid gap-1.5 text-xs leading-5 text-zinc-500">
+                                <?php foreach ($card['bullets'] as $bullet) : ?>
+                                  <li class="flex items-start gap-2">
+                                    <span class="mt-1 inline-flex h-2 w-2 flex-none items-center justify-center rounded-full bg-primary/30"></span>
+                                    <span class="flex-1"><?php echo esc_html($bullet); ?></span>
+                                  </li>
+                                <?php endforeach; ?>
+                              </ul>
+                            <?php endif; ?>
+                          </div>
+                        </button>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+              <?php endif; ?>
               <div class="mt-6 rounded-xl border border-zinc-200/80 bg-white p-6 shadow-lg shadow-primary/10">
                 <div class="flex items-start justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
                   <span><?php esc_html_e('Plan Your Demo', 'webmakerr'); ?></span>
@@ -1601,34 +1983,17 @@ get_header();
                         <?php esc_html_e('Primary goal', 'webmakerr'); ?> <span class="text-red-500">*</span>
                       </span>
                       <div class="space-y-3" role="group" aria-label="<?php esc_attr_e('Select your primary goal', 'webmakerr'); ?>">
-                        <label class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 text-left text-sm text-zinc-600 transition hover:border-zinc-300">
-                          <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="launch" data-label="<?php esc_attr_e('Launch faster', 'webmakerr'); ?>" />
-                          <span>
-                            <span class="block text-sm font-semibold text-zinc-900"><?php esc_html_e('Launch faster', 'webmakerr'); ?></span>
-                            <span class="block text-xs text-zinc-500 sm:text-sm sm:text-zinc-600"><?php esc_html_e('Ship a conversion-ready experience in weeks.', 'webmakerr'); ?></span>
-                          </span>
-                        </label>
-                        <label class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 text-left text-sm text-zinc-600 transition hover:border-zinc-300">
-                          <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="migrate" data-label="<?php esc_attr_e('Migrate without downtime', 'webmakerr'); ?>" />
-                          <span>
-                            <span class="block text-sm font-semibold text-zinc-900"><?php esc_html_e('Migrate without downtime', 'webmakerr'); ?></span>
-                            <span class="block text-xs text-zinc-500 sm:text-sm sm:text-zinc-600"><?php esc_html_e('Replatform safely with CRM and commerce synced.', 'webmakerr'); ?></span>
-                          </span>
-                        </label>
-                        <label class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 text-left text-sm text-zinc-600 transition hover:border-zinc-300">
-                          <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="scale" data-label="<?php esc_attr_e('Scale conversions', 'webmakerr'); ?>" />
-                          <span>
-                            <span class="block text-sm font-semibold text-zinc-900"><?php esc_html_e('Scale conversions', 'webmakerr'); ?></span>
-                            <span class="block text-xs text-zinc-500 sm:text-sm sm:text-zinc-600"><?php esc_html_e('Unify funnels, analytics, and experiments.', 'webmakerr'); ?></span>
-                          </span>
-                        </label>
-                        <label class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 text-left text-sm text-zinc-600 transition hover:border-zinc-300">
-                          <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="integrations" data-label="<?php esc_attr_e('Automate workflows', 'webmakerr'); ?>" />
-                          <span>
-                            <span class="block text-sm font-semibold text-zinc-900"><?php esc_html_e('Automate workflows', 'webmakerr'); ?></span>
-                            <span class="block text-xs text-zinc-500 sm:text-sm sm:text-zinc-600"><?php esc_html_e('Connect CRM, store, and support in one motion.', 'webmakerr'); ?></span>
-                          </span>
-                        </label>
+                        <?php foreach ($marketing_business_primary_goals as $goal) : ?>
+                          <label class="flex items-start gap-3 rounded-[6px] border border-zinc-200 bg-white px-4 py-3 text-left text-sm text-zinc-600 transition hover:border-zinc-300">
+                            <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="<?php echo esc_attr($goal['value']); ?>" data-label="<?php echo esc_attr($goal['label']); ?>" />
+                            <span>
+                              <span class="block text-sm font-semibold text-zinc-900"><?php echo esc_html($goal['label']); ?></span>
+                              <?php if (! empty($goal['description'])) : ?>
+                                <span class="block text-xs text-zinc-500 sm:text-sm sm:text-zinc-600"><?php echo esc_html($goal['description']); ?></span>
+                              <?php endif; ?>
+                            </span>
+                          </label>
+                        <?php endforeach; ?>
                       </div>
                       <p class="hidden text-xs font-medium text-red-600" data-error="primary_goal"></p>
                     </div>
@@ -1894,34 +2259,17 @@ get_header();
                   <?php esc_html_e('Primary goal', 'webmakerr'); ?> <span class="text-red-500">*</span>
                 </span>
                 <div class="grid gap-2 sm:grid-cols-2">
-                  <label class="flex cursor-pointer items-start gap-3 rounded border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-700 transition hover:border-dark focus-within:border-dark">
-                    <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="launch" data-label="<?php esc_attr_e('Launch faster', 'webmakerr'); ?>" />
-                    <span class="leading-5">
-                      <span class="block font-semibold text-zinc-900"><?php esc_html_e('Launch faster', 'webmakerr'); ?></span>
-                      <span class="block text-xs text-zinc-500"><?php esc_html_e('Ship campaigns without the operational drag.', 'webmakerr'); ?></span>
-                    </span>
-                  </label>
-                  <label class="flex cursor-pointer items-start gap-3 rounded border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-700 transition hover:border-dark focus-within:border-dark">
-                    <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="migrate" data-label="<?php esc_attr_e('Migrate without downtime', 'webmakerr'); ?>" />
-                    <span class="leading-5">
-                      <span class="block font-semibold text-zinc-900"><?php esc_html_e('Migrate without downtime', 'webmakerr'); ?></span>
-                      <span class="block text-xs text-zinc-500"><?php esc_html_e('Stabilize infrastructure while you replatform.', 'webmakerr'); ?></span>
-                    </span>
-                  </label>
-                  <label class="flex cursor-pointer items-start gap-3 rounded border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-700 transition hover:border-dark focus-within:border-dark">
-                    <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="scale" data-label="<?php esc_attr_e('Scale conversions', 'webmakerr'); ?>" />
-                    <span class="leading-5">
-                      <span class="block font-semibold text-zinc-900"><?php esc_html_e('Scale conversions', 'webmakerr'); ?></span>
-                      <span class="block text-xs text-zinc-500"><?php esc_html_e('Keep every experience fast as traffic surges.', 'webmakerr'); ?></span>
-                    </span>
-                  </label>
-                  <label class="flex cursor-pointer items-start gap-3 rounded border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-700 transition hover:border-dark focus-within:border-dark">
-                    <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="integrations" data-label="<?php esc_attr_e('Automate workflows', 'webmakerr'); ?>" />
-                    <span class="leading-5">
-                      <span class="block font-semibold text-zinc-900"><?php esc_html_e('Automate workflows', 'webmakerr'); ?></span>
-                      <span class="block text-xs text-zinc-500"><?php esc_html_e('Connect tools and data without manual effort.', 'webmakerr'); ?></span>
-                    </span>
-                  </label>
+                  <?php foreach ($marketing_business_primary_goals as $goal) : ?>
+                    <label class="flex cursor-pointer items-start gap-3 rounded border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-700 transition hover:border-dark focus-within:border-dark">
+                      <input class="mt-1 h-4 w-4 rounded border border-zinc-200 text-primary focus:ring-dark/40" type="radio" name="primary_goal" value="<?php echo esc_attr($goal['value']); ?>" data-label="<?php echo esc_attr($goal['label']); ?>" />
+                      <span class="leading-5">
+                        <span class="block font-semibold text-zinc-900"><?php echo esc_html($goal['label']); ?></span>
+                        <?php if (! empty($goal['description'])) : ?>
+                          <span class="block text-xs text-zinc-500"><?php echo esc_html($goal['description']); ?></span>
+                        <?php endif; ?>
+                      </span>
+                    </label>
+                  <?php endforeach; ?>
                 </div>
                 <p class="hidden text-xs font-medium text-red-600" data-error="primary_goal"></p>
               </div>
@@ -1973,6 +2321,155 @@ get_header();
           </div>
         </div>
       </div>
+
+      <?php if (! empty($marketing_business_primary_goals)) : ?>
+        <nav class="sticky top-0 z-30 border-b border-zinc-200 bg-white/95 py-3 backdrop-blur" data-goal-nav>
+          <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="hidden text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-zinc-400 sm:inline">
+                <?php esc_html_e('Explore solutions by goal', 'webmakerr'); ?>
+              </span>
+              <div class="flex flex-wrap gap-2">
+                <?php foreach ($marketing_business_primary_goals as $goal) :
+                    $section = isset($goal['section']) ? $goal['section'] : array();
+                    $section_id = isset($section['id']) ? $section['id'] : '';
+                    if (! $section_id) {
+                        continue;
+                    }
+                    ?>
+                    <a
+                      class="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-zinc-500 transition hover:border-primary/40 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      href="#<?php echo esc_attr($section_id); ?>"
+                      data-goal-link="<?php echo esc_attr($section_id); ?>"
+                    >
+                      <span class="h-1.5 w-1.5 rounded-full bg-primary/30" aria-hidden="true"></span>
+                      <span><?php echo esc_html($goal['nav_label']); ?></span>
+                    </a>
+                <?php endforeach; ?>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <section class="border-b border-zinc-200 bg-slate-50 py-12 lg:py-16">
+          <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+            <div class="mx-auto flex max-w-4xl flex-col gap-4 text-center">
+              <span class="inline-flex w-fit items-center gap-2 self-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                <?php esc_html_e('Compare the paths', 'webmakerr'); ?>
+              </span>
+              <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl">
+                <?php esc_html_e('Every goal maps to a managed playbook', 'webmakerr'); ?>
+              </h2>
+              <p class="text-base leading-7 text-zinc-600 sm:text-lg">
+                <?php esc_html_e('Pick the path that fits your team. Each option unlocks a dedicated launch, migration, growth, or automation program run by Webmakerr specialists.', 'webmakerr'); ?>
+              </p>
+            </div>
+            <div class="mt-10 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+              <div class="divide-y divide-zinc-200">
+                <?php foreach ($marketing_business_primary_goals as $goal) :
+                    $comparison  = isset($goal['comparison']) ? $goal['comparison'] : array();
+                    $features    = isset($comparison['features']) ? (array) $comparison['features'] : array();
+                    $outcome     = isset($comparison['outcome']) ? $comparison['outcome'] : '';
+                    ?>
+                    <div class="grid gap-6 px-5 py-6 sm:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)] lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.85fr)_minmax(0,0.7fr)]">
+                      <div class="flex flex-col gap-2">
+                        <span class="text-xs font-semibold uppercase tracking-[0.3em] text-primary/70"><?php esc_html_e('Goal', 'webmakerr'); ?></span>
+                        <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($goal['label']); ?></p>
+                        <?php if (! empty($goal['description'])) : ?>
+                          <p class="text-sm text-zinc-500 sm:text-base sm:leading-7"><?php echo esc_html($goal['description']); ?></p>
+                        <?php endif; ?>
+                      </div>
+                      <div class="flex flex-col gap-2">
+                        <span class="text-xs font-semibold uppercase tracking-[0.3em] text-primary/70"><?php esc_html_e('Critical plays', 'webmakerr'); ?></span>
+                        <?php if (! empty($features)) : ?>
+                          <ul class="mt-1 grid gap-2 text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+                            <?php foreach ($features as $feature) : ?>
+                              <li class="flex items-start gap-2">
+                                <span class="mt-1 inline-flex h-2 w-2 flex-none items-center justify-center rounded-full bg-primary/40"></span>
+                                <span class="flex-1"><?php echo esc_html($feature); ?></span>
+                              </li>
+                            <?php endforeach; ?>
+                          </ul>
+                        <?php endif; ?>
+                      </div>
+                      <div class="flex flex-col gap-2">
+                        <span class="text-xs font-semibold uppercase tracking-[0.3em] text-primary/70"><?php esc_html_e('Outcome', 'webmakerr'); ?></span>
+                        <?php if (! empty($outcome)) : ?>
+                          <p class="text-sm font-medium text-zinc-700 sm:text-base sm:leading-7"><?php echo esc_html($outcome); ?></p>
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                <?php endforeach; ?>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <?php foreach ($marketing_business_primary_goals as $goal) :
+            $section     = isset($goal['section']) ? $goal['section'] : array();
+            $section_id  = isset($section['id']) ? $section['id'] : '';
+            if (! $section_id) {
+                continue;
+            }
+            $proof_points = isset($section['proof_points']) ? (array) $section['proof_points'] : array();
+            $eyebrow      = isset($goal['card']['eyebrow']) ? $goal['card']['eyebrow'] : '';
+            $card_summary = isset($goal['card']['summary']) ? $goal['card']['summary'] : '';
+            if (! $card_summary && ! empty($goal['description'])) {
+                $card_summary = $goal['description'];
+            }
+            ?>
+            <section id="<?php echo esc_attr($section_id); ?>" class="border-b border-zinc-200 bg-white py-12 lg:py-20" data-goal-section="<?php echo esc_attr($section_id); ?>">
+              <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
+                <div class="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+                  <div class="flex flex-col gap-4">
+                    <?php if (! empty($eyebrow)) : ?>
+                      <span class="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                        <?php echo esc_html($eyebrow); ?>
+                      </span>
+                    <?php endif; ?>
+                    <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl"><?php echo esc_html($section['headline']); ?></h2>
+                    <?php if (! empty($section['description'])) : ?>
+                      <p class="text-base leading-7 text-zinc-600 sm:text-lg"><?php echo esc_html($section['description']); ?></p>
+                    <?php endif; ?>
+                  </div>
+                  <div class="grid gap-4 sm:grid-cols-2">
+                    <?php foreach ($proof_points as $point) :
+                        $icon  = isset($point['icon']) ? $point['icon'] : '';
+                        $title = isset($point['title']) ? $point['title'] : '';
+                        $body  = isset($point['body']) ? $point['body'] : '';
+                        ?>
+                        <article class="flex h-full flex-col gap-3 rounded-[12px] border border-zinc-200 bg-white/90 p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30">
+                          <?php if ($icon) : ?>
+                            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                              <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                              echo marketing_business_render_icon($icon, 'h-5 w-5');
+                              ?>
+                            </span>
+                          <?php endif; ?>
+                          <div class="flex flex-col gap-1.5">
+                            <?php if ($title) : ?>
+                              <p class="text-base font-semibold text-zinc-950 sm:text-lg"><?php echo esc_html($title); ?></p>
+                            <?php endif; ?>
+                            <?php if ($body) : ?>
+                              <p class="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7"><?php echo esc_html($body); ?></p>
+                            <?php endif; ?>
+                          </div>
+                        </article>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+                <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <?php if ($card_summary) : ?>
+                    <p class="text-sm text-zinc-500 sm:text-base"><?php echo esc_html($card_summary); ?></p>
+                  <?php endif; ?>
+                  <a class="inline-flex items-center justify-center rounded bg-dark px-5 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark" href="<?php echo esc_url($marketing_business_demo_anchor); ?>">
+                    <?php echo esc_html(sprintf(__('Plan my %s path →', 'webmakerr'), $goal['label'])); ?>
+                  </a>
+                </div>
+              </div>
+            </section>
+        <?php endforeach; ?>
+      <?php endif; ?>
 
       <?php
       $marketing_business_testimonials = array(
