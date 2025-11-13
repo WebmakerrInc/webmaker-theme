@@ -9,6 +9,36 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+$front_page_id = (int) get_option('page_on_front');
+
+if ($front_page_id > 0 && ! is_home()) {
+    $template_candidates = array();
+    $page_template_slug  = get_page_template_slug($front_page_id);
+
+    if (! empty($page_template_slug)) {
+        $template_candidates[] = $page_template_slug;
+    }
+
+    $template_candidates = array_merge(
+        $template_candidates,
+        array(
+            'page.php',
+            'templates/page.php',
+            'index.php',
+        )
+    );
+
+    foreach ($template_candidates as $template_candidate) {
+        $located_template = locate_template($template_candidate);
+
+        if ($located_template && realpath($located_template) !== __FILE__) {
+            include $located_template;
+
+            return;
+        }
+    }
+}
+
 $popup_settings = webmakerr_get_template_popup_settings(__FILE__);
 $popup_enabled  = (bool) ($popup_settings['enabled'] ?? false);
 
