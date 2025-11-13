@@ -1480,26 +1480,22 @@ get_header();
   .marketing-plus-wrapper::before {
     content: "";
     position: absolute;
-    inset: -88px;
-    border-radius: 2.5rem;
+    inset: -28px;
+    border-radius: 1.5rem;
     pointer-events: none;
     z-index: 1;
   }
 
   .marketing-plus-wrapper::after {
-    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.55) 0%, rgba(59, 130, 246, 0.28) 42%, rgba(37, 99, 235, 0.12) 68%, rgba(37, 99, 235, 0) 90%);
-    opacity: 0.9;
-    box-shadow:
-      0 0 120px 40px rgba(79, 70, 229, 0.45),
-      0 0 200px 70px rgba(37, 99, 235, 0.35);
+    background: radial-gradient(ellipse at center, rgba(79, 70, 229, 0.18) 0%, rgba(79, 70, 229, 0.08) 45%, rgba(79, 70, 229, 0) 70%);
+    opacity: 0.5;
   }
 
   .marketing-plus-wrapper::before {
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.96) 0%, rgba(224, 231, 255, 0.9) 24%, rgba(129, 140, 248, 0.82) 46%, rgba(56, 189, 248, 0.62) 66%, rgba(37, 99, 235, 0.4) 82%, rgba(37, 99, 235, 0) 94%);
-    opacity: 0.98;
-    transform: scale(0.95);
-    transform-origin: center;
-    animation: marketing-heartbeat-glow 2.8s ease-in-out infinite;
+    background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.24) 0%, rgba(56, 189, 248, 0.12) 40%, rgba(56, 189, 248, 0) 70%);
+    opacity: 0.4;
+    transform: scale(1);
+    animation: marketing-heartbeat-glow 3.2s ease-in-out infinite;
   }
 
   .marketing-plus-wrapper .marketing-plus-card {
@@ -1510,31 +1506,24 @@ get_header();
   @keyframes marketing-heartbeat-glow {
     0%,
     100% {
-      opacity: 1;
-      transform: scale(0.95);
+      opacity: 0.45;
+      transform: scale(1);
     }
 
-    38% {
-      opacity: 0.38;
-      transform: scale(1.14);
+    30% {
+      opacity: 0.75;
+      transform: scale(1.03);
     }
 
-    58% {
-      opacity: 0.72;
-      transform: scale(1.2);
-    }
-
-    74% {
-      opacity: 1;
-      transform: scale(1.08);
+    60% {
+      opacity: 0.55;
+      transform: scale(1.05);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .marketing-plus-wrapper::before {
       animation: none;
-      opacity: 0.9;
-      transform: scale(1);
     }
   }
 </style>
