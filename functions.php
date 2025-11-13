@@ -216,7 +216,7 @@ add_filter(
             return $endpoint;
         }
 
-        return 'https://east.webmakerr.com/?fluentcrm=1&route=contact&hash=95a5aea5-bd18-4ce8-a25d-de82adc38d87';
+        return 'https://webmakerr.com/?fluentcrm=1&route=contact&hash=61d048c6-0a33-4623-bd3c-5c7f0bafc604';
     },
     10
 );
