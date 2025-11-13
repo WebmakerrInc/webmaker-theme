@@ -1469,6 +1469,128 @@ if (wp_script_is($marketing_business_script_handle, 'enqueued') || wp_script_is(
 get_header();
 ?>
 
+<style>
+  .marketing-plus-wrapper {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .marketing-plus-wrapper .marketing-plus-card {
+    position: relative;
+    z-index: 2;
+  }
+
+  .marketing-plus-wrapper .marketing-plus-ornaments {
+    position: absolute;
+    inset: -40px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .marketing-plus-wrapper .marketing-plus-icon {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgba(74, 58, 255, 0.85);
+    text-shadow: 0 10px 25px rgba(79, 70, 229, 0.18);
+    opacity: 0.85;
+  }
+
+  @keyframes marketing-plus-float-a {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+      transform: translate(8px, -10px) rotate(6deg);
+    }
+  }
+
+  @keyframes marketing-plus-float-b {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+      transform: translate(-6px, 8px) rotate(-5deg);
+    }
+  }
+
+  @keyframes marketing-plus-float-c {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+      transform: translate(6px, 6px) rotate(4deg);
+    }
+  }
+
+  @keyframes marketing-plus-float-d {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+      transform: translate(-10px, -6px) rotate(-7deg);
+    }
+  }
+
+  .marketing-plus-wrapper .marketing-plus-icon--1 {
+    top: 5%;
+    left: -12px;
+    animation: marketing-plus-float-a 7.5s ease-in-out infinite;
+  }
+
+  .marketing-plus-wrapper .marketing-plus-icon--2 {
+    top: -16px;
+    right: 18%;
+    animation: marketing-plus-float-b 6.5s ease-in-out infinite;
+  }
+
+  .marketing-plus-wrapper .marketing-plus-icon--3 {
+    bottom: -12px;
+    left: 22%;
+    animation: marketing-plus-float-c 7s ease-in-out infinite;
+  }
+
+  .marketing-plus-wrapper .marketing-plus-icon--4 {
+    bottom: 10%;
+    right: -20px;
+    animation: marketing-plus-float-d 8s ease-in-out infinite;
+  }
+
+  @media (max-width: 1023px) {
+    .marketing-plus-wrapper .marketing-plus-ornaments {
+      inset: -24px;
+    }
+
+    .marketing-plus-wrapper .marketing-plus-icon {
+      width: 26px;
+      height: 26px;
+      font-size: 1.25rem;
+      opacity: 0.75;
+    }
+
+    .marketing-plus-wrapper .marketing-plus-icon--1 {
+      left: -8px;
+    }
+
+    .marketing-plus-wrapper .marketing-plus-icon--4 {
+      right: -14px;
+    }
+  }
+</style>
+
 <main id="primary" class="flex flex-col bg-white">
   <?php while (have_posts()) : the_post(); ?>
     <article <?php post_class('flex flex-col'); ?>>
@@ -1499,49 +1621,56 @@ get_header();
                 <?php esc_html_e('Onboarding cohorts fill quickly—reserve your spot while availability lasts.', 'webmakerr'); ?>
               </p>
             </div>
-            <div class="relative w-full max-w-lg rounded-2xl border border-white/60 bg-white/95 p-8 shadow-2xl shadow-primary/10 backdrop-blur lg:ml-auto">
-              <ul class="flex flex-col gap-2 text-sm text-zinc-600">
-                <li class="flex items-center gap-2 font-medium text-zinc-700">
-                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                  echo marketing_business_render_icon('check', 'h-4 w-4 text-primary');
-                  ?>
-                  <span><?php esc_html_e('4.9/5 satisfaction from growth marketing teams', 'webmakerr'); ?></span>
-                </li>
-                <li class="flex items-center gap-2 font-medium text-zinc-700">
-                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                  echo marketing_business_render_icon('activity', 'h-4 w-4 text-primary');
-                  ?>
-                  <span><?php esc_html_e('Onboards 3× faster than typical replatforms', 'webmakerr'); ?></span>
-                </li>
-                <li class="flex items-center gap-2 font-medium text-zinc-700">
-                  <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                  echo marketing_business_render_icon('target', 'h-4 w-4 text-primary');
-                  ?>
-                  <span><?php esc_html_e('Chosen by 250+ multi-brand operators', 'webmakerr'); ?></span>
-                </li>
-              </ul>
-              <div class="mt-6 rounded-xl border border-zinc-200/80 bg-white p-6 shadow-lg shadow-primary/10">
-                <div class="flex items-start justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
-                  <span><?php esc_html_e('Plan Your Demo', 'webmakerr'); ?></span>
-                  <div class="flex flex-col items-end text-right">
-                    <span class="normal-case" data-progress-label><?php echo esc_html($marketing_business_progress_messages[0]); ?></span>
-                    <span class="mt-0.5 text-[0.55rem] font-medium tracking-[0.08em] text-primary/80 normal-case" data-progress-estimate-target data-default-estimate="<?php echo esc_attr($marketing_business_progress_estimate); ?>"><?php echo esc_html($marketing_business_progress_estimate); ?></span>
+            <div class="marketing-plus-wrapper relative w-full max-w-lg lg:ml-auto">
+              <div class="marketing-plus-ornaments" aria-hidden="true">
+                <span class="marketing-plus-icon marketing-plus-icon--1">+</span>
+                <span class="marketing-plus-icon marketing-plus-icon--2">+</span>
+                <span class="marketing-plus-icon marketing-plus-icon--3">+</span>
+                <span class="marketing-plus-icon marketing-plus-icon--4">+</span>
+              </div>
+              <div class="marketing-plus-card w-full rounded-2xl border border-white/60 bg-white/95 p-8 shadow-2xl shadow-primary/10 backdrop-blur">
+                <ul class="flex flex-col gap-2 text-sm text-zinc-600">
+                  <li class="flex items-center gap-2 font-medium text-zinc-700">
+                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('check', 'h-4 w-4 text-primary');
+                    ?>
+                    <span><?php esc_html_e('4.9/5 satisfaction from growth marketing teams', 'webmakerr'); ?></span>
+                  </li>
+                  <li class="flex items-center gap-2 font-medium text-zinc-700">
+                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('activity', 'h-4 w-4 text-primary');
+                    ?>
+                    <span><?php esc_html_e('Onboards 3× faster than typical replatforms', 'webmakerr'); ?></span>
+                  </li>
+                  <li class="flex items-center gap-2 font-medium text-zinc-700">
+                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo marketing_business_render_icon('target', 'h-4 w-4 text-primary');
+                    ?>
+                    <span><?php esc_html_e('Chosen by 250+ multi-brand operators', 'webmakerr'); ?></span>
+                  </li>
+                </ul>
+                <div class="mt-6 rounded-xl border border-zinc-200/80 bg-white p-6 shadow-lg shadow-primary/10">
+                  <div class="flex items-start justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-primary">
+                    <span><?php esc_html_e('Plan Your Demo', 'webmakerr'); ?></span>
+                    <div class="flex flex-col items-end text-right">
+                      <span class="normal-case" data-progress-label><?php echo esc_html($marketing_business_progress_messages[0]); ?></span>
+                      <span class="mt-0.5 text-[0.55rem] font-medium tracking-[0.08em] text-primary/80 normal-case" data-progress-estimate-target data-default-estimate="<?php echo esc_attr($marketing_business_progress_estimate); ?>"><?php echo esc_html($marketing_business_progress_estimate); ?></span>
+                    </div>
                   </div>
-                </div>
-                <form
-                  id="marketing-demo-scheduler"
-                  class="mt-6 flex flex-col gap-6"
-                  novalidate
-                  data-endpoint="<?php echo esc_url($marketing_business_lead_endpoint); ?>"
-                  data-nonce="<?php echo esc_attr($marketing_business_lead_nonce); ?>"
-                  data-source="marketing-business-hero"
-                  data-intent="marketing-demo-plan"
-                  data-error-message="<?php esc_attr_e('We couldn’t send your request. Please try again.', 'webmakerr'); ?>"
-                  data-progress-template="<?php echo esc_attr($marketing_business_progress_template); ?>"
-                  data-progress-complete="<?php esc_attr_e('Complete', 'webmakerr'); ?>"
-                  data-progress-labels="<?php echo esc_attr(implode('|', $marketing_business_progress_messages)); ?>"
-                  data-progress-estimate="<?php echo esc_attr($marketing_business_progress_estimate); ?>"
-                >
+                  <form
+                    id="marketing-demo-scheduler"
+                    class="mt-6 flex flex-col gap-6"
+                    novalidate
+                    data-endpoint="<?php echo esc_url($marketing_business_lead_endpoint); ?>"
+                    data-nonce="<?php echo esc_attr($marketing_business_lead_nonce); ?>"
+                    data-source="marketing-business-hero"
+                    data-intent="marketing-demo-plan"
+                    data-error-message="<?php esc_attr_e('We couldn’t send your request. Please try again.', 'webmakerr'); ?>"
+                    data-progress-template="<?php echo esc_attr($marketing_business_progress_template); ?>"
+                    data-progress-complete="<?php esc_attr_e('Complete', 'webmakerr'); ?>"
+                    data-progress-labels="<?php echo esc_attr(implode('|', $marketing_business_progress_messages)); ?>"
+                    data-progress-estimate="<?php echo esc_attr($marketing_business_progress_estimate); ?>"
+                  >
                   <input type="hidden" name="source" data-prefill="source" />
                   <input type="hidden" name="intent" data-prefill="intent" />
                   <div class="flex flex-col gap-4" data-step="0">
@@ -1689,46 +1818,46 @@ get_header();
                     </div>
                   </div>
                   <div class="hidden rounded border border-red-200 bg-red-50 px-4 py-3 text-xs font-medium text-red-700" data-form-alert role="alert"></div>
-                </form>
-                <div id="marketing-demo-success" class="mt-6 hidden rounded border border-green-200 bg-green-50 p-5 text-sm text-green-900" aria-hidden="true">
-                  <h3 class="text-lg font-semibold text-green-900"><?php esc_html_e('You’re confirmed!', 'webmakerr'); ?></h3>
-                  <p class="mt-2 text-sm text-green-800" data-success-message>
-                    <?php esc_html_e('Thanks for sharing your goals. Use the link below to choose your session time.', 'webmakerr'); ?>
-                  </p>
-                  <a class="mt-4 inline-flex items-center justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark !no-underline" href="<?php echo esc_url($marketing_business_demo_link); ?>" data-confirmation-link>
-                    <?php esc_html_e('Choose your time →', 'webmakerr'); ?>
-                  </a>
-                  <div class="mt-5 border-t border-green-200 pt-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-green-700">
-                      <?php esc_html_e('What happens after you book?', 'webmakerr'); ?>
+                  </form>
+                  <div id="marketing-demo-success" class="mt-6 hidden rounded border border-green-200 bg-green-50 p-5 text-sm text-green-900" aria-hidden="true">
+                    <h3 class="text-lg font-semibold text-green-900"><?php esc_html_e('You’re confirmed!', 'webmakerr'); ?></h3>
+                    <p class="mt-2 text-sm text-green-800" data-success-message>
+                      <?php esc_html_e('Thanks for sharing your goals. Use the link below to choose your session time.', 'webmakerr'); ?>
                     </p>
-                    <ol class="mt-3 space-y-3 text-left text-sm text-green-900 sm:text-base">
-                      <li class="flex items-start gap-3">
-                        <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800">1</span>
-                        <div class="space-y-1">
-                          <span class="block font-semibold"><?php esc_html_e('Calendar invite + prep checklist', 'webmakerr'); ?></span>
-                          <span class="block text-xs text-green-800 sm:text-sm"><?php esc_html_e('Receive a meeting link, agenda, and stakeholder checklist in minutes.', 'webmakerr'); ?></span>
-                        </div>
-                      </li>
-                      <li class="flex items-start gap-3">
-                        <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800">2</span>
-                        <div class="space-y-1">
-                          <span class="block font-semibold"><?php esc_html_e('Data readiness review', 'webmakerr'); ?></span>
-                          <span class="block text-xs text-green-800 sm:text-sm"><?php esc_html_e('Our specialists audit your current stack and flag integration or compliance needs.', 'webmakerr'); ?></span>
-                        </div>
-                      </li>
-                      <li class="flex items-start gap-3">
-                        <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800">3</span>
-                        <div class="space-y-1">
-                          <span class="block font-semibold"><?php esc_html_e('Launch plan delivered', 'webmakerr'); ?></span>
-                          <span class="block text-xs text-green-800 sm:text-sm"><?php esc_html_e('You’ll leave with a 30-60-90 day rollout timeline tailored to your goals.', 'webmakerr'); ?></span>
-                        </div>
-                      </li>
-                    </ol>
+                    <a class="mt-4 inline-flex items-center justify-center rounded bg-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-dark/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark !no-underline" href="<?php echo esc_url($marketing_business_demo_link); ?>" data-confirmation-link>
+                      <?php esc_html_e('Choose your time →', 'webmakerr'); ?>
+                    </a>
+                    <div class="mt-5 border-t border-green-200 pt-4">
+                      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-green-700">
+                        <?php esc_html_e('What happens after you book?', 'webmakerr'); ?>
+                      </p>
+                      <ol class="mt-3 space-y-3 text-left text-sm text-green-900 sm:text-base">
+                        <li class="flex items-start gap-3">
+                          <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800">1</span>
+                          <div class="space-y-1">
+                            <span class="block font-semibold"><?php esc_html_e('Calendar invite + prep checklist', 'webmakerr'); ?></span>
+                            <span class="block text-xs text-green-800 sm:text-sm"><?php esc_html_e('Receive a meeting link, agenda, and stakeholder checklist in minutes.', 'webmakerr'); ?></span>
+                          </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                          <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800">2</span>
+                          <div class="space-y-1">
+                            <span class="block font-semibold"><?php esc_html_e('Data readiness review', 'webmakerr'); ?></span>
+                            <span class="block text-xs text-green-800 sm:text-sm"><?php esc_html_e('Our specialists audit your current stack and flag integration or compliance needs.', 'webmakerr'); ?></span>
+                          </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                          <span class="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800">3</span>
+                          <div class="space-y-1">
+                            <span class="block font-semibold"><?php esc_html_e('Launch plan delivered', 'webmakerr'); ?></span>
+                            <span class="block text-xs text-green-800 sm:text-sm"><?php esc_html_e('You’ll leave with a 30-60-90 day rollout timeline tailored to your goals.', 'webmakerr'); ?></span>
+                          </div>
+                        </li>
+                      </ol>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </section>
