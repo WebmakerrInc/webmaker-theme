@@ -1473,6 +1473,29 @@ get_header();
   .marketing-plus-wrapper {
     position: relative;
     isolation: isolate;
+    z-index: 0;
+  }
+
+  .marketing-plus-wrapper::after,
+  .marketing-plus-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: -28px;
+    border-radius: 1.5rem;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .marketing-plus-wrapper::after {
+    background: radial-gradient(ellipse at center, rgba(79, 70, 229, 0.18) 0%, rgba(79, 70, 229, 0.08) 45%, rgba(79, 70, 229, 0) 70%);
+    opacity: 0.5;
+  }
+
+  .marketing-plus-wrapper::before {
+    background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.24) 0%, rgba(56, 189, 248, 0.12) 40%, rgba(56, 189, 248, 0) 70%);
+    opacity: 0.4;
+    transform: scale(1);
+    animation: marketing-heartbeat-glow 3.2s ease-in-out infinite;
   }
 
   .marketing-plus-wrapper .marketing-plus-card {
@@ -1480,113 +1503,27 @@ get_header();
     z-index: 2;
   }
 
-  .marketing-plus-wrapper .marketing-plus-ornaments {
-    position: absolute;
-    inset: -40px;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .marketing-plus-wrapper .marketing-plus-icon {
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: rgba(74, 58, 255, 0.85);
-    text-shadow: 0 10px 25px rgba(79, 70, 229, 0.18);
-    opacity: 0.85;
-  }
-
-  @keyframes marketing-plus-float-a {
+  @keyframes marketing-heartbeat-glow {
     0%,
     100% {
-      transform: translate(0, 0) rotate(0deg);
+      opacity: 0.45;
+      transform: scale(1);
     }
 
-    50% {
-      transform: translate(8px, -10px) rotate(6deg);
-    }
-  }
-
-  @keyframes marketing-plus-float-b {
-    0%,
-    100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-
-    50% {
-      transform: translate(-6px, 8px) rotate(-5deg);
-    }
-  }
-
-  @keyframes marketing-plus-float-c {
-    0%,
-    100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-
-    50% {
-      transform: translate(6px, 6px) rotate(4deg);
-    }
-  }
-
-  @keyframes marketing-plus-float-d {
-    0%,
-    100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-
-    50% {
-      transform: translate(-10px, -6px) rotate(-7deg);
-    }
-  }
-
-  .marketing-plus-wrapper .marketing-plus-icon--1 {
-    top: 5%;
-    left: -12px;
-    animation: marketing-plus-float-a 7.5s ease-in-out infinite;
-  }
-
-  .marketing-plus-wrapper .marketing-plus-icon--2 {
-    top: -16px;
-    right: 18%;
-    animation: marketing-plus-float-b 6.5s ease-in-out infinite;
-  }
-
-  .marketing-plus-wrapper .marketing-plus-icon--3 {
-    bottom: -12px;
-    left: 22%;
-    animation: marketing-plus-float-c 7s ease-in-out infinite;
-  }
-
-  .marketing-plus-wrapper .marketing-plus-icon--4 {
-    bottom: 10%;
-    right: -20px;
-    animation: marketing-plus-float-d 8s ease-in-out infinite;
-  }
-
-  @media (max-width: 1023px) {
-    .marketing-plus-wrapper .marketing-plus-ornaments {
-      inset: -24px;
-    }
-
-    .marketing-plus-wrapper .marketing-plus-icon {
-      width: 26px;
-      height: 26px;
-      font-size: 1.25rem;
+    30% {
       opacity: 0.75;
+      transform: scale(1.03);
     }
 
-    .marketing-plus-wrapper .marketing-plus-icon--1 {
-      left: -8px;
+    60% {
+      opacity: 0.55;
+      transform: scale(1.05);
     }
+  }
 
-    .marketing-plus-wrapper .marketing-plus-icon--4 {
-      right: -14px;
+  @media (prefers-reduced-motion: reduce) {
+    .marketing-plus-wrapper::before {
+      animation: none;
     }
   }
 </style>
@@ -1622,12 +1559,6 @@ get_header();
               </p>
             </div>
             <div class="marketing-plus-wrapper relative w-full max-w-lg lg:ml-auto">
-              <div class="marketing-plus-ornaments" aria-hidden="true">
-                <span class="marketing-plus-icon marketing-plus-icon--1">+</span>
-                <span class="marketing-plus-icon marketing-plus-icon--2">+</span>
-                <span class="marketing-plus-icon marketing-plus-icon--3">+</span>
-                <span class="marketing-plus-icon marketing-plus-icon--4">+</span>
-              </div>
               <div class="marketing-plus-card w-full rounded-2xl border border-white/60 bg-white/95 p-8 shadow-2xl shadow-primary/10 backdrop-blur">
                 <ul class="flex flex-col gap-2 text-sm text-zinc-600">
                   <li class="flex items-center gap-2 font-medium text-zinc-700">
