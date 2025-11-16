@@ -35,15 +35,12 @@ get_header();
 .hero-anim-card {
   position:relative;
   width:100%;
-  height:clamp(320px, 48vw, 440px);
+  height:380px;
   border-radius:20px;
   border:1px solid #e5e7eb;
   overflow:hidden;
-  background:radial-gradient(circle at 20% 20%, rgba(14,165,233,0.12), transparent 36%),
-             linear-gradient(145deg,#ffffff,#eef2ff);
-  box-shadow:0 18px 50px rgba(15,23,42,0.12);
-  backdrop-filter:blur(8px);
-  transition:box-shadow .35s ease, transform .35s ease;
+  background:linear-gradient(145deg,#ffffff,#eef2ff);
+  box-shadow:0 15px 45px rgba(15,23,42,0.08);
 }
 
 .hero-anim-card::after {
@@ -67,18 +64,16 @@ get_header();
   padding:24px;
   opacity:0;
   background:var(--hero-bg);
-  transition:opacity .6s ease, transform .6s ease;
+  transition:opacity .6s ease;
   pointer-events:none;
   display:flex;
   flex-direction:column;
   justify-content:center;
   gap:18px;
-  transform:translateY(8px);
 }
 
 .scene.active {
   opacity:1;
-  transform:translateY(0);
   pointer-events:auto;
 }
 
@@ -227,12 +222,11 @@ get_header();
 
 @media (max-width: 768px) {
   .hero-anim-card {
-    height:clamp(280px, 60vw, 340px);
+    height:320px;
   }
 
   .scene {
     padding:16px;
-    gap:12px;
   }
 }
 
@@ -482,87 +476,7 @@ get_header();
 
 .scene-ecommerce .product-card {
   padding:18px;
-  width:min(100%, 320px);
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  background:linear-gradient(160deg, rgba(14,165,233,0.06), rgba(255,255,255,0.9));
-}
-
-.product-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.product-card .badge {
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:6px 10px;
-  background:rgba(79,70,229,0.08);
-  color:#4338ca;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:600;
-  letter-spacing:0.01em;
-}
-
-.price-chip {
-  padding:6px 10px;
-  background:#0f172a;
-  color:white;
-  border-radius:12px;
-  font-weight:700;
-  font-size:12px;
-  box-shadow:0 10px 30px rgba(15,23,42,0.16);
-}
-
-.product-visual {
-  position:relative;
-  background:white;
-  border:1px solid #e2e8f0;
-  border-radius:14px;
-  padding:12px;
-  overflow:hidden;
-  box-shadow:0 12px 24px rgba(14,165,233,0.08);
-}
-
-.product-graphic {
-  width:100%;
-  height:auto;
-  display:block;
-  filter:drop-shadow(0 18px 24px rgba(14,165,233,0.25));
-  animation:productFloat 6s ease-in-out infinite;
-}
-
-.product-glow {
-  position:absolute;
-  inset:10% 6% auto;
-  height:38%;
-  background:radial-gradient(circle at 50% 50%, rgba(56,189,248,0.18), transparent 60%);
-  filter:blur(24px);
-  pointer-events:none;
-  animation:productPulse 8s ease-in-out infinite;
-}
-
-.product-meta {
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-}
-
-.product-title {
-  font-weight:700;
-  color:#0f172a;
-  font-size:16px;
-}
-
-.product-subtitle {
-  color:#475569;
-  font-size:13px;
-  line-height:1.5;
-}
+  width:260px;
 }
 
 .scene-ecommerce .cart-panel,
@@ -603,40 +517,6 @@ get_header();
   0%,48% { opacity:0; transform:translateY(30px); }
   58%,78% { opacity:1; transform:translateY(0); }
   100% { opacity:0; transform:translateY(10px); }
-}
-
-@keyframes productFloat {
-  0% { transform:translateY(0); }
-  40% { transform:translateY(-6px); }
-  70% { transform:translateY(3px); }
-  100% { transform:translateY(0); }
-}
-
-@keyframes productPulse {
-  0% { opacity:.5; transform:scale(0.98); }
-  50% { opacity:.9; transform:scale(1.02); }
-  100% { opacity:.5; transform:scale(0.98); }
-}
-
-@media (max-width: 640px) {
-  .scene-ecommerce .ui-window {
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-  }
-
-  .scene-ecommerce .product-card,
-  .scene-ecommerce .cart-panel,
-  .scene-ecommerce .checkout-panel {
-    position:relative;
-    top:auto;
-    right:auto;
-    bottom:auto;
-    width:100%;
-    transform:none !important;
-    opacity:1 !important;
-    animation:none !important;
-  }
 }
 
 .order-success {
@@ -1209,38 +1089,9 @@ get_header();
                 <div class="scene scene-ecommerce" data-scene="ecommerce">
                     <div class="ui-window h-full">
                         <div class="product-card">
-                            <div class="product-header">
-                                <span class="badge">Featured</span>
-                                <span class="price-chip">$48</span>
-                            </div>
-                            <div class="product-visual" aria-hidden="true">
-                                <svg viewBox="0 0 220 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-graphic">
-                                    <defs>
-                                        <linearGradient id="shoeGradient" x1="0" y1="0" x2="220" y2="120" gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#38bdf8" stop-opacity="0.9"/>
-                                            <stop offset="1" stop-color="#1e3a8a" stop-opacity="0.95"/>
-                                        </linearGradient>
-                                        <linearGradient id="accent" x1="20" y1="60" x2="200" y2="80" gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#a5b4fc"/>
-                                            <stop offset="1" stop-color="#c084fc"/>
-                                        </linearGradient>
-                                    </defs>
-                                    <path d="M26 78c22-8 36-34 62-34 20 0 36 18 52 18 18 0 32-10 46-6 8 2 12 8 12 16 0 18-12 36-40 36H54c-24 0-34-12-34-24 0-4 2-6 6-6z" fill="url(#shoeGradient)" opacity="0.9"/>
-                                    <path d="M60 70c18-10 26-22 46-22 14 0 28 12 46 16" stroke="url(#accent)" stroke-width="8" stroke-linecap="round"/>
-                                    <path d="M62 90c32-12 58-12 92-6" stroke="#e0f2fe" stroke-width="6" stroke-linecap="round" opacity=".7"/>
-                                    <circle cx="146" cy="88" r="10" fill="#0f172a" opacity=".9"/>
-                                    <circle cx="86" cy="92" r="12" fill="#0f172a" opacity=".9"/>
-                                    <circle cx="86" cy="92" r="6" fill="#e2e8f0"/>
-                                    <circle cx="146" cy="88" r="5" fill="#e2e8f0"/>
-                                    <path d="M32 78c10-14 22-24 38-26" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round" opacity=".8"/>
-                                    <path d="M140 44c-6 2-14 2-18-4" stroke="#bae6fd" stroke-width="5" stroke-linecap="round" opacity=".8"/>
-                                </svg>
-                                <div class="product-glow"></div>
-                            </div>
-                            <div class="product-meta">
-                                <p class="product-title">Featherlight Runner</p>
-                                <p class="product-subtitle">Breathable mesh, responsive foam, built for daily miles.</p>
-                            </div>
+                            <div class="skeleton w-full h-32 rounded-2xl mb-4"></div>
+                            <div class="h-3 rounded-full bg-slate-200"></div>
+                            <div class="h-3 rounded-full bg-slate-200 mt-2 w-3/4"></div>
                             <div class="btn">Add to cart</div>
                         </div>
                         <div class="cart-panel">
