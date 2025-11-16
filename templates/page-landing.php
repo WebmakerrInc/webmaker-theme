@@ -16,794 +16,238 @@ get_header();
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-:root {
-  --cursor-color:#0f172a;
-  --hero-bg:#f7f9fb;
-}
 
-@keyframes skeleton {
-  0% { background-position:-240px 0; }
-  100% { background-position:240px 0; }
-}
-
-.skeleton {
-  background-image:linear-gradient(90deg,#e5e7eb 0%,#ffffff 50%,#e5e7eb 100%);
-  background-size:480px 100%;
-  animation:skeleton 1.4s linear infinite;
-}
+:root { --cursor-color:#0f172a; --hero-bg:#f8fafc; --card-radius:20px; }
 
 .hero-anim-card {
-  position:relative;
-  width:100%;
-  height:360px;
-  border-radius:20px;
-  border:1px solid #e5e7eb;
-  overflow:hidden;
-  background:linear-gradient(145deg,#ffffff,#eef2ff);
-  box-shadow:0 15px 45px rgba(15,23,42,0.08);
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #ffffff, #eef2ff);
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.12);
 }
 
 .hero-anim-card::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:white;
-  opacity:0;
-  transition:opacity .45s ease;
-  pointer-events:none;
-  z-index:50;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 250, 252, 0.82);
+  opacity: 0;
+  transition: opacity .45s ease;
+  pointer-events: none;
+  z-index: 70;
 }
 
-.hero-anim-card.resetting::after {
-  opacity:1;
-}
+.hero-anim-card.resetting::after { opacity: 1; }
 
 .scene {
-  position:absolute;
-  inset:0;
-  padding:24px;
-  opacity:0;
-  background:var(--hero-bg);
-  transition:opacity .6s ease;
-  pointer-events:none;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:18px;
-}
-
-.scene.active {
-  opacity:1;
-  pointer-events:auto;
-}
-
-.ui-window {
-  background:white;
-  border-radius:18px;
-  border:1px solid #e2e8f0;
-  box-shadow:0 10px 30px rgba(15,23,42,0.08);
-  padding:18px;
-  position:relative;
-  overflow:hidden;
-}
-
-.cursor-dot {
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--cursor-color);
-  position:absolute;
-  transform:translate(-50%,-50%);
-  z-index:20;
-  opacity:0;
-}
-
-.scene.active .cursor-dot {
-  opacity:1;
-}
-
-.click-ripple {
-  width:16px;
-  height:16px;
-  border-radius:50%;
-  border:2px solid var(--cursor-color);
-  position:absolute;
-  transform:translate(-50%,-50%) scale(.4);
-  opacity:0;
-  z-index:10;
-}
-
-/* -------------------------------------------------------------- */
-/* BOOKING FLOW */
-/* -------------------------------------------------------------- */
-.scene-booking .calendar-shell {
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.scene-booking .calendar-grid {
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:6px;
-}
-
-.scene-booking .calendar-label {
-  font-size:11px;
-  color:#94a3b8;
-  text-transform:uppercase;
-  letter-spacing:0.04em;
-}
-
-.booking-day {
-  height:36px;
-  border-radius:10px;
-  background:#e2e8f0;
-  font-size:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  opacity:0;
-  transform:translateY(8px) scale(.9);
-}
-
-.scene-booking.active .booking-day {
-  animation:dayPop .5s forwards ease-out;
-  animation-delay:var(--delay);
-}
-
-@keyframes dayPop {
-  0% { opacity:0; transform:translateY(8px) scale(.9); }
-  100% { opacity:1; transform:translateY(0) scale(1); }
-}
-
-.booking-form {
-  position:absolute;
-  left:50%;
-  bottom:24px;
-  transform:translate(-50%,40px);
-  width:80%;
-  background:white;
-  border:1px solid #e2e8f0;
-  border-radius:16px;
-  padding:16px;
-  box-shadow:0 20px 40px rgba(15,23,42,0.12);
-  opacity:0;
-}
-
-.scene-booking.active .booking-form {
-  animation:bookingFormSlide 6s forwards cubic-bezier(.4,0,.2,1);
-}
-
-@keyframes bookingFormSlide {
-  0%,28% { opacity:0; transform:translate(-50%,40px); }
-  32%,58% { opacity:1; transform:translate(-50%,0); }
-  65%,100% { opacity:0; transform:translate(-50%,20px); }
-}
-
-.typing-line {
-  height:10px;
-  background:#e2e8f0;
-  border-radius:999px;
-  margin-top:10px;
-  position:relative;
-  overflow:hidden;
-}
-
-.typing-line::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:#0f172a;
-  width:0;
-}
-
-.scene-booking.active .typing-line::after {
-  animation:typingFill 1.2s forwards steps(30);
-  animation-delay:var(--start,1.8s);
-}
-
-@keyframes typingFill {
-  from { width:0; }
-  to { width:100%; }
-}
-
-.confirm-btn {
-  margin-top:12px;
-  height:32px;
-  border-radius:10px;
-  background:#0f172a;
-  color:white;
-  font-size:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.scene-booking.active .confirm-btn {
-  animation:confirmPulse 6s forwards;
-}
-
-@keyframes confirmPulse {
-  0%,48% { box-shadow:none; }
-  52% { box-shadow:0 0 0 0 rgba(15,23,42,0.35); }
-  58% { box-shadow:0 0 0 12px rgba(15,23,42,0); }
-  100% { box-shadow:none; }
-}
-
-.booking-success {
-  position:absolute;
-  top:38px;
-  right:32px;
-  background:#0ea5e9;
-  color:white;
-  font-size:12px;
-  padding:6px 12px;
-  border-radius:999px;
-  opacity:0;
-}
-
-.scene-booking.active .booking-success {
-  animation:bookingSuccess 6s forwards;
-}
-
-@keyframes bookingSuccess {
-  0%,55% { opacity:0; transform:translateY(-8px); }
-  60%,80% { opacity:1; transform:translateY(0); }
-  100% { opacity:0; transform:translateY(-6px); }
-}
-
-.scene-booking .cursor-dot {
-  top:110px;
-  left:120px;
-}
-
-.scene-booking.active .cursor-dot {
-  animation:bookingCursor 6s cubic-bezier(.4,0,.2,1) forwards;
-}
-
-@keyframes bookingCursor {
-  0% { top:120px; left:100px; }
-  20% { top:200px; left:220px; }
-  32% { top:200px; left:220px; }
-  48% { top:270px; left:210px; }
-  58% { top:295px; left:285px; }
-  100% { top:120px; left:100px; }
-}
-
-.scene-booking .click-ripple {
-  top:200px;
-  left:220px;
-}
-
-.scene-booking.active .click-ripple {
-  animation:bookingRipple 6s forwards;
-}
-
-@keyframes bookingRipple {
-  0%,18% { opacity:0; transform:translate(-50%,-50%) scale(.4); }
-  22% { opacity:1; transform:translate(-50%,-50%) scale(1); }
-  28% { opacity:0; transform:translate(-50%,-50%) scale(1.8); }
-  100% { opacity:0; }
-}
-
-/* -------------------------------------------------------------- */
-/* CRM FLOW */
-/* -------------------------------------------------------------- */
-.scene-crm .ui-window {
-  display:flex;
-  flex-direction:column;
-  gap:24px;
-}
-
-.crm-bars {
-  display:flex;
-  align-items:flex-end;
-  gap:12px;
-  height:140px;
-}
-
-.crm-bar {
-  width:26px;
-  border-radius:10px 10px 4px 4px;
-  background:#cbd5f5;
-  transform-origin:bottom;
-  opacity:.6;
-}
-
-.scene-crm.active .crm-bar {
-  animation:crmBarGrow 4s forwards;
-}
-
-@keyframes crmBarGrow {
-  0% { transform:scaleY(.1); opacity:.3; }
-  35% { opacity:1; }
-  60% { transform:scaleY(var(--grow,1)); }
-  100% { transform:scaleY(var(--grow,1)); }
-}
-
-.crm-tooltip {
-  position:absolute;
-  bottom:130px;
-  left:50%;
-  transform:translate(-50%,20px);
-  background:#0f172a;
-  color:white;
-  font-size:11px;
-  padding:6px 10px;
-  border-radius:8px;
-  opacity:0;
-}
-
-.scene-crm.active .crm-tooltip {
-  animation:crmTooltip 4s forwards;
-}
-
-@keyframes crmTooltip {
-  0%,35% { opacity:0; transform:translate(-50%,20px); }
-  40%,70% { opacity:1; transform:translate(-50%,0); }
-  100% { opacity:0; transform:translate(-50%,-8px); }
-}
-
-.crm-highlight {
-  position:absolute;
-  bottom:36px;
-  right:42px;
-  width:78px;
-  height:78px;
-  border-radius:16px;
-  border:1px solid rgba(15,23,42,0.18);
-  opacity:0;
-}
-
-.scene-crm.active .crm-highlight {
-  animation:crmHighlight 4s forwards;
-}
-
-@keyframes crmHighlight {
-  0%,60% { opacity:0; transform:scale(.8); }
-  68%,86% { opacity:1; transform:scale(1); }
-  100% { opacity:0; transform:scale(.9); }
-}
-
-.scene-crm .cursor-dot {
-  top:80px;
-  left:80px;
-}
-
-.scene-crm.active .cursor-dot {
-  animation:crmCursor 4s cubic-bezier(.4,0,.2,1) forwards;
-}
-
-@keyframes crmCursor {
-  0% { top:200px; left:120px; }
-  30% { top:120px; left:210px; }
-  48% { top:120px; left:210px; }
-  70% { top:70px; left:290px; }
-  100% { top:200px; left:120px; }
-}
-
-.scene-crm .click-ripple {
-  top:120px;
-  left:210px;
-}
-
-.scene-crm.active .click-ripple {
-  animation:crmRipple 4s forwards;
-}
-
-@keyframes crmRipple {
-  0%,24% { opacity:0; }
-  30% { opacity:1; transform:translate(-50%,-50%) scale(1); }
-  42% { opacity:0; transform:translate(-50%,-50%) scale(1.6); }
-  100% { opacity:0; }
-}
-
-/* -------------------------------------------------------------- */
-/* E-COMMERCE FLOW */
-/* -------------------------------------------------------------- */
-.scene-ecommerce .product-card,
-.scene-ecommerce .cart-panel,
-.scene-ecommerce .checkout-panel {
-  border-radius:18px;
-  border:1px solid #e2e8f0;
-  background:white;
-  box-shadow:0 15px 35px rgba(15,23,42,0.08);
-}
-
-.scene-ecommerce .product-card {
-  padding:18px;
-  width:260px;
-}
-
-.scene-ecommerce .cart-panel,
-.scene-ecommerce .checkout-panel {
-  position:absolute;
-  top:28px;
-  right:28px;
-  width:220px;
-  padding:16px;
-  opacity:0;
-}
-
-.scene-ecommerce .cart-panel {
-  transform:translateX(140px);
-}
-
-.scene-ecommerce .checkout-panel {
-  top:auto;
-  bottom:32px;
-  transform:translateY(30px);
-}
-
-.scene-ecommerce.active .cart-panel {
-  animation:cartSlide 6s forwards;
-}
-
-@keyframes cartSlide {
-  0%,24% { opacity:0; transform:translateX(140px); }
-  30%,55% { opacity:1; transform:translateX(0); }
-  75%,100% { opacity:0; transform:translateX(100px); }
-}
-
-.scene-ecommerce.active .checkout-panel {
-  animation:checkoutRise 6s forwards;
-}
-
-@keyframes checkoutRise {
-  0%,48% { opacity:0; transform:translateY(30px); }
-  58%,78% { opacity:1; transform:translateY(0); }
-  100% { opacity:0; transform:translateY(10px); }
-}
-
-.order-success {
-  position:absolute;
-  left:50%;
-  bottom:40px;
-  transform:translate(-50%,20px);
-  padding:8px 16px;
-  background:#22c55e;
-  color:white;
-  font-size:13px;
-  border-radius:999px;
-  opacity:0;
-}
-
-.scene-ecommerce.active .order-success {
-  animation:orderBadge 6s forwards;
-}
-
-@keyframes orderBadge {
-  0%,70% { opacity:0; transform:translate(-50%,20px); }
-  78%,92% { opacity:1; transform:translate(-50%,0); }
-  100% { opacity:0; transform:translate(-50%,10px); }
-}
-
-.scene-ecommerce .cursor-dot {
-  top:140px;
-  left:120px;
-}
-
-.scene-ecommerce.active .cursor-dot {
-  animation:ecomCursor 6s cubic-bezier(.4,0,.2,1) forwards;
-}
-
-@keyframes ecomCursor {
-  0% { top:190px; left:150px; }
-  18% { top:250px; left:190px; }
-  32% { top:140px; left:330px; }
-  46% { top:210px; left:360px; }
-  62% { top:320px; left:280px; }
-  72% { top:320px; left:240px; }
-  100% { top:190px; left:150px; }
-}
-
-.scene-ecommerce .ripple-add {
-  top:250px;
-  left:190px;
-}
-
-.scene-ecommerce .ripple-checkout {
-  top:210px;
-  left:360px;
-}
-
-.scene-ecommerce .ripple-pay {
-  top:320px;
-  left:240px;
-}
-
-.scene-ecommerce.active .ripple-add {
-  animation:ecomRipple 6s forwards;
-}
-
-.scene-ecommerce.active .ripple-checkout {
-  animation:ecomRippleCheckout 6s forwards;
-}
-
-.scene-ecommerce.active .ripple-pay {
-  animation:ecomRipplePay 6s forwards;
-}
-
-@keyframes ecomRipple {
-  0%,10% { opacity:0; }
-  15% { opacity:1; transform:translate(-50%,-50%) scale(1); }
-  24% { opacity:0; transform:translate(-50%,-50%) scale(1.8); }
-  100% { opacity:0; }
-}
-
-@keyframes ecomRippleCheckout {
-  0%,34% { opacity:0; }
-  40% { opacity:1; transform:translate(-50%,-50%) scale(1); }
-  48% { opacity:0; transform:translate(-50%,-50%) scale(1.8); }
-  100% { opacity:0; }
-}
-
-@keyframes ecomRipplePay {
-  0%,62% { opacity:0; }
-  70% { opacity:1; transform:translate(-50%,-50%) scale(1); }
-  78% { opacity:0; transform:translate(-50%,-50%) scale(1.8); }
-  100% { opacity:0; }
-}
-
-.scene-ecommerce .btn {
-  margin-top:14px;
-  background:#0f172a;
-  color:white;
-  border-radius:10px;
-  padding:10px 14px;
-  font-size:13px;
-  text-align:center;
-}
-
-.cart-line,
-.checkout-line {
-  height:10px;
-  background:#e2e8f0;
-  border-radius:999px;
-  margin-top:10px;
-  position:relative;
-  overflow:hidden;
-}
-
-.cart-line::after,
-.checkout-line::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:#0f172a;
-  width:0;
-}
-
-.scene-ecommerce.active .cart-line::after {
-  animation:cartFill 6s forwards;
-}
-
-.scene-ecommerce.active .checkout-line::after {
-  animation:checkoutFill 6s forwards;
-}
-
-@keyframes cartFill {
-  0%,30% { width:0; }
-  48% { width:80%; }
-  100% { width:80%; }
-}
-
-@keyframes checkoutFill {
-  0%,58% { width:0; }
-  80% { width:100%; }
-  100% { width:100%; }
-}
-
-/* -------------------------------------------------------------- */
-/* AUTOMATION FLOW */
-/* -------------------------------------------------------------- */
-.scene-automation {
-  background:linear-gradient(135deg,#fdf4ff,#eef2ff);
-}
-
-.node {
-  position:absolute;
-  width:32px;
-  height:32px;
-  border-radius:12px;
-  background:white;
-  border:1px solid rgba(15,23,42,0.1);
-  box-shadow:0 12px 25px rgba(15,23,42,0.08);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-  color:#0f172a;
-  opacity:.8;
-}
-
-.scene-automation.active .node {
-  animation:nodePulse 4s infinite ease-in-out;
-}
-
-@keyframes nodePulse {
-  0% { transform:scale(.9); opacity:.7; }
-  50% { transform:scale(1.05); opacity:1; }
-  100% { transform:scale(.95); opacity:.85; }
-}
-
-.connection {
-  position:absolute;
-  height:2px;
-  background:rgba(15,23,42,0.2);
-  transform-origin:left;
-  opacity:.2;
-}
-
-.scene-automation.active .connection {
-  animation:connectionDraw 4s forwards;
-}
-
-@keyframes connectionDraw {
-  0% { transform:scaleX(0); opacity:0; }
-  25% { transform:scaleX(1); opacity:1; }
-  100% { opacity:.5; }
-}
-
-.connection-vertical {
-  width:2px;
-  height:120px;
-  transform-origin:top;
-}
-
-.scene-automation.active .connection-vertical {
-  animation:connectionRise 4s forwards;
-}
-
-@keyframes connectionRise {
-  0% { transform:scaleY(0); opacity:0; }
-  30% { transform:scaleY(1); opacity:1; }
-  100% { opacity:.5; }
-}
-
-.scene-automation .cursor-dot {
-  top:120px;
-  left:140px;
-}
-
-.scene-automation.active .cursor-dot {
-  animation:automationCursor 4s cubic-bezier(.4,0,.2,1) forwards;
-}
-
-@keyframes automationCursor {
-  0% { top:220px; left:120px; }
-  35% { top:120px; left:220px; }
-  62% { top:190px; left:280px; }
-  100% { top:220px; left:120px; }
-}
-
-.scene-automation .drag-indicator {
-  position:absolute;
-  width:60px;
-  height:60px;
-  border:1px dashed rgba(15,23,42,0.2);
-  border-radius:20px;
-  opacity:0;
-}
-
-.scene-automation.active .drag-indicator {
-  animation:dragHighlight 4s forwards;
-}
-
-@keyframes dragHighlight {
-  0%,45% { opacity:0; transform:translate(-10px,-10px) scale(.9); }
-  55%,75% { opacity:1; transform:translate(0,0) scale(1); }
-  100% { opacity:0; transform:scale(.95); }
-}
-
-/* -------------------------------------------------------------- */
-/* SUMMARY DASHBOARD */
-/* -------------------------------------------------------------- */
-.scene-dashboard .widget-grid {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-}
-
-.scene-dashboard .widget {
-  background:white;
-  border:1px solid #e2e8f0;
-  border-radius:16px;
-  padding:16px;
-  box-shadow:0 12px 30px rgba(15,23,42,0.06);
-  position:relative;
-}
-
-.widget-value {
-  height:34px;
-  overflow:hidden;
-  position:relative;
-  font-weight:600;
-  color:#0f172a;
-  font-size:20px;
-}
-
-.digit-roller {
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-
-.digit-roller span {
-  display:block;
-}
-
-.scene-dashboard.active .digit-roller {
-  animation:digitScroll 3s steps(5) forwards;
-}
-
-@keyframes digitScroll {
-  from { transform:translateY(0); }
-  to { transform:translateY(var(--scroll,-120%)); }
-}
-
-.widget-bar {
-  width:100%;
-  height:8px;
-  background:#e2e8f0;
-  border-radius:999px;
-  margin-top:12px;
-  position:relative;
-  overflow:hidden;
-}
-
-.widget-bar::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:#0f172a;
-  width:0;
-}
-
-.scene-dashboard.active .widget-bar::after {
-  animation:widgetFill 3s forwards;
-}
-
-@keyframes widgetFill {
-  0% { width:0; }
-  60% { width:80%; }
-  100% { width:90%; }
-}
-
-.scene-dashboard .cursor-dot {
-  top:180px;
-  left:240px;
-}
-
-.scene-dashboard.active .cursor-dot {
-  animation:dashboardCursor 3s cubic-bezier(.4,0,.2,1) forwards;
-}
-
-@keyframes dashboardCursor {
-  0% { top:260px; left:140px; }
-  45% { top:190px; left:260px; }
-  100% { top:260px; left:140px; }
-}
-
-.scene-dashboard .hover-glow {
-  position:absolute;
-  inset:0;
-  border-radius:16px;
-  border:2px solid rgba(14,165,233,0.4);
-  opacity:0;
-}
-
-.scene-dashboard.active .hover-glow {
-  animation:hoverPulse 3s forwards;
-}
-
-@keyframes hoverPulse {
-  0%,45% { opacity:0; }
-  55%,80% { opacity:1; box-shadow:0 0 0 8px rgba(14,165,233,0.15); }
-  100% { opacity:0; }
-}
-
+  position: absolute;
+  inset: 0;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(14px) scale(.98);
+  transition: opacity .7s ease, transform .7s ease;
+  pointer-events: none;
+  background: var(--hero-bg);
+}
+.scene.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+.scene-layer { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.surface { background: white; border: 1px solid #e5e7eb; border-radius: 18px; box-shadow: 0 16px 48px rgba(15, 23, 42, 0.1); }
+
+.cursor-dot { width: 10px; height: 10px; border-radius: 999px; background: var(--cursor-color); position: absolute; transform: translate(-50%, -50%); z-index: 60; opacity: 0; }
+.scene.active .cursor-dot { opacity: 1; }
+.click-ripple { position: absolute; width: 18px; height: 18px; border-radius: 999px; border: 2px solid var(--cursor-color); transform: translate(-50%, -50%) scale(.25); opacity: 0; z-index: 50; }
+@keyframes ripple { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.25); } 12% { opacity: 1; } 45% { transform: translate(-50%,-50%) scale(1.35); } 100% { opacity: 0; transform: translate(-50%,-50%) scale(1.8); } }
+
+.scene-transition { position: absolute; inset: 0; background: linear-gradient(120deg, rgba(255,255,255,.85), rgba(241,245,249,.65)); opacity: 0; filter: blur(16px); pointer-events: none; }
+.scene.active .scene-transition { animation: sceneGlow 1.2s ease forwards; }
+@keyframes sceneGlow { from { opacity: 0; transform: scale(1.02); } to { opacity: 1; transform: scale(1); } }
+
+/* BOOKING */
+.scene-booking .booking-shell { width: 100%; max-width: 920px; display: grid; grid-template-columns: 1.4fr .75fr; gap: 20px; }
+.booking-calendar { position: relative; overflow: hidden; }
+.booking-calendar .month { font-size: 13px; font-weight: 700; color: #0f172a; }
+.booking-calendar .label-row { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-top: 10px; color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; }
+.booking-calendar .day-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 8px; margin-top: 10px; }
+.booking-cell { height: 40px; border-radius: 12px; background: #e5e7eb; color: #111827; font-size: 13px; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(10px) scale(.92); box-shadow: inset 0 1px 0 rgba(255,255,255,.9); }
+.booking-cell.highlight { background: linear-gradient(135deg,#c7d2fe,#6366f1); color: #0f172a; font-weight: 700; box-shadow: 0 12px 24px rgba(99,102,241,0.22); }
+.scene-booking.active .booking-cell { animation: dayRise .6s forwards ease-out; animation-delay: var(--d); }
+@keyframes dayRise { from { opacity: 0; transform: translateY(10px) scale(.92); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.booking-sidebar { display: flex; flex-direction: column; gap: 12px; }
+.booking-sidebar .chip { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 12px; background: #f3f4f6; border: 1px solid #e5e7eb; font-size: 13px; color: #0f172a; box-shadow: 0 8px 18px rgba(15,23,42,0.05); opacity: 0; transform: translateX(12px); }
+.scene-booking.active .chip { animation: chipSlide .65s forwards ease; animation-delay: var(--d); }
+@keyframes chipSlide { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+
+.booking-form { position: absolute; left: 50%; bottom: 26px; transform: translate(-50%,80px) scale(.97); width: 92%; max-width: 820px; background: white; border: 1px solid #e2e8f0; border-radius: 18px; padding: 18px 20px; box-shadow: 0 30px 70px rgba(15,23,42,0.16); opacity: 0; }
+.scene-booking.active .booking-form { animation: formLift 6s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes formLift { 0%,18% { opacity: 0; transform: translate(-50%,80px) scale(.97); } 26%,74% { opacity: 1; transform: translate(-50%,0) scale(1); } 90%,100% { opacity: 0; transform: translate(-50%,20px) scale(.98); } }
+
+.booking-input { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #6b7280; }
+.booking-input label { text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; font-size: 10px; }
+.booking-input .field { border: 1px solid #e5e7eb; background: #f8fafc; border-radius: 12px; padding: 10px 12px; font-size: 13px; color: #0f172a; position: relative; overflow: hidden; }
+.typed-line { display: block; width: 0ch; white-space: nowrap; border-right: 2px solid #0f172a; }
+.scene-booking.active .typed-name { animation: typingName 6s steps(6,end) forwards; }
+@keyframes typingName { 0%,22% { width: 0ch; } 32%,46% { width: 6ch; } 100% { width: 6ch; } }
+.scene-booking.active .typed-email { animation: typingEmail 6s steps(11,end) forwards; }
+@keyframes typingEmail { 0%,32% { width: 0ch; } 42%,60% { width: 11ch; } 100% { width: 11ch; } }
+
+.time-select { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.time-chip { padding: 8px 12px; border-radius: 12px; background: #e5e7eb; color: #0f172a; font-weight: 600; box-shadow: inset 0 1px 0 rgba(255,255,255,.9); transform: scale(.96); opacity: .45; }
+.scene-booking.active .time-chip.hot { animation: timeFocus 6s forwards; }
+@keyframes timeFocus { 0%,50% { opacity: .45; transform: scale(.96); } 56%,72% { opacity: 1; transform: scale(1.03); box-shadow: 0 12px 24px rgba(14,165,233,0.3); background: linear-gradient(135deg,#bae6fd,#0ea5e9); color: #0f172a; } 100% { opacity: 1; transform: scale(1); } }
+
+.confirm-btn { margin-top: 12px; height: 38px; border-radius: 12px; background: #0f172a; color: white; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 6px; letter-spacing: 0.01em; box-shadow: 0 10px 30px rgba(15,23,42,0.28); }
+.scene-booking.active .confirm-btn { animation: confirmPulse 6s forwards; }
+@keyframes confirmPulse { 0%,60% { box-shadow: 0 10px 30px rgba(15,23,42,0.18); transform: scale(1); } 66% { transform: scale(1.03); box-shadow: 0 0 0 0 rgba(14,165,233,0.38); } 72% { box-shadow: 0 0 0 16px rgba(14,165,233,0); transform: scale(1); } 100% { box-shadow: 0 12px 30px rgba(15,23,42,0.18); } }
+
+.booking-success { position: absolute; right: 26px; top: 28px; background: #22c55e; color: white; font-size: 12px; padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; opacity: 0; box-shadow: 0 12px 24px rgba(34,197,94,0.35); }
+.scene-booking.active .booking-success { animation: successBadge 6s forwards; }
+@keyframes successBadge { 0%,70% { opacity: 0; transform: translateY(-8px); } 76%,90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-6px); } }
+
+.scene-booking .cursor-dot { top: 180px; left: 200px; }
+.scene-booking.active .cursor-dot { animation: bookingCursor 6s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes bookingCursor { 0% { top: 200px; left: 220px; } 18% { top: 250px; left: 340px; } 32% { top: 320px; left: 260px; } 52% { top: 330px; left: 320px; } 70% { top: 360px; left: 420px; } 92% { top: 120px; left: 520px; } 100% { top: 200px; left: 220px; } }
+.scene-booking .click-ripple { top: 250px; left: 340px; }
+.scene-booking.active .click-ripple { animation: bookingRipple 6s forwards; }
+@keyframes bookingRipple { 0%,12% { opacity: 0; transform: translate(-50%,-50%) scale(.25); } 18% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 26% { opacity: 0; transform: translate(-50%,-50%) scale(1.6); } 100% { opacity: 0; } }
+
+/* CRM */
+.scene-crm .crm-shell { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; width: 100%; max-width: 880px; position: relative; }
+.crm-column { display: flex; flex-direction: column; gap: 12px; }
+.pipeline { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+.pipeline .stage { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 10px; box-shadow: 0 8px 18px rgba(15,23,42,0.06); position: relative; transition: transform .35s ease, box-shadow .35s ease; }
+.scene-crm.active .stage.hot { animation: stagePop 4s forwards; }
+@keyframes stagePop { 0%,35% { transform: translateY(8px) scale(.96); box-shadow: 0 8px 18px rgba(15,23,42,0.08); } 45%,70% { transform: translateY(-4px) scale(1.03); box-shadow: 0 18px 40px rgba(99,102,241,0.25); } 100% { transform: translateY(0) scale(1); } }
+
+.bar-row { display: flex; align-items: flex-end; gap: 10px; height: 140px; }
+.bar { width: 30px; border-radius: 12px; background: linear-gradient(180deg,#dbeafe,#818cf8); opacity: .5; transform-origin: bottom; }
+.scene-crm.active .bar { animation: barGrow 4s forwards; }
+@keyframes barGrow { 0% { transform: scaleY(.1); opacity: .3; } 35% { opacity: .8; } 60% { transform: scaleY(var(--h)); } 100% { transform: scaleY(var(--h)); opacity: 1; } }
+
+.metric-card { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 12px; box-shadow: 0 12px 32px rgba(15,23,42,0.08); }
+.metric-card .title { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.08em; }
+.metric-card .value { font-size: 22px; font-weight: 700; color: #0f172a; }
+
+.crm-tooltip { position: absolute; left: 50%; top: 10px; transform: translate(-50%,-10px); background: #0f172a; color: white; font-size: 12px; padding: 8px 12px; border-radius: 12px; box-shadow: 0 10px 30px rgba(15,23,42,0.25); opacity: 0; }
+.scene-crm.active .crm-tooltip { animation: crmTooltip 4s forwards; }
+@keyframes crmTooltip { 0%,28% { opacity: 0; transform: translate(-50%,-10px); } 36%,70% { opacity: 1; transform: translate(-50%,0); } 100% { opacity: 0; transform: translate(-50%,-8px); } }
+
+.crm-highlight { position: absolute; bottom: 20px; right: 24px; width: 90px; height: 90px; border-radius: 18px; border: 1px solid rgba(14,165,233,0.4); box-shadow: 0 0 0 0 rgba(14,165,233,0.2); opacity: 0; }
+.scene-crm.active .crm-highlight { animation: crmGlow 4s forwards; }
+@keyframes crmGlow { 0%,55% { opacity: 0; transform: scale(.92); } 65%,82% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 14px rgba(14,165,233,0.15); } 100% { opacity: 0; transform: scale(.95); } }
+
+.scene-crm .cursor-dot { top: 220px; left: 240px; }
+.scene-crm.active .cursor-dot { animation: crmCursor 4s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes crmCursor { 0% { top: 250px; left: 260px; } 26% { top: 140px; left: 320px; } 46% { top: 140px; left: 320px; } 64% { top: 110px; left: 420px; } 100% { top: 250px; left: 260px; } }
+.scene-crm .click-ripple { top: 140px; left: 320px; }
+.scene-crm.active .click-ripple { animation: crmRipple 4s forwards; }
+@keyframes crmRipple { 0%,20% { opacity: 0; } 26% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 34% { opacity: 0; transform: translate(-50%,-50%) scale(1.55); } 100% { opacity: 0; } }
+
+/* ECOMMERCE */
+.scene-ecommerce .commerce-shell { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; width: 100%; max-width: 900px; position: relative; }
+.product-card { background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 16px; box-shadow: 0 16px 38px rgba(15,23,42,0.08); display: grid; gap: 10px; }
+.product-visual { width: 100%; height: 150px; border-radius: 14px; background: linear-gradient(135deg,#d1fae5,#60a5fa); position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,.9); }
+.product-visual::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 30% 30%,rgba(255,255,255,.6),transparent 60%); }
+.product-meta { display: flex; align-items: center; justify-content: space-between; }
+.price-tag { font-size: 20px; font-weight: 700; color: #0f172a; }
+.rating { display: flex; gap: 4px; color: #f59e0b; font-size: 14px; }
+
+.cart-panel, .checkout-panel { background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 16px; position: absolute; opacity: 0; box-shadow: 0 20px 50px rgba(15,23,42,0.12); }
+.cart-panel { width: 240px; right: 24px; top: 24px; transform: translateX(120px); }
+.checkout-panel { width: 260px; right: 24px; bottom: 24px; transform: translateY(40px); }
+.scene-ecommerce.active .cart-panel { animation: cartReveal 6s forwards; }
+@keyframes cartReveal { 0%,18% { opacity: 0; transform: translateX(120px); } 26%,52% { opacity: 1; transform: translateX(0); } 78%,100% { opacity: 0; transform: translateX(80px); } }
+.scene-ecommerce.active .checkout-panel { animation: checkoutReveal 6s forwards; }
+@keyframes checkoutReveal { 0%,48% { opacity: 0; transform: translateY(40px); } 58%,80% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(16px); } }
+
+.cart-line, .checkout-line { height: 12px; border-radius: 999px; background: #e5e7eb; position: relative; overflow: hidden; margin-top: 10px; }
+.cart-line::after, .checkout-line::after { content: ""; position: absolute; inset: 0; background: #0f172a; width: 0; }
+.scene-ecommerce.active .cart-line::after { animation: cartFill 6s forwards; }
+@keyframes cartFill { 0%,22% { width: 0; } 40% { width: 90%; } 100% { width: 90%; } }
+.scene-ecommerce.active .checkout-line::after { animation: checkoutFill 6s forwards; }
+@keyframes checkoutFill { 0%,60% { width: 0; } 78% { width: 100%; } 100% { width: 100%; } }
+
+.ecom-button { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 14px; background: #0f172a; color: white; border-radius: 12px; font-weight: 600; box-shadow: 0 12px 30px rgba(15,23,42,0.2); }
+.scene-ecommerce .order-success { position: absolute; left: 50%; bottom: 36px; transform: translate(-50%,16px); padding: 10px 16px; background: #22c55e; color: white; font-weight: 600; border-radius: 14px; box-shadow: 0 14px 32px rgba(34,197,94,0.38); opacity: 0; }
+.scene-ecommerce.active .order-success { animation: orderToast 6s forwards; }
+@keyframes orderToast { 0%,74% { opacity: 0; transform: translate(-50%,16px); } 80%,92% { opacity: 1; transform: translate(-50%,0); } 100% { opacity: 0; transform: translate(-50%,8px); } }
+
+.scene-ecommerce .cursor-dot { top: 240px; left: 220px; }
+.scene-ecommerce.active .cursor-dot { animation: ecomCursor 6s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes ecomCursor { 0% { top: 230px; left: 220px; } 18% { top: 210px; left: 320px; } 34% { top: 180px; left: 430px; } 52% { top: 240px; left: 520px; } 68% { top: 300px; left: 500px; } 82% { top: 330px; left: 420px; } 100% { top: 230px; left: 220px; } }
+.scene-ecommerce .click-ripple { top: 210px; left: 320px; }
+.scene-ecommerce .ripple-checkout { top: 180px; left: 430px; }
+.scene-ecommerce .ripple-pay { top: 300px; left: 500px; }
+.scene-ecommerce.active .click-ripple { animation: ecomRipple 6s forwards; }
+.scene-ecommerce.active .ripple-checkout { animation: ecomRippleCheckout 6s forwards; }
+.scene-ecommerce.active .ripple-pay { animation: ecomRipplePay 6s forwards; }
+@keyframes ecomRipple { 0%,10% { opacity: 0; } 16% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 24% { opacity: 0; transform: translate(-50%,-50%) scale(1.5); } 100% { opacity: 0; } }
+@keyframes ecomRippleCheckout { 0%,28% { opacity: 0; } 36% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 44% { opacity: 0; transform: translate(-50%,-50%) scale(1.5); } 100% { opacity: 0; } }
+@keyframes ecomRipplePay { 0%,64% { opacity: 0; } 72% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 82% { opacity: 0; transform: translate(-50%,-50%) scale(1.5); } 100% { opacity: 0; } }
+
+/* AUTOMATION */
+.scene-automation { background: linear-gradient(140deg,#eef2ff,#fdf2f8); }
+.automation-shell { width: 100%; max-width: 880px; position: relative; overflow: hidden; padding: 20px; }
+.node { position: absolute; min-width: 170px; padding: 12px 14px; border-radius: 14px; background: white; border: 1px solid #e5e7eb; box-shadow: 0 18px 38px rgba(15,23,42,0.1); display: flex; flex-direction: column; gap: 6px; }
+.node .title { font-weight: 700; color: #0f172a; font-size: 14px; }
+.node .desc { font-size: 12px; color: #6b7280; }
+.scene-automation.active .node { animation: nodePulse 4s infinite ease-in-out; }
+@keyframes nodePulse { 0% { transform: scale(.96); box-shadow: 0 18px 38px rgba(15,23,42,0.1); } 50% { transform: scale(1.03); box-shadow: 0 22px 48px rgba(79,70,229,0.22); } 100% { transform: scale(.98); } }
+
+.connection { position: absolute; height: 3px; background: linear-gradient(90deg,#6366f1,#22c55e); transform-origin: left; opacity: .5; border-radius: 999px; }
+.scene-automation.active .connection { animation: connectionDraw 4s forwards; }
+@keyframes connectionDraw { 0% { transform: scaleX(0); opacity: 0; } 30% { transform: scaleX(1); opacity: .8; } 100% { opacity: .6; } }
+.connection-vertical { width: 3px; height: 120px; transform-origin: top; }
+.scene-automation.active .connection-vertical { animation: connectionRise 4s forwards; }
+@keyframes connectionRise { 0% { transform: scaleY(0); opacity: 0; } 32% { transform: scaleY(1); opacity: .8; } 100% { opacity: .6; } }
+
+.automation-badge { position: absolute; top: 18px; right: 18px; padding: 8px 12px; background: #ecfeff; color: #0f172a; font-weight: 700; border-radius: 12px; border: 1px solid #bae6fd; box-shadow: 0 12px 26px rgba(59,130,246,0.22); opacity: 0; }
+.scene-automation.active .automation-badge { animation: automationBadge 4s forwards; }
+@keyframes automationBadge { 0%,38% { opacity: 0; transform: translateY(-8px); } 46%,80% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-6px); } }
+
+.tooltip-automation { position: absolute; bottom: 18px; left: 18px; padding: 8px 12px; background: #0f172a; color: white; border-radius: 12px; font-size: 12px; box-shadow: 0 12px 32px rgba(15,23,42,0.28); opacity: 0; }
+.scene-automation.active .tooltip-automation { animation: autoTooltip 4s forwards; }
+@keyframes autoTooltip { 0%,55% { opacity: 0; transform: translateY(8px); } 65%,90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(6px); } }
+
+.scene-automation .cursor-dot { top: 260px; left: 200px; }
+.scene-automation.active .cursor-dot { animation: automationCursor 4s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes automationCursor { 0% { top: 260px; left: 200px; } 28% { top: 170px; left: 320px; } 54% { top: 230px; left: 440px; } 78% { top: 300px; left: 360px; } 100% { top: 260px; left: 200px; } }
+
+/* DASHBOARD */
+.scene-dashboard .dashboard-shell { width: 100%; max-width: 900px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; }
+.metric-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.metric { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 12px; box-shadow: 0 12px 32px rgba(15,23,42,0.08); opacity: 0; transform: translateY(12px); }
+.metric .label { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.08em; }
+.metric .value { font-size: 22px; font-weight: 800; color: #0f172a; }
+.scene-dashboard.active .metric { animation: metricPop 3s forwards; animation-delay: var(--d); }
+@keyframes metricPop { 0% { opacity: 0; transform: translateY(12px); } 30% { opacity: 1; transform: translateY(0); } 100% { opacity: 1; } }
+
+.chart-card { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 12px 32px rgba(15,23,42,0.08); position: relative; }
+.line-chart { height: 160px; background: linear-gradient(180deg,#eef2ff,#ffffff); border-radius: 12px; position: relative; overflow: hidden; }
+.spark-line { position: absolute; left: 14px; right: 14px; bottom: 40px; height: 3px; background: linear-gradient(90deg,#22c55e,#0ea5e9); width: 0; border-radius: 999px; box-shadow: 0 8px 24px rgba(14,165,233,0.3); }
+.scene-dashboard.active .spark-line { animation: chartDraw 3s forwards; }
+@keyframes chartDraw { 0% { width: 0; } 60% { width: 92%; } 100% { width: 100%; } }
+
+.chart-dots { position: absolute; left: 14px; right: 14px; bottom: 40px; display: flex; justify-content: space-between; }
+.chart-dots span { width: 12px; height: 12px; background: white; border: 2px solid #0ea5e9; border-radius: 999px; box-shadow: 0 8px 20px rgba(14,165,233,0.35); opacity: 0; transform: translateY(8px); }
+.scene-dashboard.active .chart-dots span { animation: dotRise 3s forwards; animation-delay: calc(var(--i) * .12s); }
+@keyframes dotRise { 0% { opacity: 0; transform: translateY(8px); } 40% { opacity: 1; transform: translateY(0); } 100% { opacity: 1; } }
+
+.scene-dashboard .cursor-dot { top: 220px; left: 260px; }
+.scene-dashboard.active .cursor-dot { animation: dashboardCursor 3s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes dashboardCursor { 0% { top: 240px; left: 180px; } 46% { top: 180px; left: 340px; } 100% { top: 240px; left: 180px; } }
+
+.hover-lift { position: absolute; inset: 0; border-radius: 14px; border: 2px solid rgba(14,165,233,0.35); opacity: 0; }
+.scene-dashboard.active .hover-lift { animation: hoverLift 3s forwards; }
+@keyframes hoverLift { 0%,40% { opacity: 0; } 52%,78% { opacity: 1; box-shadow: 0 0 0 12px rgba(14,165,233,0.14); } 100% { opacity: 0; } }
 </style>
 
 <section class="w-full bg-gray-50 pt-20 pb-14 border-b border-gray-200">
@@ -860,162 +304,305 @@ get_header();
             <div class="hero-anim-card" id="webmakerrHero">
 
                 <div class="scene scene-booking" data-scene="booking">
-                    <div class="ui-window h-full">
-                        <div class="skeleton w-2/3 h-6 rounded-lg mb-4"></div>
-                        <div class="calendar-shell">
-                            <div class="calendar-grid text-[10px] text-gray-400 tracking-[0.35em] uppercase font-semibold">
-                                <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    <div class="scene-layer">
+                        <div class="booking-shell">
+                            <div class="surface booking-calendar p-5">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-[0.08em] text-gray-400">Calendar</p>
+                                        <p class="month">September 2024</p>
+                                    </div>
+                                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-600">Booking flow</span>
+                                </div>
+                                <div class="label-row">
+                                    <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                                </div>
+                                <div class="day-grid text-sm font-semibold text-gray-700">
+                                    <span></span><span></span><span></span>
+                                    <div class="booking-cell" style="--d:.05s">4</div>
+                                    <div class="booking-cell" style="--d:.10s">5</div>
+                                    <div class="booking-cell" style="--d:.15s">6</div>
+                                    <div class="booking-cell" style="--d:.20s">7</div>
+                                    <div class="booking-cell" style="--d:.25s">8</div>
+                                    <div class="booking-cell highlight" style="--d:.30s">9</div>
+                                    <div class="booking-cell" style="--d:.35s">10</div>
+                                    <div class="booking-cell" style="--d:.40s">11</div>
+                                    <div class="booking-cell" style="--d:.45s">12</div>
+                                    <div class="booking-cell" style="--d:.50s">13</div>
+                                    <div class="booking-cell" style="--d:.55s">14</div>
+                                    <div class="booking-cell" style="--d:.60s">15</div>
+                                    <div class="booking-cell" style="--d:.65s">16</div>
+                                    <div class="booking-cell" style="--d:.70s">17</div>
+                                    <div class="booking-cell" style="--d:.75s">18</div>
+                                </div>
+                                <div class="flex items-center justify-between text-[11px] text-gray-500 mt-4">
+                                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-500"></span> Confirmed slots</span>
+                                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Next available</span>
+                                </div>
                             </div>
-                            <div class="calendar-grid text-gray-700">
-                                <span></span><span></span><span></span>
-                                <div class="booking-day" style="--delay:0.05s">4</div>
-                                <div class="booking-day" style="--delay:0.10s">5</div>
-                                <div class="booking-day" style="--delay:0.15s">6</div>
-                                <div class="booking-day" style="--delay:0.20s">7</div>
-                                <div class="booking-day" style="--delay:0.25s">8</div>
-                                <div class="booking-day" style="--delay:0.30s">9</div>
-                                <div class="booking-day" style="--delay:0.35s">10</div>
-                                <div class="booking-day" style="--delay:0.40s">11</div>
-                                <div class="booking-day" style="--delay:0.45s">12</div>
-                                <div class="booking-day" style="--delay:0.50s">13</div>
-                                <div class="booking-day" style="--delay:0.55s">14</div>
-                                <div class="booking-day" style="--delay:0.60s">15</div>
-                                <div class="booking-day" style="--delay:0.65s">16</div>
-                                <div class="booking-day" style="--delay:0.70s">17</div>
-                                <div class="booking-day" style="--delay:0.75s">18</div>
+
+                            <div class="booking-sidebar">
+                                <div class="chip" style="--d:.15s"><span class="font-semibold">Today</span><span class="text-gray-500">3 slots</span></div>
+                                <div class="chip" style="--d:.25s"><span class="font-semibold">Tomorrow</span><span class="text-gray-500">4 slots</span></div>
+                                <div class="chip" style="--d:.35s"><span class="font-semibold">Next available</span><span class="text-emerald-600 font-semibold">3:00 PM</span></div>
+                                <div class="surface p-4">
+                                    <p class="text-xs uppercase tracking-[0.08em] text-gray-400">Highlights</p>
+                                    <p class="text-sm font-semibold text-gray-900 mt-2">Consultation Call</p>
+                                    <p class="text-xs text-gray-500">30 minutes · video</p>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="booking-form">
+                            <div class="flex items-center justify-between mb-2">
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-wide text-gray-400">Service</p>
+                                    <p class="text-[14px] font-semibold text-gray-900">Consultation Call</p>
+                                </div>
+                                <span class="text-[11px] px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-semibold">Next available: 3:00 PM</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-3 mt-3">
+                                <div class="booking-input">
+                                    <label>Name</label>
+                                    <div class="field">
+                                        <span class="typed-line typed-name">Ava</span>
+                                    </div>
+                                </div>
+                                <div class="booking-input">
+                                    <label>Email</label>
+                                    <div class="field">
+                                        <span class="typed-line typed-email">ava@studio.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="booking-input mt-3">
+                                <label>Time</label>
+                                <div class="time-select">
+                                    <span class="time-chip">1:30 PM</span>
+                                    <span class="time-chip hot">3:00 PM</span>
+                                    <span class="time-chip">4:30 PM</span>
+                                </div>
+                            </div>
+                            <div class="confirm-btn mt-4">✔ Confirm Booking</div>
+                        </div>
+
+                        <div class="booking-success">✔ Your meeting is scheduled!</div>
+                        <div class="scene-transition"></div>
                     </div>
-                    <div class="booking-form">
-                        <div class="text-[13px] font-semibold text-gray-800">Confirm booking</div>
-                        <div class="text-[10px] uppercase tracking-wide text-gray-400 mt-3">Name</div>
-                        <div class="typing-line" style="--start:1.9s"></div>
-                        <div class="text-[10px] uppercase tracking-wide text-gray-400 mt-4">Email</div>
-                        <div class="typing-line" style="--start:2.6s"></div>
-                        <div class="confirm-btn">Confirm</div>
-                    </div>
-                    <div class="booking-success">✔ Booking confirmed</div>
                     <div class="cursor-dot"></div>
                     <div class="click-ripple"></div>
                 </div>
 
                 <div class="scene scene-crm" data-scene="crm">
-                    <div class="ui-window h-full">
-                        <div class="skeleton w-1/2 h-6 rounded-lg"></div>
-                        <div class="crm-bars mt-6">
-                            <div class="crm-bar" style="--grow:.35"></div>
-                            <div class="crm-bar" style="--grow:.55"></div>
-                            <div class="crm-bar" style="--grow:.4"></div>
-                            <div class="crm-bar" style="--grow:.75"></div>
-                            <div class="crm-bar" style="--grow:.45"></div>
+                    <div class="scene-layer">
+                        <div class="crm-shell">
+                            <div class="crm-column">
+                                <div class="metric-card">
+                                    <p class="title">Leads</p>
+                                    <p class="value">132</p>
+                                    <p class="text-[12px] text-emerald-600 font-semibold">+32 this week</p>
+                                </div>
+                                <div class="metric-card">
+                                    <p class="title">Sales Pipeline</p>
+                                    <div class="bar-row mt-3">
+                                        <div class="bar" style="--h:.24"></div>
+                                        <div class="bar" style="--h:.48"></div>
+                                        <div class="bar" style="--h:.12"></div>
+                                        <div class="bar" style="--h:.38"></div>
+                                    </div>
+                                </div>
+                                <div class="metric-card">
+                                    <p class="title">Tasks</p>
+                                    <div class="flex items-center justify-between mt-2 text-[13px] text-gray-700">
+                                        <span>Follow-ups</span>
+                                        <span class="font-semibold text-indigo-600">18</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-[13px] text-gray-700">
+                                        <span>Demos</span>
+                                        <span class="font-semibold text-indigo-600">6</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pipeline">
+                                <div class="stage">
+                                    <p class="text-[11px] uppercase tracking-[0.08em] text-gray-500">Leads</p>
+                                    <p class="text-[20px] font-bold text-gray-900">24</p>
+                                    <p class="text-[12px] text-gray-500">New this week</p>
+                                </div>
+                                <div class="stage hot">
+                                    <p class="text-[11px] uppercase tracking-[0.08em] text-gray-500">Qualified</p>
+                                    <p class="text-[20px] font-bold text-gray-900">48</p>
+                                    <p class="text-[12px] text-gray-500">Ready for demo</p>
+                                </div>
+                                <div class="stage">
+                                    <p class="text-[11px] uppercase tracking-[0.08em] text-gray-500">Proposal</p>
+                                    <p class="text-[20px] font-bold text-gray-900">18</p>
+                                    <p class="text-[12px] text-gray-500">Awaiting sign</p>
+                                </div>
+                                <div class="stage">
+                                    <p class="text-[11px] uppercase tracking-[0.08em] text-gray-500">Won</p>
+                                    <p class="text-[20px] font-bold text-gray-900">12</p>
+                                    <p class="text-[12px] text-gray-500">Closed deals</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="crm-tooltip">New leads: 32</div>
+                        <div class="crm-tooltip">32 new leads this week</div>
                         <div class="crm-highlight"></div>
+                        <div class="scene-transition"></div>
                     </div>
                     <div class="cursor-dot"></div>
                     <div class="click-ripple"></div>
                 </div>
 
                 <div class="scene scene-ecommerce" data-scene="ecommerce">
-                    <div class="ui-window h-full">
-                        <div class="product-card">
-                            <div class="skeleton w-full h-32 rounded-2xl mb-4"></div>
-                            <div class="h-3 rounded-full bg-slate-200"></div>
-                            <div class="h-3 rounded-full bg-slate-200 mt-2 w-3/4"></div>
-                            <div class="btn">Add to cart</div>
+                    <div class="scene-layer">
+                        <div class="commerce-shell">
+                            <div class="product-card">
+                                <div class="flex items-center justify-between text-[11px] text-gray-500">
+                                    <span class="px-2 py-1 rounded-full bg-gray-100 text-gray-700 font-semibold">Audio · In stock</span>
+                                    <span class="text-emerald-600 font-semibold">Free shipping</span>
+                                </div>
+                                <div class="product-visual"></div>
+                                <div class="product-meta">
+                                    <div>
+                                        <p class="text-[16px] font-semibold text-gray-900">Premium Headphones</p>
+                                        <p class="text-[13px] text-gray-500">Wireless · Noise cancelling</p>
+                                    </div>
+                                    <div class="price-tag">$89.00</div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="rating">★★★★★ <span class="text-[12px] text-gray-500 ml-1">(4.8)</span></div>
+                                    <button class="ecom-button text-[12px]">Add to Cart</button>
+                                </div>
+                            </div>
+
+                            <div class="cart-panel">
+                                <div class="flex items-center justify-between text-sm font-semibold text-gray-900">
+                                    <span>Cart</span>
+                                    <span class="text-gray-500 text-xs">1 item</span>
+                                </div>
+                                <div class="flex gap-3 items-center mt-3">
+                                    <div class="w-12 h-12 rounded-xl bg-indigo-100"></div>
+                                    <div class="text-[13px] text-gray-800">
+                                        <p class="font-semibold">Premium Headphones</p>
+                                        <p class="text-gray-500">Qty 1</p>
+                                    </div>
+                                    <span class="ml-auto font-semibold text-gray-900">$89</span>
+                                </div>
+                                <div class="cart-line mt-3"></div>
+                                <button class="ecom-button text-[12px] mt-3 w-full justify-center">Checkout →</button>
+                            </div>
+
+                            <div class="checkout-panel">
+                                <div class="flex items-center justify-between text-sm font-semibold text-gray-900">
+                                    <span>Checkout</span>
+                                    <span class="text-xs text-gray-500">Secure</span>
+                                </div>
+                                <div class="mt-3 space-y-2 text-[12px] text-gray-700">
+                                    <div class="flex flex-col gap-1">
+                                        <span class="uppercase tracking-[0.08em] text-gray-400">Name</span>
+                                        <div class="checkout-line"></div>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <span class="uppercase tracking-[0.08em] text-gray-400">Email</span>
+                                        <div class="checkout-line"></div>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <span class="uppercase tracking-[0.08em] text-gray-400">Address</span>
+                                        <div class="checkout-line"></div>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <span class="uppercase tracking-[0.08em] text-gray-400">Card</span>
+                                        <div class="checkout-line"></div>
+                                    </div>
+                                </div>
+                                <button class="ecom-button text-[12px] mt-4 w-full justify-center">Pay $89</button>
+                            </div>
+
+                            <div class="order-success">✔ Order Successful!</div>
+                            <div class="scene-transition"></div>
                         </div>
-                        <div class="cart-panel">
-                            <div class="text-sm font-semibold text-gray-900">Cart</div>
-                            <div class="cart-line mt-4"></div>
-                            <div class="cart-line"></div>
-                            <div class="btn text-[12px] mt-4">Checkout →</div>
-                        </div>
-                        <div class="checkout-panel">
-                            <div class="text-sm font-semibold text-gray-900">Checkout</div>
-                            <div class="checkout-line mt-4"></div>
-                            <div class="checkout-line"></div>
-                            <div class="checkout-line"></div>
-                            <div class="btn text-[12px] mt-4">Pay now</div>
-                        </div>
-                        <div class="order-success">✔ Order successful</div>
                     </div>
                     <div class="cursor-dot"></div>
-                    <div class="click-ripple ripple-add"></div>
+                    <div class="click-ripple"></div>
                     <div class="click-ripple ripple-checkout"></div>
                     <div class="click-ripple ripple-pay"></div>
                 </div>
 
                 <div class="scene scene-automation" data-scene="automation">
-                    <div class="ui-window h-full">
-                        <div class="node" style="top:60px; left:70px;">A</div>
-                        <div class="node" style="top:60px; right:70px;">B</div>
-                        <div class="node" style="bottom:70px; left:120px;">C</div>
-                        <div class="node" style="bottom:80px; right:110px;">D</div>
-                        <span class="connection" style="top:76px; left:100px; width:190px;"></span>
-                        <span class="connection connection-vertical" style="top:90px; left:86px;"></span>
-                        <span class="connection" style="bottom:100px; left:140px; width:160px;"></span>
-                        <div class="drag-indicator" style="top:150px; left:220px;"></div>
+                    <div class="scene-layer">
+                        <div class="automation-shell">
+                            <div class="node" style="top:50px; left:70px;">
+                                <p class="title">Booking Created</p>
+                                <p class="desc">Capture details + timezone</p>
+                            </div>
+                            <div class="node" style="top:50px; right:80px;">
+                                <p class="title">Check CRM Tag</p>
+                                <p class="desc">Is VIP client?</p>
+                            </div>
+                            <div class="node" style="bottom:80px; left:120px;">
+                                <p class="title">Send Email</p>
+                                <p class="desc">Share confirmation + invite</p>
+                            </div>
+                            <div class="node" style="bottom:90px; right:120px;">
+                                <p class="title">Add to Pipeline</p>
+                                <p class="desc">Move into onboarding</p>
+                            </div>
+
+                            <span class="connection" style="top:86px; left:210px; width:160px;"></span>
+                            <span class="connection connection-vertical" style="top:110px; left:150px;"></span>
+                            <span class="connection" style="bottom:120px; left:240px; width:170px;"></span>
+                            <span class="connection" style="top:190px; left:330px; width:120px;"></span>
+
+                            <div class="automation-badge">Automation active</div>
+                            <div class="tooltip-automation">Connections synced</div>
+                            <div class="scene-transition"></div>
+                        </div>
                     </div>
                     <div class="cursor-dot"></div>
                 </div>
 
                 <div class="scene scene-dashboard" data-scene="dashboard">
-                    <div class="ui-window h-full">
-                        <div class="widget-grid">
-                            <div class="widget">
-                                <p class="text-[11px] text-gray-500 uppercase tracking-wide">Bookings</p>
-                                <div class="widget-value">
-                                    <div class="digit-roller" style="--scroll:-140%">
-                                        <span>24</span>
-                                        <span>48</span>
-                                        <span>72</span>
-                                        <span>96</span>
-                                        <span>124</span>
-                                    </div>
+                    <div class="scene-layer">
+                        <div class="dashboard-shell">
+                            <div class="metric-tiles">
+                                <div class="metric" style="--d:.05s">
+                                    <p class="label">Bookings</p>
+                                    <p class="value">12 bookings this week</p>
                                 </div>
-                                <div class="widget-bar"></div>
-                                <div class="hover-glow"></div>
+                                <div class="metric" style="--d:.12s">
+                                    <p class="label">Revenue</p>
+                                    <p class="value">$1,482</p>
+                                </div>
+                                <div class="metric" style="--d:.18s">
+                                    <p class="label">Leads</p>
+                                    <p class="value">32 new leads</p>
+                                </div>
                             </div>
-                            <div class="widget">
-                                <p class="text-[11px] text-gray-500 uppercase tracking-wide">Revenue</p>
-                                <div class="widget-value">
-                                    <div class="digit-roller" style="--scroll:-160%">
-                                        <span>$2k</span>
-                                        <span>$4k</span>
-                                        <span>$6k</span>
-                                        <span>$9k</span>
-                                        <span>$12k</span>
+
+                            <div class="chart-card">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-[0.08em] text-gray-400">Performance</p>
+                                        <p class="text-sm font-semibold text-gray-900">Booking + sales momentum</p>
+                                    </div>
+                                    <span class="text-[11px] px-3 py-1 rounded-full bg-gray-100 text-gray-700 font-semibold">Live</span>
+                                </div>
+                                <div class="line-chart">
+                                    <div class="spark-line"></div>
+                                    <div class="chart-dots">
+                                        <span style="--i:0"></span>
+                                        <span style="--i:1"></span>
+                                        <span style="--i:2"></span>
+                                        <span style="--i:3"></span>
+                                        <span style="--i:4"></span>
                                     </div>
                                 </div>
-                                <div class="widget-bar"></div>
-                            </div>
-                            <div class="widget">
-                                <p class="text-[11px] text-gray-500 uppercase tracking-wide">Automation runs</p>
-                                <div class="widget-value">
-                                    <div class="digit-roller" style="--scroll:-120%">
-                                        <span>5</span>
-                                        <span>12</span>
-                                        <span>24</span>
-                                        <span>48</span>
-                                        <span>64</span>
-                                    </div>
-                                </div>
-                                <div class="widget-bar"></div>
-                            </div>
-                            <div class="widget">
-                                <p class="text-[11px] text-gray-500 uppercase tracking-wide">Store sales</p>
-                                <div class="widget-value">
-                                    <div class="digit-roller" style="--scroll:-150%">
-                                        <span>8</span>
-                                        <span>16</span>
-                                        <span>32</span>
-                                        <span>48</span>
-                                        <span>76</span>
-                                    </div>
-                                </div>
-                                <div class="widget-bar"></div>
+                                <div class="hover-lift"></div>
                             </div>
                         </div>
+                        <div class="scene-transition"></div>
                     </div>
                     <div class="cursor-dot"></div>
                 </div>
