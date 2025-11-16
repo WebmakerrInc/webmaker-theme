@@ -35,7 +35,7 @@ get_header();
 .hero-anim-card {
   position:relative;
   width:100%;
-  height:clamp(320px, 48vw, 440px);
+  height:clamp(340px, 46vw, 460px);
   border-radius:20px;
   border:1px solid #e5e7eb;
   overflow:hidden;
@@ -43,7 +43,7 @@ get_header();
              linear-gradient(145deg,#ffffff,#eef2ff);
   box-shadow:0 18px 50px rgba(15,23,42,0.12);
   backdrop-filter:blur(8px);
-  transition:box-shadow .35s ease, transform .35s ease;
+  transition:box-shadow .35s ease, transform .35s ease, border-color .35s ease;
 }
 
 .hero-anim-card::after {
@@ -227,7 +227,7 @@ get_header();
 
 @media (max-width: 768px) {
   .hero-anim-card {
-    height:clamp(280px, 60vw, 340px);
+    height:clamp(300px, 68vw, 380px);
   }
 
   .scene {
@@ -471,6 +471,12 @@ get_header();
 /* -------------------------------------------------------------- */
 /* E-COMMERCE FLOW */
 /* -------------------------------------------------------------- */
+.scene-ecommerce .ui-window {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+  gap:14px;
+}
+
 .scene-ecommerce .product-card,
 .scene-ecommerce .cart-panel,
 .scene-ecommerce .checkout-panel {
@@ -482,7 +488,7 @@ get_header();
 
 .scene-ecommerce .product-card {
   padding:18px;
-  width:min(100%, 320px);
+  width:100%;
   display:flex;
   flex-direction:column;
   gap:14px;
@@ -520,13 +526,15 @@ get_header();
 
 .product-visual {
   position:relative;
-  background:white;
+  background:radial-gradient(circle at 40% 20%, rgba(79,70,229,0.12), transparent 55%), #ffffff;
   border:1px solid #e2e8f0;
   border-radius:14px;
-  padding:12px;
+  padding:16px;
   overflow:hidden;
-  box-shadow:0 12px 24px rgba(14,165,233,0.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.8), 0 10px 24px rgba(79,70,229,0.12);
 }
+
+.product-visual svg { width:100%; height:auto; display:block; }
 
 .product-graphic {
   width:100%;
@@ -538,12 +546,11 @@ get_header();
 
 .product-glow {
   position:absolute;
-  inset:10% 6% auto;
-  height:38%;
-  background:radial-gradient(circle at 50% 50%, rgba(56,189,248,0.18), transparent 60%);
-  filter:blur(24px);
+  inset:-30px;
+  background:radial-gradient(circle at 40% 35%, rgba(126,34,206,0.18), transparent 45%);
+  filter:blur(36px);
+  opacity:.7;
   pointer-events:none;
-  animation:productPulse 8s ease-in-out infinite;
 }
 
 .product-meta {
@@ -563,26 +570,41 @@ get_header();
   font-size:13px;
   line-height:1.5;
 }
+
+.product-specs {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:4px;
+}
+
+.spec-chip {
+  padding:6px 10px;
+  background:rgba(79,70,229,0.06);
+  color:#4338ca;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:600;
+  border:1px solid rgba(67,56,202,0.18);
 }
 
 .scene-ecommerce .cart-panel,
 .scene-ecommerce .checkout-panel {
-  position:absolute;
-  top:28px;
-  right:28px;
-  width:220px;
+  position:relative;
+  top:auto;
+  right:auto;
+  width:100%;
   padding:16px;
   opacity:0;
 }
 
 .scene-ecommerce .cart-panel {
-  transform:translateX(140px);
+  transform:translateY(12px);
 }
 
 .scene-ecommerce .checkout-panel {
-  top:auto;
-  bottom:32px;
-  transform:translateY(30px);
+  bottom:auto;
+  transform:translateY(20px);
 }
 
 .scene-ecommerce.active .cart-panel {
@@ -590,9 +612,9 @@ get_header();
 }
 
 @keyframes cartSlide {
-  0%,24% { opacity:0; transform:translateX(140px); }
-  30%,55% { opacity:1; transform:translateX(0); }
-  75%,100% { opacity:0; transform:translateX(100px); }
+  0%,24% { opacity:0; transform:translateY(18px); }
+  30%,55% { opacity:1; transform:translateY(0); }
+  75%,100% { opacity:0; transform:translateY(12px); }
 }
 
 .scene-ecommerce.active .checkout-panel {
@@ -600,7 +622,7 @@ get_header();
 }
 
 @keyframes checkoutRise {
-  0%,48% { opacity:0; transform:translateY(30px); }
+  0%,48% { opacity:0; transform:translateY(24px); }
   58%,78% { opacity:1; transform:translateY(0); }
   100% { opacity:0; transform:translateY(10px); }
 }
@@ -663,8 +685,8 @@ get_header();
 }
 
 .scene-ecommerce .cursor-dot {
-  top:140px;
-  left:120px;
+  top:34%;
+  left:24%;
 }
 
 .scene-ecommerce.active .cursor-dot {
@@ -672,28 +694,27 @@ get_header();
 }
 
 @keyframes ecomCursor {
-  0% { top:190px; left:150px; }
-  18% { top:250px; left:190px; }
-  32% { top:140px; left:330px; }
-  46% { top:210px; left:360px; }
-  62% { top:320px; left:280px; }
-  72% { top:320px; left:240px; }
-  100% { top:190px; left:150px; }
+  0% { top:36%; left:26%; }
+  18% { top:48%; left:32%; }
+  34% { top:40%; left:74%; }
+  52% { top:68%; left:76%; }
+  70% { top:70%; left:48%; }
+  100% { top:36%; left:26%; }
 }
 
 .scene-ecommerce .ripple-add {
-  top:250px;
-  left:190px;
+  top:48%;
+  left:32%;
 }
 
 .scene-ecommerce .ripple-checkout {
-  top:210px;
-  left:360px;
+  top:68%;
+  left:76%;
 }
 
 .scene-ecommerce .ripple-pay {
-  top:320px;
-  left:240px;
+  top:70%;
+  left:48%;
 }
 
 .scene-ecommerce.active .ripple-add {
@@ -776,6 +797,56 @@ get_header();
   0%,58% { width:0; }
   80% { width:100%; }
   100% { width:100%; }
+}
+
+.flow-step {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  background:rgba(15,23,42,0.02);
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  margin-top:10px;
+  opacity:0;
+  transform:translateY(6px);
+  animation-delay:var(--delay,0s);
+}
+
+.flow-step strong { font-size:13px; color:#0f172a; display:block; }
+.flow-sub { font-size:12px; color:#475569; }
+
+.flow-dot {
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#22c55e,#0ea5e9);
+  box-shadow:0 0 0 6px rgba(14,165,233,0.12);
+}
+
+.flow-chip {
+  margin-left:auto;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  background:rgba(14,165,233,0.1);
+  color:#0ea5e9;
+  border:1px solid rgba(14,165,233,0.25);
+}
+
+.flow-chip.success {
+  background:rgba(34,197,94,0.12);
+  color:#16a34a;
+  border-color:rgba(34,197,94,0.3);
+}
+
+.scene-ecommerce.active .flow-step { animation:flowRise 6s forwards; }
+
+@keyframes flowRise {
+  0%,16% { opacity:0; transform:translateY(10px); }
+  24%,70% { opacity:1; transform:translateY(0); }
+  100% { opacity:1; }
 }
 
 /* -------------------------------------------------------------- */
@@ -1210,53 +1281,90 @@ get_header();
                     <div class="ui-window h-full">
                         <div class="product-card">
                             <div class="product-header">
-                                <span class="badge">Featured</span>
-                                <span class="price-chip">$48</span>
+                                <span class="badge">Limited drop</span>
+                                <span class="price-chip">$189</span>
                             </div>
                             <div class="product-visual" aria-hidden="true">
-                                <svg viewBox="0 0 220 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-graphic">
+                                <svg viewBox="0 0 220 150" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-graphic">
                                     <defs>
-                                        <linearGradient id="shoeGradient" x1="0" y1="0" x2="220" y2="120" gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#38bdf8" stop-opacity="0.9"/>
-                                            <stop offset="1" stop-color="#1e3a8a" stop-opacity="0.95"/>
+                                        <linearGradient id="ringBand" x1="36" y1="24" x2="180" y2="140" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#c084fc"/>
+                                            <stop offset="1" stop-color="#6366f1"/>
                                         </linearGradient>
-                                        <linearGradient id="accent" x1="20" y1="60" x2="200" y2="80" gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#a5b4fc"/>
-                                            <stop offset="1" stop-color="#c084fc"/>
-                                        </linearGradient>
+                                        <radialGradient id="stone" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(108 52) rotate(90) scale(42)">
+                                            <stop offset="0.1" stop-color="#f5f3ff"/>
+                                            <stop offset="0.55" stop-color="#c4b5fd"/>
+                                            <stop offset="1" stop-color="#7c3aed" stop-opacity="0.55"/>
+                                        </radialGradient>
                                     </defs>
-                                    <path d="M26 78c22-8 36-34 62-34 20 0 36 18 52 18 18 0 32-10 46-6 8 2 12 8 12 16 0 18-12 36-40 36H54c-24 0-34-12-34-24 0-4 2-6 6-6z" fill="url(#shoeGradient)" opacity="0.9"/>
-                                    <path d="M60 70c18-10 26-22 46-22 14 0 28 12 46 16" stroke="url(#accent)" stroke-width="8" stroke-linecap="round"/>
-                                    <path d="M62 90c32-12 58-12 92-6" stroke="#e0f2fe" stroke-width="6" stroke-linecap="round" opacity=".7"/>
-                                    <circle cx="146" cy="88" r="10" fill="#0f172a" opacity=".9"/>
-                                    <circle cx="86" cy="92" r="12" fill="#0f172a" opacity=".9"/>
-                                    <circle cx="86" cy="92" r="6" fill="#e2e8f0"/>
-                                    <circle cx="146" cy="88" r="5" fill="#e2e8f0"/>
-                                    <path d="M32 78c10-14 22-24 38-26" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round" opacity=".8"/>
-                                    <path d="M140 44c-6 2-14 2-18-4" stroke="#bae6fd" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+                                    <circle cx="110" cy="76" r="54" stroke="url(#ringBand)" stroke-width="12" fill="none" opacity="0.92"/>
+                                    <circle cx="110" cy="76" r="38" fill="url(#stone)" opacity="0.9"/>
+                                    <circle cx="110" cy="76" r="18" fill="#fff" opacity="0.75"/>
+                                    <path d="M110 24c12-16 32-16 42-4" stroke="#a78bfa" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+                                    <path d="M64 118c22 18 80 18 104-6" stroke="#e0e7ff" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+                                    <path d="M84 52c8-10 24-14 38-8" stroke="#bfdbfe" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+                                    <circle cx="78" cy="38" r="6" fill="#e0f2fe"/>
+                                    <circle cx="152" cy="54" r="5" fill="#e0f2fe"/>
+                                    <path d="M136 30c4-6 10-10 18-8" stroke="#fef3c7" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+                                    <path d="M166 36l6-8" stroke="#fde68a" stroke-width="4" stroke-linecap="round"/>
+                                    <path d="M86 30l-6-8" stroke="#fef08a" stroke-width="4" stroke-linecap="round"/>
                                 </svg>
                                 <div class="product-glow"></div>
                             </div>
                             <div class="product-meta">
-                                <p class="product-title">Featherlight Runner</p>
-                                <p class="product-subtitle">Breathable mesh, responsive foam, built for daily miles.</p>
+                                <p class="product-title">Aurora Halo Ring</p>
+                                <p class="product-subtitle">14k gold with a lab-grown center stone, crafted for everyday shine.</p>
+                                <div class="product-specs">
+                                    <span class="spec-chip">Size 6.5</span>
+                                    <span class="spec-chip">Ships in 24h</span>
+                                    <span class="spec-chip">Free resize</span>
+                                </div>
                             </div>
                             <div class="btn">Add to cart</div>
                         </div>
                         <div class="cart-panel">
                             <div class="text-sm font-semibold text-gray-900">Cart</div>
                             <div class="cart-line mt-4"></div>
-                            <div class="cart-line"></div>
+                            <div class="flow-step" style="--delay:0.14s">
+                                <span class="flow-dot"></span>
+                                <div>
+                                    <strong>Added Aurora Halo</strong>
+                                    <span class="flow-sub">1 item • $189</span>
+                                </div>
+                                <span class="flow-chip">In cart</span>
+                            </div>
+                            <div class="flow-step" style="--delay:0.24s">
+                                <span class="flow-dot"></span>
+                                <div>
+                                    <strong>Gift wrap enabled</strong>
+                                    <span class="flow-sub">Complimentary note</span>
+                                </div>
+                                <span class="flow-chip">Saved</span>
+                            </div>
                             <div class="btn text-[12px] mt-4">Checkout →</div>
                         </div>
                         <div class="checkout-panel">
                             <div class="text-sm font-semibold text-gray-900">Checkout</div>
                             <div class="checkout-line mt-4"></div>
-                            <div class="checkout-line"></div>
-                            <div class="checkout-line"></div>
+                            <div class="flow-step" style="--delay:0.44s">
+                                <span class="flow-dot"></span>
+                                <div>
+                                    <strong>Secure payment</strong>
+                                    <span class="flow-sub">Apple Pay • Ending 44</span>
+                                </div>
+                                <span class="flow-chip">Verified</span>
+                            </div>
+                            <div class="flow-step" style="--delay:0.62s">
+                                <span class="flow-dot"></span>
+                                <div>
+                                    <strong>Order confirmed</strong>
+                                    <span class="flow-sub">Arrives by Friday</span>
+                                </div>
+                                <span class="flow-chip success">Paid</span>
+                            </div>
                             <div class="btn text-[12px] mt-4">Pay now</div>
                         </div>
-                        <div class="order-success">✔ Order successful</div>
+                        <div class="order-success">✔ Order confirmed &amp; ready to ship</div>
                     </div>
                     <div class="cursor-dot"></div>
                     <div class="click-ripple ripple-add"></div>
