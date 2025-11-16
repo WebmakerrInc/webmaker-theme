@@ -35,7 +35,7 @@ get_header();
 .hero-anim-card {
   position:relative;
   width:100%;
-  height:360px;
+  height:380px;
   border-radius:20px;
   border:1px solid #e5e7eb;
   overflow:hidden;
@@ -220,6 +220,16 @@ get_header();
   justify-content:center;
 }
 
+@media (max-width: 768px) {
+  .hero-anim-card {
+    height:320px;
+  }
+
+  .scene {
+    padding:16px;
+  }
+}
+
 .scene-booking.active .confirm-btn {
   animation:confirmPulse 6s forwards;
 }
@@ -293,100 +303,153 @@ get_header();
 .scene-crm .ui-window {
   display:flex;
   flex-direction:column;
-  gap:24px;
+  gap:18px;
 }
 
-.crm-bars {
-  display:flex;
-  align-items:flex-end;
+.crm-kpis {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
   gap:12px;
-  height:140px;
 }
 
-.crm-bar {
-  width:26px;
-  border-radius:10px 10px 4px 4px;
-  background:#cbd5f5;
-  transform-origin:bottom;
-  opacity:.6;
+.crm-kpi {
+  background:linear-gradient(135deg,#f8fafc,#eef2ff);
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 8px 18px rgba(15,23,42,0.06);
 }
 
-.scene-crm.active .crm-bar {
-  animation:crmBarGrow 4s forwards;
+.crm-kpi strong {
+  display:block;
+  font-size:16px;
+  color:#0f172a;
 }
 
-@keyframes crmBarGrow {
-  0% { transform:scaleY(.1); opacity:.3; }
-  35% { opacity:1; }
-  60% { transform:scaleY(var(--grow,1)); }
-  100% { transform:scaleY(var(--grow,1)); }
+.crm-kpi span {
+  font-size:12px;
+  color:#64748b;
 }
 
-.crm-tooltip {
-  position:absolute;
-  bottom:130px;
-  left:50%;
-  transform:translate(-50%,20px);
+.scene-crm.active .crm-kpi {
+  animation:kpiPop 4s ease forwards;
+}
+
+@keyframes kpiPop {
+  0% { transform:translateY(12px); opacity:0; }
+  20% { transform:translateY(0); opacity:1; }
+  100% { opacity:1; }
+}
+
+.lead-table {
   background:#0f172a;
+  border-radius:14px;
   color:white;
-  font-size:11px;
-  padding:6px 10px;
-  border-radius:8px;
-  opacity:0;
+  padding:14px;
+  position:relative;
+  overflow:hidden;
 }
 
-.scene-crm.active .crm-tooltip {
-  animation:crmTooltip 4s forwards;
-}
-
-@keyframes crmTooltip {
-  0%,35% { opacity:0; transform:translate(-50%,20px); }
-  40%,70% { opacity:1; transform:translate(-50%,0); }
-  100% { opacity:0; transform:translate(-50%,-8px); }
-}
-
-.crm-highlight {
+.lead-table::after {
+  content:"";
   position:absolute;
-  bottom:36px;
-  right:42px;
-  width:78px;
-  height:78px;
-  border-radius:16px;
-  border:1px solid rgba(15,23,42,0.18);
+  inset:0;
+  background:radial-gradient(circle at 20% 20%, rgba(59,130,246,0.25), transparent 45%);
+  pointer-events:none;
+}
+
+.lead-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,0.08);
   opacity:0;
 }
 
-.scene-crm.active .crm-highlight {
-  animation:crmHighlight 4s forwards;
+.lead-row:last-child { border-bottom:none; }
+
+.lead-info { display:flex; flex-direction:column; gap:2px; }
+
+.lead-name { font-weight:600; font-size:13px; }
+
+.lead-meta { font-size:11px; color:rgba(255,255,255,0.7); }
+
+.status-pill {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:11px;
+  background:rgba(34,197,94,0.15);
+  color:#bbf7d0;
+  border:1px solid rgba(34,197,94,0.4);
 }
 
-@keyframes crmHighlight {
-  0%,60% { opacity:0; transform:scale(.8); }
-  68%,86% { opacity:1; transform:scale(1); }
-  100% { opacity:0; transform:scale(.9); }
+.status-pill.pending {
+  background:rgba(14,165,233,0.15);
+  color:#bfdbfe;
+  border-color:rgba(59,130,246,0.4);
 }
 
-.scene-crm .cursor-dot {
-  top:80px;
-  left:80px;
+.lead-profit {
+  font-weight:700;
+  font-size:13px;
+  color:#bbf7d0;
 }
+
+.scene-crm.active .lead-row {
+  animation:leadReveal 4s forwards;
+  animation-delay:var(--delay,0s);
+}
+
+@keyframes leadReveal {
+  0%,20% { opacity:0; transform:translateY(6px); }
+  28%,70% { opacity:1; transform:translateY(0); }
+  100% { opacity:1; }
+}
+
+.crm-activity {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:12px;
+  color:#334155;
+}
+
+.crm-activity .pulse-dot {
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 0 0 rgba(34,197,94,0.4);
+}
+
+.scene-crm.active .pulse-dot {
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow:0 0 0 0 rgba(34,197,94,0.4); }
+  50% { box-shadow:0 0 0 10px rgba(34,197,94,0); }
+  100% { box-shadow:0 0 0 0 rgba(34,197,94,0); }
+}
+
+.scene-crm .cursor-dot { top:160px; left:200px; }
 
 .scene-crm.active .cursor-dot {
   animation:crmCursor 4s cubic-bezier(.4,0,.2,1) forwards;
 }
 
 @keyframes crmCursor {
-  0% { top:200px; left:120px; }
-  30% { top:120px; left:210px; }
-  48% { top:120px; left:210px; }
-  70% { top:70px; left:290px; }
-  100% { top:200px; left:120px; }
+  0% { top:240px; left:140px; }
+  35% { top:130px; left:260px; }
+  60% { top:200px; left:320px; }
+  100% { top:240px; left:140px; }
 }
 
-.scene-crm .click-ripple {
-  top:120px;
-  left:210px;
-}
+.scene-crm .click-ripple { top:130px; left:260px; }
 
 .scene-crm.active .click-ripple {
   animation:crmRipple 4s forwards;
@@ -602,69 +665,148 @@ get_header();
   background:linear-gradient(135deg,#fdf4ff,#eef2ff);
 }
 
-.node {
+.automation-grid {
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:16px;
+  height:100%;
+}
+
+@media (max-width: 768px) {
+  .automation-grid { grid-template-columns:1fr; }
+}
+
+.code-window {
+  background:#0f172a;
+  color:#e2e8f0;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.08);
+  padding:16px;
+  box-shadow:0 12px 30px rgba(15,23,42,0.2);
+  position:relative;
+  overflow:hidden;
+}
+
+.code-window::after {
+  content:"";
   position:absolute;
-  width:32px;
-  height:32px;
-  border-radius:12px;
-  background:white;
-  border:1px solid rgba(15,23,42,0.1);
-  box-shadow:0 12px 25px rgba(15,23,42,0.08);
+  inset:0;
+  background:radial-gradient(circle at 30% 20%, rgba(14,165,233,0.16), transparent 45%);
+  pointer-events:none;
+}
+
+.code-line {
+  font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  margin-bottom:8px;
+  opacity:.4;
+  transform:translateX(-6px);
+  position:relative;
+}
+
+.code-line .cursor-block {
+  display:inline-block;
+  width:10px;
+  height:12px;
+  background:#22c55e;
+  border-radius:2px;
+  margin-left:6px;
+  box-shadow:0 0 12px rgba(34,197,94,0.6);
+}
+
+.scene-automation.active .code-line {
+  animation:codeReveal 4s forwards;
+  animation-delay:var(--delay,0s);
+}
+
+@keyframes codeReveal {
+  0%,10% { opacity:.2; transform:translateX(-10px); }
+  18%,60% { opacity:1; transform:translateX(0); }
+  100% { opacity:.8; }
+}
+
+.run-status {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:10px;
+  background:rgba(34,197,94,0.1);
+  color:#bbf7d0;
+  font-size:12px;
+  border:1px solid rgba(34,197,94,0.25);
+}
+
+.automation-flow {
+  position:relative;
+  background:linear-gradient(180deg,#ffffff,#eef2ff);
+  border:1px solid #e2e8f0;
+  border-radius:14px;
+  padding:16px;
+  box-shadow:0 12px 24px rgba(15,23,42,0.08);
+  overflow:hidden;
+}
+
+.automation-steps {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.automation-step {
   display:flex;
   align-items:center;
-  justify-content:center;
+  gap:10px;
+  padding:10px;
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(15,23,42,0.06);
+  opacity:0;
+}
+
+.automation-step .bubble {
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:#0ea5e9;
+  box-shadow:0 0 0 6px rgba(14,165,233,0.15);
+}
+
+.automation-step strong { color:#0f172a; font-size:13px; }
+.automation-step span { color:#475569; font-size:12px; }
+
+.scene-automation.active .automation-step {
+  animation:stepFade 4s forwards;
+  animation-delay:var(--delay,0s);
+}
+
+@keyframes stepFade {
+  0%,20% { opacity:0; transform:translateY(8px); }
+  28%,70% { opacity:1; transform:translateY(0); }
+  100% { opacity:1; }
+}
+
+.automation-log {
+  margin-top:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
   font-size:12px;
   color:#0f172a;
-  opacity:.8;
 }
 
-.scene-automation.active .node {
-  animation:nodePulse 4s infinite ease-in-out;
-}
-
-@keyframes nodePulse {
-  0% { transform:scale(.9); opacity:.7; }
-  50% { transform:scale(1.05); opacity:1; }
-  100% { transform:scale(.95); opacity:.85; }
-}
-
-.connection {
-  position:absolute;
-  height:2px;
-  background:rgba(15,23,42,0.2);
-  transform-origin:left;
-  opacity:.2;
-}
-
-.scene-automation.active .connection {
-  animation:connectionDraw 4s forwards;
-}
-
-@keyframes connectionDraw {
-  0% { transform:scaleX(0); opacity:0; }
-  25% { transform:scaleX(1); opacity:1; }
-  100% { opacity:.5; }
-}
-
-.connection-vertical {
-  width:2px;
-  height:120px;
-  transform-origin:top;
-}
-
-.scene-automation.active .connection-vertical {
-  animation:connectionRise 4s forwards;
-}
-
-@keyframes connectionRise {
-  0% { transform:scaleY(0); opacity:0; }
-  30% { transform:scaleY(1); opacity:1; }
-  100% { opacity:.5; }
+.automation-log .dot {
+  width:8px;
+  height:8px;
+  background:#22c55e;
+  border-radius:50%;
+  box-shadow:0 0 0 8px rgba(34,197,94,0.12);
 }
 
 .scene-automation .cursor-dot {
-  top:120px;
-  left:140px;
+  top:200px;
+  left:240px;
 }
 
 .scene-automation.active .cursor-dot {
@@ -672,29 +814,10 @@ get_header();
 }
 
 @keyframes automationCursor {
-  0% { top:220px; left:120px; }
-  35% { top:120px; left:220px; }
-  62% { top:190px; left:280px; }
-  100% { top:220px; left:120px; }
-}
-
-.scene-automation .drag-indicator {
-  position:absolute;
-  width:60px;
-  height:60px;
-  border:1px dashed rgba(15,23,42,0.2);
-  border-radius:20px;
-  opacity:0;
-}
-
-.scene-automation.active .drag-indicator {
-  animation:dragHighlight 4s forwards;
-}
-
-@keyframes dragHighlight {
-  0%,45% { opacity:0; transform:translate(-10px,-10px) scale(.9); }
-  55%,75% { opacity:1; transform:translate(0,0) scale(1); }
-  100% { opacity:0; transform:scale(.95); }
+  0% { top:260px; left:140px; }
+  35% { top:180px; left:260px; }
+  62% { top:230px; left:320px; }
+  100% { top:260px; left:140px; }
 }
 
 /* -------------------------------------------------------------- */
@@ -901,16 +1024,63 @@ get_header();
 
                 <div class="scene scene-crm" data-scene="crm">
                     <div class="ui-window h-full">
-                        <div class="skeleton w-1/2 h-6 rounded-lg"></div>
-                        <div class="crm-bars mt-6">
-                            <div class="crm-bar" style="--grow:.35"></div>
-                            <div class="crm-bar" style="--grow:.55"></div>
-                            <div class="crm-bar" style="--grow:.4"></div>
-                            <div class="crm-bar" style="--grow:.75"></div>
-                            <div class="crm-bar" style="--grow:.45"></div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm font-semibold text-gray-900">CRM pipeline</div>
+                            <div class="crm-activity">
+                                <span class="pulse-dot"></span>
+                                Syncing live leads
+                            </div>
                         </div>
-                        <div class="crm-tooltip">New leads: 32</div>
-                        <div class="crm-highlight"></div>
+
+                        <div class="crm-kpis">
+                            <div class="crm-kpi">
+                                <strong>24</strong>
+                                <span>New leads</span>
+                            </div>
+                            <div class="crm-kpi">
+                                <strong>$18.4k</strong>
+                                <span>Pipeline value</span>
+                            </div>
+                            <div class="crm-kpi">
+                                <strong>62%</strong>
+                                <span>Win rate</span>
+                            </div>
+                        </div>
+
+                        <div class="lead-table">
+                            <div class="lead-row" style="--delay:0.1s">
+                                <div class="lead-info">
+                                    <span class="lead-name">Mia Johnson</span>
+                                    <span class="lead-meta">Demo booked • Agency</span>
+                                </div>
+                                <span class="status-pill">Won</span>
+                                <span class="lead-profit">+$3,200</span>
+                            </div>
+                            <div class="lead-row" style="--delay:0.2s">
+                                <div class="lead-info">
+                                    <span class="lead-name">Arjun Patel</span>
+                                    <span class="lead-meta">Follow-up • SaaS</span>
+                                </div>
+                                <span class="status-pill pending">Nurturing</span>
+                                <span class="lead-profit">+$1,150</span>
+                            </div>
+                            <div class="lead-row" style="--delay:0.3s">
+                                <div class="lead-info">
+                                    <span class="lead-name">Chloe Park</span>
+                                    <span class="lead-meta">Proposal sent • Ecommerce</span>
+                                </div>
+                                <span class="status-pill">Won</span>
+                                <span class="lead-profit">+$4,780</span>
+                            </div>
+                            <div class="lead-row" style="--delay:0.4s">
+                                <div class="lead-info">
+                                    <span class="lead-name">Diego Martinez</span>
+                                    <span class="lead-meta">Discovery • Consulting</span>
+                                </div>
+                                <span class="status-pill pending">In review</span>
+                                <span class="lead-profit">+$960</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="cursor-dot"></div>
                     <div class="click-ripple"></div>
@@ -947,14 +1117,62 @@ get_header();
 
                 <div class="scene scene-automation" data-scene="automation">
                     <div class="ui-window h-full">
-                        <div class="node" style="top:60px; left:70px;">A</div>
-                        <div class="node" style="top:60px; right:70px;">B</div>
-                        <div class="node" style="bottom:70px; left:120px;">C</div>
-                        <div class="node" style="bottom:80px; right:110px;">D</div>
-                        <span class="connection" style="top:76px; left:100px; width:190px;"></span>
-                        <span class="connection connection-vertical" style="top:90px; left:86px;"></span>
-                        <span class="connection" style="bottom:100px; left:140px; width:160px;"></span>
-                        <div class="drag-indicator" style="top:150px; left:220px;"></div>
+                        <div class="automation-grid">
+                            <div class="code-window">
+                                <div class="flex items-center gap-2 text-[11px] text-gray-300 mb-3">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    Automation script
+                                </div>
+                                <div class="code-line" style="--delay:0.05s">const lead = await fetchLead();</div>
+                                <div class="code-line" style="--delay:0.12s">if (lead.intent === "demo") {</div>
+                                <div class="code-line" style="--delay:0.2s">  queueEmail("Schedule demo", lead.email);</div>
+                                <div class="code-line" style="--delay:0.28s">  syncCRM(lead.id, { stage: "Active" });</div>
+                                <div class="code-line" style="--delay:0.36s">}</div>
+                                <div class="code-line" style="--delay:0.44s">logRun("Automation deployed");<span class="cursor-block"></span></div>
+
+                                <div class="run-status mt-4">
+                                    <span>●</span> Running automation flow
+                                </div>
+                            </div>
+
+                            <div class="automation-flow">
+                                <div class="automation-steps">
+                                    <div class="automation-step" style="--delay:0.12s">
+                                        <span class="bubble"></span>
+                                        <div>
+                                            <strong>Webhook received</strong>
+                                            <span>New signup detected</span>
+                                        </div>
+                                    </div>
+                                    <div class="automation-step" style="--delay:0.22s">
+                                        <span class="bubble"></span>
+                                        <div>
+                                            <strong>Qualify lead</strong>
+                                            <span>Score raised to 92</span>
+                                        </div>
+                                    </div>
+                                    <div class="automation-step" style="--delay:0.32s">
+                                        <span class="bubble"></span>
+                                        <div>
+                                            <strong>Create task</strong>
+                                            <span>Assign to sales team</span>
+                                        </div>
+                                    </div>
+                                    <div class="automation-step" style="--delay:0.42s">
+                                        <span class="bubble"></span>
+                                        <div>
+                                            <strong>Send confirmation</strong>
+                                            <span>Meeting link shared</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="automation-log">
+                                    <span class="dot"></span>
+                                    Workflow synced to CRM
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="cursor-dot"></div>
                 </div>
