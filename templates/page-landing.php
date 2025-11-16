@@ -16,265 +16,792 @@ get_header();
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+:root {
+  --cursor-color:#0f172a;
+  --hero-bg:#f7f9fb;
+}
 
-/* -------------------------------------------------------------- */
-/* GLOBAL SKELETON EFFECT (Cal.com style) */
-/* -------------------------------------------------------------- */
 @keyframes skeleton {
-  0% { background-position:-200px 0; }
-  100% { background-position:200px 0; }
-}
-.skeleton {
-  background-image:linear-gradient(90deg,#e5e7eb 0%,#fafafa 50%,#e5e7eb 100%);
-  background-size:400px 100%;
-  animation:skeleton 1.2s infinite linear;
+  0% { background-position:-240px 0; }
+  100% { background-position:240px 0; }
 }
 
-/* -------------------------------------------------------------- */
-/* SLIDER CONTAINER — JS controls active slide */
-/* -------------------------------------------------------------- */
-.demo-slide {
+.skeleton {
+  background-image:linear-gradient(90deg,#e5e7eb 0%,#ffffff 50%,#e5e7eb 100%);
+  background-size:480px 100%;
+  animation:skeleton 1.4s linear infinite;
+}
+
+.hero-anim-card {
+  position:relative;
+  width:100%;
+  height:360px;
+  border-radius:20px;
+  border:1px solid #e5e7eb;
+  overflow:hidden;
+  background:linear-gradient(145deg,#ffffff,#eef2ff);
+  box-shadow:0 15px 45px rgba(15,23,42,0.08);
+}
+
+.hero-anim-card::after {
+  content:"";
   position:absolute;
   inset:0;
+  background:white;
   opacity:0;
-  transition:opacity .6s ease-in-out;
+  transition:opacity .45s ease;
   pointer-events:none;
+  z-index:50;
 }
-.demo-slide.active {
+
+.hero-anim-card.resetting::after {
   opacity:1;
-  z-index:2;
+}
+
+.scene {
+  position:absolute;
+  inset:0;
+  padding:24px;
+  opacity:0;
+  background:var(--hero-bg);
+  transition:opacity .6s ease;
+  pointer-events:none;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:18px;
+}
+
+.scene.active {
+  opacity:1;
+  pointer-events:auto;
+}
+
+.ui-window {
+  background:white;
+  border-radius:18px;
+  border:1px solid #e2e8f0;
+  box-shadow:0 10px 30px rgba(15,23,42,0.08);
+  padding:18px;
+  position:relative;
+  overflow:hidden;
+}
+
+.cursor-dot {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--cursor-color);
+  position:absolute;
+  transform:translate(-50%,-50%);
+  z-index:20;
+  opacity:0;
+}
+
+.scene.active .cursor-dot {
+  opacity:1;
+}
+
+.click-ripple {
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  border:2px solid var(--cursor-color);
+  position:absolute;
+  transform:translate(-50%,-50%) scale(.4);
+  opacity:0;
+  z-index:10;
 }
 
 /* -------------------------------------------------------------- */
-/* CARD 1 — BOOKING CALENDAR (6s smooth UX flow) */
+/* BOOKING FLOW */
 /* -------------------------------------------------------------- */
-.day {
-  height:32px;
-  background:#e5e7eb;
-  border-radius:6px;
+.scene-booking .calendar-shell {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.scene-booking .calendar-grid {
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+}
+
+.scene-booking .calendar-label {
+  font-size:11px;
+  color:#94a3b8;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+
+.booking-day {
+  height:36px;
+  border-radius:10px;
+  background:#e2e8f0;
   font-size:12px;
   display:flex;
   align-items:center;
   justify-content:center;
   opacity:0;
-  transform:translateY(6px) scale(.96);
-  animation:dayFade .45s forwards ease-out;
-}
-@keyframes dayFade {
-  to { opacity:1; transform:translateY(0) scale(1); }
+  transform:translateY(8px) scale(.9);
 }
 
-/* 8px cursor */
-.book-mouse {
-  width:8px; height:8px; background:#111; border-radius:50%;
-  position:absolute; z-index:50;
-  top:60px; left:50px;
-  transform:translate(-50%,-50%);
-  animation:bookCursor 6s infinite ease-in-out;
+.scene-booking.active .booking-day {
+  animation:dayPop .5s forwards ease-out;
+  animation-delay:var(--delay);
 }
 
-@keyframes bookCursor {
-  0%   { top:60px; left:50px; }
-  20%  { top:155px; left:160px; } /* select date */
-  30%  { top:155px; left:160px; }
-  45%  { top:110px; left:140px; } /* move to confirm */
-  55%  { top:175px; left:160px; } /* click confirm */
-  65%  { top:175px; left:160px; }
-  100% { top:60px; left:50px; }
+@keyframes dayPop {
+  0% { opacity:0; transform:translateY(8px) scale(.9); }
+  100% { opacity:1; transform:translateY(0) scale(1); }
 }
 
-/* Click ripple */
-.book-click {
-  width:14px; height:14px;
-  border:2px solid #111;
-  border-radius:50%;
+.booking-form {
   position:absolute;
-  top:155px; left:160px;
-  opacity:0;
-  transform:translate(-50%,-50%) scale(.4);
-  animation:bookClick 6s infinite ease-in-out;
-}
-
-@keyframes bookClick {
-  0%,18% { opacity:0; }
-  20% { opacity:1; transform:scale(1); }
-  28% { opacity:0; transform:scale(1.6); }
-  100%{ opacity:0; }
-}
-
-/* Booking Form Popup */
-.book-form {
-  position:absolute;
-  bottom:20px; left:50%; transform:translateX(-50%) translateY(20px);
+  left:50%;
+  bottom:24px;
+  transform:translate(-50%,40px);
   width:80%;
   background:white;
-  border:1px solid #e5e7eb;
-  border-radius:10px;
-  padding:12px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.08);
+  border:1px solid #e2e8f0;
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 20px 40px rgba(15,23,42,0.12);
   opacity:0;
-  animation:formIn 6s infinite ease;
 }
 
-@keyframes formIn {
-  0%,28% { opacity:0; transform:translateX(-50%) translateY(20px); }
-  30%,50% { opacity:1; transform:translateX(-50%) translateY(0); }
-  52%,100% { opacity:0; }
+.scene-booking.active .booking-form {
+  animation:bookingFormSlide 6s forwards cubic-bezier(.4,0,.2,1);
 }
 
-/* Success Badge */
-.book-success {
+@keyframes bookingFormSlide {
+  0%,28% { opacity:0; transform:translate(-50%,40px); }
+  32%,58% { opacity:1; transform:translate(-50%,0); }
+  65%,100% { opacity:0; transform:translate(-50%,20px); }
+}
+
+.typing-line {
+  height:10px;
+  background:#e2e8f0;
+  border-radius:999px;
+  margin-top:10px;
+  position:relative;
+  overflow:hidden;
+}
+
+.typing-line::after {
+  content:"";
   position:absolute;
-  bottom:120px; left:50%; transform:translateX(-50%);
-  padding:6px 12px;
-  background:#10b981;
+  inset:0;
+  background:#0f172a;
+  width:0;
+}
+
+.scene-booking.active .typing-line::after {
+  animation:typingFill 1.2s forwards steps(30);
+  animation-delay:var(--start,1.8s);
+}
+
+@keyframes typingFill {
+  from { width:0; }
+  to { width:100%; }
+}
+
+.confirm-btn {
+  margin-top:12px;
+  height:32px;
+  border-radius:10px;
+  background:#0f172a;
   color:white;
   font-size:12px;
-  border-radius:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.scene-booking.active .confirm-btn {
+  animation:confirmPulse 6s forwards;
+}
+
+@keyframes confirmPulse {
+  0%,48% { box-shadow:none; }
+  52% { box-shadow:0 0 0 0 rgba(15,23,42,0.35); }
+  58% { box-shadow:0 0 0 12px rgba(15,23,42,0); }
+  100% { box-shadow:none; }
+}
+
+.booking-success {
+  position:absolute;
+  top:38px;
+  right:32px;
+  background:#0ea5e9;
+  color:white;
+  font-size:12px;
+  padding:6px 12px;
+  border-radius:999px;
   opacity:0;
-  animation:bookSuccess 6s infinite ease-out;
 }
-@keyframes bookSuccess {
-  0%,50%{ opacity:0; }
-  52%,75%{ opacity:1; }
-  80%,100%{ opacity:0; }
+
+.scene-booking.active .booking-success {
+  animation:bookingSuccess 6s forwards;
+}
+
+@keyframes bookingSuccess {
+  0%,55% { opacity:0; transform:translateY(-8px); }
+  60%,80% { opacity:1; transform:translateY(0); }
+  100% { opacity:0; transform:translateY(-6px); }
+}
+
+.scene-booking .cursor-dot {
+  top:110px;
+  left:120px;
+}
+
+.scene-booking.active .cursor-dot {
+  animation:bookingCursor 6s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+@keyframes bookingCursor {
+  0% { top:120px; left:100px; }
+  20% { top:200px; left:220px; }
+  32% { top:200px; left:220px; }
+  48% { top:270px; left:210px; }
+  58% { top:295px; left:285px; }
+  100% { top:120px; left:100px; }
+}
+
+.scene-booking .click-ripple {
+  top:200px;
+  left:220px;
+}
+
+.scene-booking.active .click-ripple {
+  animation:bookingRipple 6s forwards;
+}
+
+@keyframes bookingRipple {
+  0%,18% { opacity:0; transform:translate(-50%,-50%) scale(.4); }
+  22% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  28% { opacity:0; transform:translate(-50%,-50%) scale(1.8); }
+  100% { opacity:0; }
 }
 
 /* -------------------------------------------------------------- */
-/* CARD 2 — CRM */
+/* CRM FLOW */
 /* -------------------------------------------------------------- */
-.crm-bar { width:18px; border-radius:4px; background:#d1d5db;
-  transform:scaleY(.3); opacity:.4; }
-.bar-1{height:25%} .bar-2{height:40%} .bar-3{height:30%}
-.bar-4{height:55%} .bar-5{height:35%}
-
-.bar-4 { animation:crmPulse 4s infinite; }
-@keyframes crmPulse {
-  0%,38%,100% { background:#d1d5db; opacity:.4; }
-  42%,52% { background:#111; opacity:1; }
+.scene-crm .ui-window {
+  display:flex;
+  flex-direction:column;
+  gap:24px;
 }
 
-/* CRM Cursor */
-.crm-mouse {
-  width:8px; height:8px; background:#111; border-radius:50%;
-  position:absolute; z-index:50;
-  top:40px; left:40px;
-  transform:translate(-50%,-50%);
-  animation:crmCursor 4s infinite ease-in-out;
+.crm-bars {
+  display:flex;
+  align-items:flex-end;
+  gap:12px;
+  height:140px;
 }
+
+.crm-bar {
+  width:26px;
+  border-radius:10px 10px 4px 4px;
+  background:#cbd5f5;
+  transform-origin:bottom;
+  opacity:.6;
+}
+
+.scene-crm.active .crm-bar {
+  animation:crmBarGrow 4s forwards;
+}
+
+@keyframes crmBarGrow {
+  0% { transform:scaleY(.1); opacity:.3; }
+  35% { opacity:1; }
+  60% { transform:scaleY(var(--grow,1)); }
+  100% { transform:scaleY(var(--grow,1)); }
+}
+
+.crm-tooltip {
+  position:absolute;
+  bottom:130px;
+  left:50%;
+  transform:translate(-50%,20px);
+  background:#0f172a;
+  color:white;
+  font-size:11px;
+  padding:6px 10px;
+  border-radius:8px;
+  opacity:0;
+}
+
+.scene-crm.active .crm-tooltip {
+  animation:crmTooltip 4s forwards;
+}
+
+@keyframes crmTooltip {
+  0%,35% { opacity:0; transform:translate(-50%,20px); }
+  40%,70% { opacity:1; transform:translate(-50%,0); }
+  100% { opacity:0; transform:translate(-50%,-8px); }
+}
+
+.crm-highlight {
+  position:absolute;
+  bottom:36px;
+  right:42px;
+  width:78px;
+  height:78px;
+  border-radius:16px;
+  border:1px solid rgba(15,23,42,0.18);
+  opacity:0;
+}
+
+.scene-crm.active .crm-highlight {
+  animation:crmHighlight 4s forwards;
+}
+
+@keyframes crmHighlight {
+  0%,60% { opacity:0; transform:scale(.8); }
+  68%,86% { opacity:1; transform:scale(1); }
+  100% { opacity:0; transform:scale(.9); }
+}
+
+.scene-crm .cursor-dot {
+  top:80px;
+  left:80px;
+}
+
+.scene-crm.active .cursor-dot {
+  animation:crmCursor 4s cubic-bezier(.4,0,.2,1) forwards;
+}
+
 @keyframes crmCursor {
-  0% { top:40px; left:40px; }
-  25%{ top:120px; left:140px; }
-  40%{ top:120px; left:140px; }
-  70%{ top:65px; left:105px; }
-  100%{ top:40px; left:40px; }
+  0% { top:200px; left:120px; }
+  30% { top:120px; left:210px; }
+  48% { top:120px; left:210px; }
+  70% { top:70px; left:290px; }
+  100% { top:200px; left:120px; }
 }
 
-/* CRM Click */
-.crm-click {
-  width:14px; height:14px;
-  border:2px solid #111; border-radius:50%;
-  position:absolute; top:120px; left:140px;
-  opacity:0; transform:translate(-50%,-50%) scale(.4);
-  animation:crmClick 4s infinite;
-}
-@keyframes crmClick {
-  0%,22%{ opacity:0; }
-  25%{ opacity:1; transform:scale(1); }
-  33%{ opacity:0; transform:scale(1.6); }
-  100%{ opacity:0; }
+.scene-crm .click-ripple {
+  top:120px;
+  left:210px;
 }
 
-/* -------------------------------------------------------------- */
-/* CARD 3 — STORE */
-/* -------------------------------------------------------------- */
-.store-img{
-  width:100%; height:70px; border-radius:10px; background:#e5e7eb;
-  animation:skeleton 1.1s infinite;
-}
-.store-text{
-  width:60%; height:10px; background:#d1d5db; border-radius:4px;
-  margin-top:8px;
-}
-.store-item{
-  background:white; padding:10px; border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.06);
-  transform:scale(.92); opacity:0;
-}
-.item-1{ animation:storeFade 4s infinite .2s; }
-.item-2{ animation:storeFade 4s infinite .4s; }
-
-@keyframes storeFade {
-  0%{opacity:0; transform:scale(.92);}
-  10%{opacity:1; transform:scale(1);}
-  45%{opacity:1;}
-  70%{opacity:.88; transform:scale(.97);}
-  100%{opacity:0; transform:scale(.92);}
+.scene-crm.active .click-ripple {
+  animation:crmRipple 4s forwards;
 }
 
-.store-mouse{
-  width:8px; height:8px; background:#111; border-radius:50%;
-  position:absolute; top:60px; left:70px; transform:translate(-50%,-50%);
-  animation:storeCursor 4s infinite;
-}
-@keyframes storeCursor {
-  0%  { top:60px; left:70px; }
-  25% { top:95px; left:140px; }
-  40% { top:95px; left:140px; }
-  65% { top:135px; left:105px; }
-  100%{ top:60px; left:70px; }
+@keyframes crmRipple {
+  0%,24% { opacity:0; }
+  30% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  42% { opacity:0; transform:translate(-50%,-50%) scale(1.6); }
+  100% { opacity:0; }
 }
 
 /* -------------------------------------------------------------- */
-/* CARD 4 — AUTOMATIONS */
+/* E-COMMERCE FLOW */
 /* -------------------------------------------------------------- */
-.node{
-  width:18px; height:18px; background:#d4d4d4;
-  border-radius:50%; position:absolute;
-  animation:nodePulse 3s infinite alternate ease;
+.scene-ecommerce .product-card,
+.scene-ecommerce .cart-panel,
+.scene-ecommerce .checkout-panel {
+  border-radius:18px;
+  border:1px solid #e2e8f0;
+  background:white;
+  box-shadow:0 15px 35px rgba(15,23,42,0.08);
 }
-.a1{ top:35px; left:35px; }
-.a2{ top:80px; right:35px; }
-.a3{ bottom:40px; left:65px; }
+
+.scene-ecommerce .product-card {
+  padding:18px;
+  width:260px;
+}
+
+.scene-ecommerce .cart-panel,
+.scene-ecommerce .checkout-panel {
+  position:absolute;
+  top:28px;
+  right:28px;
+  width:220px;
+  padding:16px;
+  opacity:0;
+}
+
+.scene-ecommerce .cart-panel {
+  transform:translateX(140px);
+}
+
+.scene-ecommerce .checkout-panel {
+  top:auto;
+  bottom:32px;
+  transform:translateY(30px);
+}
+
+.scene-ecommerce.active .cart-panel {
+  animation:cartSlide 6s forwards;
+}
+
+@keyframes cartSlide {
+  0%,24% { opacity:0; transform:translateX(140px); }
+  30%,55% { opacity:1; transform:translateX(0); }
+  75%,100% { opacity:0; transform:translateX(100px); }
+}
+
+.scene-ecommerce.active .checkout-panel {
+  animation:checkoutRise 6s forwards;
+}
+
+@keyframes checkoutRise {
+  0%,48% { opacity:0; transform:translateY(30px); }
+  58%,78% { opacity:1; transform:translateY(0); }
+  100% { opacity:0; transform:translateY(10px); }
+}
+
+.order-success {
+  position:absolute;
+  left:50%;
+  bottom:40px;
+  transform:translate(-50%,20px);
+  padding:8px 16px;
+  background:#22c55e;
+  color:white;
+  font-size:13px;
+  border-radius:999px;
+  opacity:0;
+}
+
+.scene-ecommerce.active .order-success {
+  animation:orderBadge 6s forwards;
+}
+
+@keyframes orderBadge {
+  0%,70% { opacity:0; transform:translate(-50%,20px); }
+  78%,92% { opacity:1; transform:translate(-50%,0); }
+  100% { opacity:0; transform:translate(-50%,10px); }
+}
+
+.scene-ecommerce .cursor-dot {
+  top:140px;
+  left:120px;
+}
+
+.scene-ecommerce.active .cursor-dot {
+  animation:ecomCursor 6s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+@keyframes ecomCursor {
+  0% { top:190px; left:150px; }
+  18% { top:250px; left:190px; }
+  32% { top:140px; left:330px; }
+  46% { top:210px; left:360px; }
+  62% { top:320px; left:280px; }
+  72% { top:320px; left:240px; }
+  100% { top:190px; left:150px; }
+}
+
+.scene-ecommerce .ripple-add {
+  top:250px;
+  left:190px;
+}
+
+.scene-ecommerce .ripple-checkout {
+  top:210px;
+  left:360px;
+}
+
+.scene-ecommerce .ripple-pay {
+  top:320px;
+  left:240px;
+}
+
+.scene-ecommerce.active .ripple-add {
+  animation:ecomRipple 6s forwards;
+}
+
+.scene-ecommerce.active .ripple-checkout {
+  animation:ecomRippleCheckout 6s forwards;
+}
+
+.scene-ecommerce.active .ripple-pay {
+  animation:ecomRipplePay 6s forwards;
+}
+
+@keyframes ecomRipple {
+  0%,10% { opacity:0; }
+  15% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  24% { opacity:0; transform:translate(-50%,-50%) scale(1.8); }
+  100% { opacity:0; }
+}
+
+@keyframes ecomRippleCheckout {
+  0%,34% { opacity:0; }
+  40% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  48% { opacity:0; transform:translate(-50%,-50%) scale(1.8); }
+  100% { opacity:0; }
+}
+
+@keyframes ecomRipplePay {
+  0%,62% { opacity:0; }
+  70% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  78% { opacity:0; transform:translate(-50%,-50%) scale(1.8); }
+  100% { opacity:0; }
+}
+
+.scene-ecommerce .btn {
+  margin-top:14px;
+  background:#0f172a;
+  color:white;
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:13px;
+  text-align:center;
+}
+
+.cart-line,
+.checkout-line {
+  height:10px;
+  background:#e2e8f0;
+  border-radius:999px;
+  margin-top:10px;
+  position:relative;
+  overflow:hidden;
+}
+
+.cart-line::after,
+.checkout-line::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:#0f172a;
+  width:0;
+}
+
+.scene-ecommerce.active .cart-line::after {
+  animation:cartFill 6s forwards;
+}
+
+.scene-ecommerce.active .checkout-line::after {
+  animation:checkoutFill 6s forwards;
+}
+
+@keyframes cartFill {
+  0%,30% { width:0; }
+  48% { width:80%; }
+  100% { width:80%; }
+}
+
+@keyframes checkoutFill {
+  0%,58% { width:0; }
+  80% { width:100%; }
+  100% { width:100%; }
+}
+
+/* -------------------------------------------------------------- */
+/* AUTOMATION FLOW */
+/* -------------------------------------------------------------- */
+.scene-automation {
+  background:linear-gradient(135deg,#fdf4ff,#eef2ff);
+}
+
+.node {
+  position:absolute;
+  width:32px;
+  height:32px;
+  border-radius:12px;
+  background:white;
+  border:1px solid rgba(15,23,42,0.1);
+  box-shadow:0 12px 25px rgba(15,23,42,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  color:#0f172a;
+  opacity:.8;
+}
+
+.scene-automation.active .node {
+  animation:nodePulse 4s infinite ease-in-out;
+}
 
 @keyframes nodePulse {
-  0%{ transform:scale(.85); opacity:.6; }
-  100%{ transform:scale(1); opacity:1; }
+  0% { transform:scale(.9); opacity:.7; }
+  50% { transform:scale(1.05); opacity:1; }
+  100% { transform:scale(.95); opacity:.85; }
 }
 
-.line-x{
-  position:absolute; top:55px; left:35px; right:50px; height:2px;
-  background:#e5e7eb; transform-origin:left;
-  animation:lineGrowX 3s infinite;
-}
-@keyframes lineGrowX {
-  0%{ transform:scaleX(0); opacity:.4; }
-  30%{ transform:scaleX(1); opacity:1; }
-  100%{ opacity:.4; }
+.connection {
+  position:absolute;
+  height:2px;
+  background:rgba(15,23,42,0.2);
+  transform-origin:left;
+  opacity:.2;
 }
 
-.line-y{
-  position:absolute; top:35px; left:42px; bottom:45px; width:2px;
-  background:#e5e7eb; transform-origin:top;
-  animation:lineGrowY 3s infinite;
-}
-@keyframes lineGrowY {
-  0%{ transform:scaleY(0); opacity:.4; }
-  35%{ transform:scaleY(1); opacity:1; }
-  100%{ opacity:.4; }
+.scene-automation.active .connection {
+  animation:connectionDraw 4s forwards;
 }
 
-.auto-mouse{
-  width:8px; height:8px; background:#111; border-radius:50%;
-  position:absolute; top:45px; left:40px;
-  transform:translate(-50%,-50%);
-  animation:autoCursor 3s infinite ease;
+@keyframes connectionDraw {
+  0% { transform:scaleX(0); opacity:0; }
+  25% { transform:scaleX(1); opacity:1; }
+  100% { opacity:.5; }
 }
-@keyframes autoCursor {
-  0%{ top:45px; left:40px; }
-  40%{ top:85px; left:135px; }
-  70%{ top:115px; left:80px; }
-  100%{ top:45px; left:40px; }
+
+.connection-vertical {
+  width:2px;
+  height:120px;
+  transform-origin:top;
+}
+
+.scene-automation.active .connection-vertical {
+  animation:connectionRise 4s forwards;
+}
+
+@keyframes connectionRise {
+  0% { transform:scaleY(0); opacity:0; }
+  30% { transform:scaleY(1); opacity:1; }
+  100% { opacity:.5; }
+}
+
+.scene-automation .cursor-dot {
+  top:120px;
+  left:140px;
+}
+
+.scene-automation.active .cursor-dot {
+  animation:automationCursor 4s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+@keyframes automationCursor {
+  0% { top:220px; left:120px; }
+  35% { top:120px; left:220px; }
+  62% { top:190px; left:280px; }
+  100% { top:220px; left:120px; }
+}
+
+.scene-automation .drag-indicator {
+  position:absolute;
+  width:60px;
+  height:60px;
+  border:1px dashed rgba(15,23,42,0.2);
+  border-radius:20px;
+  opacity:0;
+}
+
+.scene-automation.active .drag-indicator {
+  animation:dragHighlight 4s forwards;
+}
+
+@keyframes dragHighlight {
+  0%,45% { opacity:0; transform:translate(-10px,-10px) scale(.9); }
+  55%,75% { opacity:1; transform:translate(0,0) scale(1); }
+  100% { opacity:0; transform:scale(.95); }
+}
+
+/* -------------------------------------------------------------- */
+/* SUMMARY DASHBOARD */
+/* -------------------------------------------------------------- */
+.scene-dashboard .widget-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.scene-dashboard .widget {
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 12px 30px rgba(15,23,42,0.06);
+  position:relative;
+}
+
+.widget-value {
+  height:34px;
+  overflow:hidden;
+  position:relative;
+  font-weight:600;
+  color:#0f172a;
+  font-size:20px;
+}
+
+.digit-roller {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.digit-roller span {
+  display:block;
+}
+
+.scene-dashboard.active .digit-roller {
+  animation:digitScroll 3s steps(5) forwards;
+}
+
+@keyframes digitScroll {
+  from { transform:translateY(0); }
+  to { transform:translateY(var(--scroll,-120%)); }
+}
+
+.widget-bar {
+  width:100%;
+  height:8px;
+  background:#e2e8f0;
+  border-radius:999px;
+  margin-top:12px;
+  position:relative;
+  overflow:hidden;
+}
+
+.widget-bar::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:#0f172a;
+  width:0;
+}
+
+.scene-dashboard.active .widget-bar::after {
+  animation:widgetFill 3s forwards;
+}
+
+@keyframes widgetFill {
+  0% { width:0; }
+  60% { width:80%; }
+  100% { width:90%; }
+}
+
+.scene-dashboard .cursor-dot {
+  top:180px;
+  left:240px;
+}
+
+.scene-dashboard.active .cursor-dot {
+  animation:dashboardCursor 3s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+@keyframes dashboardCursor {
+  0% { top:260px; left:140px; }
+  45% { top:190px; left:260px; }
+  100% { top:260px; left:140px; }
+}
+
+.scene-dashboard .hover-glow {
+  position:absolute;
+  inset:0;
+  border-radius:16px;
+  border:2px solid rgba(14,165,233,0.4);
+  opacity:0;
+}
+
+.scene-dashboard.active .hover-glow {
+  animation:hoverPulse 3s forwards;
+}
+
+@keyframes hoverPulse {
+  0%,45% { opacity:0; }
+  55%,80% { opacity:1; box-shadow:0 0 0 8px rgba(14,165,233,0.15); }
+  100% { opacity:0; }
 }
 
 </style>
@@ -330,103 +857,167 @@ get_header();
             </div>
 
 
-            <div class="relative w-full h-[360px] rounded-[20px] border border-gray-200 shadow-sm overflow-hidden"
-                 id="demoSlider">
+            <div class="hero-anim-card" id="webmakerrHero">
 
-                <div class="demo-slide" id="slide-1">
-                    <div class="w-full h-full bg-gray-100 p-4 rounded-xl relative overflow-hidden">
-
-                        <div class="w-full h-8 skeleton rounded"></div>
-
-                        <div class="p-4 grid grid-cols-7 gap-1 text-center">
-
-                            <div class="col-span-7 grid grid-cols-7 text-[9px] text-gray-500">
-                                <span>S</span><span>M</span><span>T</span><span>W</span>
-                                <span>T</span><span>F</span><span>S</span>
+                <div class="scene scene-booking" data-scene="booking">
+                    <div class="ui-window h-full">
+                        <div class="skeleton w-2/3 h-6 rounded-lg mb-4"></div>
+                        <div class="calendar-shell">
+                            <div class="calendar-grid text-[10px] text-gray-400 tracking-[0.35em] uppercase font-semibold">
+                                <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
                             </div>
-
-                            <div class="col-span-7 grid grid-cols-7 gap-1 mt-2">
-                                <div></div><div></div><div></div>
-
-                                <div class="day" style="--i:1">1</div>
-                                <div class="day" style="--i:2">2</div>
-                                <div class="day" style="--i:3">3</div>
-                                <div class="day" style="--i:4">4</div>
-                                <div class="day" style="--i:5">5</div>
-                                <div class="day" style="--i:6">6</div>
-                                <div class="day" style="--i:7">7</div>
-                                <div class="day" style="--i:8">8</div>
-                                <div class="day" style="--i:9">9</div>
-                                <div class="day" style="--i:10">10</div>
-                                <div class="day" style="--i:11">11</div>
+                            <div class="calendar-grid text-gray-700">
+                                <span></span><span></span><span></span>
+                                <div class="booking-day" style="--delay:0.05s">4</div>
+                                <div class="booking-day" style="--delay:0.10s">5</div>
+                                <div class="booking-day" style="--delay:0.15s">6</div>
+                                <div class="booking-day" style="--delay:0.20s">7</div>
+                                <div class="booking-day" style="--delay:0.25s">8</div>
+                                <div class="booking-day" style="--delay:0.30s">9</div>
+                                <div class="booking-day" style="--delay:0.35s">10</div>
+                                <div class="booking-day" style="--delay:0.40s">11</div>
+                                <div class="booking-day" style="--delay:0.45s">12</div>
+                                <div class="booking-day" style="--delay:0.50s">13</div>
+                                <div class="booking-day" style="--delay:0.55s">14</div>
+                                <div class="booking-day" style="--delay:0.60s">15</div>
+                                <div class="booking-day" style="--delay:0.65s">16</div>
+                                <div class="booking-day" style="--delay:0.70s">17</div>
+                                <div class="booking-day" style="--delay:0.75s">18</div>
                             </div>
-
-                            <div class="book-mouse"></div>
-                            <div class="book-click"></div>
-
-                            <div class="book-form">
-                                <div class="text-[12px] font-medium text-gray-800 mb-2">Book Appointment</div>
-                                <input class="w-full border border-gray-300 rounded px-2 py-1 text-[12px] mb-2" placeholder="Name" />
-                                <input class="w-full border border-gray-300 rounded px-2 py-1 text-[12px]" placeholder="Email" />
-                                <button class="w-full bg-black text-white text-[12px] py-1.5 rounded mt-2">Confirm</button>
-                            </div>
-
-                            <div class="book-success">✔ Booking confirmed</div>
-
                         </div>
                     </div>
+                    <div class="booking-form">
+                        <div class="text-[13px] font-semibold text-gray-800">Confirm booking</div>
+                        <div class="text-[10px] uppercase tracking-wide text-gray-400 mt-3">Name</div>
+                        <div class="typing-line" style="--start:1.9s"></div>
+                        <div class="text-[10px] uppercase tracking-wide text-gray-400 mt-4">Email</div>
+                        <div class="typing-line" style="--start:2.6s"></div>
+                        <div class="confirm-btn">Confirm</div>
+                    </div>
+                    <div class="booking-success">✔ Booking confirmed</div>
+                    <div class="cursor-dot"></div>
+                    <div class="click-ripple"></div>
                 </div>
 
-                <div class="demo-slide" id="slide-2">
-                    <div class="w-full h-full bg-gray-100 p-4 relative rounded-xl overflow-hidden">
-
-                        <div class="w-full h-8 skeleton rounded"></div>
-
-                        <div class="absolute inset-0 p-5 flex gap-3 items-end mt-6">
-                            <div class="crm-bar bar-1"></div>
-                            <div class="crm-bar bar-2"></div>
-                            <div class="crm-bar bar-3"></div>
-                            <div class="crm-bar bar-4"></div>
-                            <div class="crm-bar bar-5"></div>
+                <div class="scene scene-crm" data-scene="crm">
+                    <div class="ui-window h-full">
+                        <div class="skeleton w-1/2 h-6 rounded-lg"></div>
+                        <div class="crm-bars mt-6">
+                            <div class="crm-bar" style="--grow:.35"></div>
+                            <div class="crm-bar" style="--grow:.55"></div>
+                            <div class="crm-bar" style="--grow:.4"></div>
+                            <div class="crm-bar" style="--grow:.75"></div>
+                            <div class="crm-bar" style="--grow:.45"></div>
                         </div>
-
-                        <div class="crm-mouse"></div>
-                        <div class="crm-click"></div>
-
+                        <div class="crm-tooltip">New leads: 32</div>
+                        <div class="crm-highlight"></div>
                     </div>
+                    <div class="cursor-dot"></div>
+                    <div class="click-ripple"></div>
                 </div>
 
-                <div class="demo-slide" id="slide-3">
-                    <div class="w-full h-full bg-gray-100 p-4 grid grid-cols-2 gap-3 rounded-xl relative">
-
-                        <div class="store-item item-1">
-                            <div class="store-img"></div>
-                            <div class="store-text"></div>
+                <div class="scene scene-ecommerce" data-scene="ecommerce">
+                    <div class="ui-window h-full">
+                        <div class="product-card">
+                            <div class="skeleton w-full h-32 rounded-2xl mb-4"></div>
+                            <div class="h-3 rounded-full bg-slate-200"></div>
+                            <div class="h-3 rounded-full bg-slate-200 mt-2 w-3/4"></div>
+                            <div class="btn">Add to cart</div>
                         </div>
-
-                        <div class="store-item item-2">
-                            <div class="store-img"></div>
-                            <div class="store-text"></div>
+                        <div class="cart-panel">
+                            <div class="text-sm font-semibold text-gray-900">Cart</div>
+                            <div class="cart-line mt-4"></div>
+                            <div class="cart-line"></div>
+                            <div class="btn text-[12px] mt-4">Checkout →</div>
                         </div>
-
-                        <div class="store-mouse"></div>
-
+                        <div class="checkout-panel">
+                            <div class="text-sm font-semibold text-gray-900">Checkout</div>
+                            <div class="checkout-line mt-4"></div>
+                            <div class="checkout-line"></div>
+                            <div class="checkout-line"></div>
+                            <div class="btn text-[12px] mt-4">Pay now</div>
+                        </div>
+                        <div class="order-success">✔ Order successful</div>
                     </div>
+                    <div class="cursor-dot"></div>
+                    <div class="click-ripple ripple-add"></div>
+                    <div class="click-ripple ripple-checkout"></div>
+                    <div class="click-ripple ripple-pay"></div>
                 </div>
 
-                <div class="demo-slide" id="slide-4">
-                    <div class="w-full h-full bg-gray-100 p-4 rounded-xl relative overflow-hidden">
-
-                        <div class="node a1"></div>
-                        <div class="node a2"></div>
-                        <div class="node a3"></div>
-
-                        <div class="line-x"></div>
-                        <div class="line-y"></div>
-
-                        <div class="auto-mouse"></div>
-
+                <div class="scene scene-automation" data-scene="automation">
+                    <div class="ui-window h-full">
+                        <div class="node" style="top:60px; left:70px;">A</div>
+                        <div class="node" style="top:60px; right:70px;">B</div>
+                        <div class="node" style="bottom:70px; left:120px;">C</div>
+                        <div class="node" style="bottom:80px; right:110px;">D</div>
+                        <span class="connection" style="top:76px; left:100px; width:190px;"></span>
+                        <span class="connection connection-vertical" style="top:90px; left:86px;"></span>
+                        <span class="connection" style="bottom:100px; left:140px; width:160px;"></span>
+                        <div class="drag-indicator" style="top:150px; left:220px;"></div>
                     </div>
+                    <div class="cursor-dot"></div>
+                </div>
+
+                <div class="scene scene-dashboard" data-scene="dashboard">
+                    <div class="ui-window h-full">
+                        <div class="widget-grid">
+                            <div class="widget">
+                                <p class="text-[11px] text-gray-500 uppercase tracking-wide">Bookings</p>
+                                <div class="widget-value">
+                                    <div class="digit-roller" style="--scroll:-140%">
+                                        <span>24</span>
+                                        <span>48</span>
+                                        <span>72</span>
+                                        <span>96</span>
+                                        <span>124</span>
+                                    </div>
+                                </div>
+                                <div class="widget-bar"></div>
+                                <div class="hover-glow"></div>
+                            </div>
+                            <div class="widget">
+                                <p class="text-[11px] text-gray-500 uppercase tracking-wide">Revenue</p>
+                                <div class="widget-value">
+                                    <div class="digit-roller" style="--scroll:-160%">
+                                        <span>$2k</span>
+                                        <span>$4k</span>
+                                        <span>$6k</span>
+                                        <span>$9k</span>
+                                        <span>$12k</span>
+                                    </div>
+                                </div>
+                                <div class="widget-bar"></div>
+                            </div>
+                            <div class="widget">
+                                <p class="text-[11px] text-gray-500 uppercase tracking-wide">Automation runs</p>
+                                <div class="widget-value">
+                                    <div class="digit-roller" style="--scroll:-120%">
+                                        <span>5</span>
+                                        <span>12</span>
+                                        <span>24</span>
+                                        <span>48</span>
+                                        <span>64</span>
+                                    </div>
+                                </div>
+                                <div class="widget-bar"></div>
+                            </div>
+                            <div class="widget">
+                                <p class="text-[11px] text-gray-500 uppercase tracking-wide">Store sales</p>
+                                <div class="widget-value">
+                                    <div class="digit-roller" style="--scroll:-150%">
+                                        <span>8</span>
+                                        <span>16</span>
+                                        <span>32</span>
+                                        <span>48</span>
+                                        <span>76</span>
+                                    </div>
+                                </div>
+                                <div class="widget-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cursor-dot"></div>
                 </div>
 
             </div>
@@ -1088,30 +1679,42 @@ track.addEventListener("touchend", e => {
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    const heroCard = document.getElementById("webmakerrHero");
+    if (!heroCard) return;
 
-    const slides = [
-        { id: "slide-1", duration: 6000 },
-        { id: "slide-2", duration: 4000 },
-        { id: "slide-3", duration: 4000 },
-        { id: "slide-4", duration: 3000 },
+    const timeline = [
+        { id: "booking", duration: 6000 },
+        { id: "crm", duration: 4000 },
+        { id: "ecommerce", duration: 6000 },
+        { id: "automation", duration: 4000 },
+        { id: "dashboard", duration: 3000 },
     ];
 
-    let current = 0;
+    const scenes = timeline.map(item => ({
+        el: heroCard.querySelector(`[data-scene="${item.id}"]`),
+        duration: item.duration,
+    })).filter(scene => scene.el);
 
-    function showSlide(index) {
-        document.querySelectorAll(".demo-slide").forEach(s => s.classList.remove("active"));
-        document.getElementById(slides[index].id).classList.add("active");
-    }
+    let index = 0;
+    let timer;
 
-    function nextSlide() {
-        current = (current + 1) % slides.length;
-        showSlide(current);
-        setTimeout(nextSlide, slides[current].duration);
-    }
+    const activate = (idx) => {
+        scenes.forEach((scene, sceneIndex) => {
+            scene.el.classList.toggle("active", sceneIndex === idx);
+        });
 
-    showSlide(0);
-    setTimeout(nextSlide, slides[0].duration);
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            const nextIndex = (idx + 1) % scenes.length;
+            if (nextIndex === 0) {
+                heroCard.classList.add("resetting");
+                setTimeout(() => heroCard.classList.remove("resetting"), 500);
+            }
+            activate(nextIndex);
+        }, scenes[idx].duration);
+    };
 
+    activate(index);
 });
 </script>
 
