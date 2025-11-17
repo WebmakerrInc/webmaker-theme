@@ -3,16 +3,15 @@
  * Template Name: Landing Page Home
  */
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cal.com Style Homepage</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<?php
+if (! defined('ABSPATH')) {
+    exit;
+}
 
-<body class="bg-white text-gray-900 antialiased">
+get_header();
+?>
+
+<script src="https://cdn.tailwindcss.com"></script>
 
 <!-- ======================================= -->
 <!-- STEP 1 — HERO SECTION (Optimized) -->
@@ -180,8 +179,10 @@
         </div>
 
     </div>
+
 </section>
-<!-- ======================================= -->
+
+ <!-- ======================================= -->
 <!-- STEP 2 — HOW IT WORKS (Optimized) -->
 <!-- ======================================= -->
 <section class="w-full bg-[#f7f7f7] py-24 border-t border-gray-200">
@@ -746,3 +747,7 @@
     </div>
 </section>
 
+
+<?php
+get_footer();
+?>
