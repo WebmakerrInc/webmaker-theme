@@ -13,6 +13,29 @@ get_header();
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<style>
+    .booking-hero-panel {
+        opacity: 0;
+        transform: translateY(16px) scale(0.985);
+        transition: all 700ms cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+    }
+
+    .booking-hero-panel.is-active {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+    }
+
+    .booking-hero-ambient {
+        background: radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.08), transparent 45%),
+                    radial-gradient(circle at 80% 0%, rgba(167, 139, 250, 0.08), transparent 35%),
+                    radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.08), transparent 40%);
+    }
+</style>
+
 <!-- ======================================= -->
 <!-- STEP 1 — HERO SECTION (Optimized) -->
 <!-- ======================================= -->
@@ -75,105 +98,165 @@ get_header();
 
             </div>
 
-            <!-- RIGHT SIDE — Booking Card -->
-            <div class="bg-white border border-gray-200 rounded-[20px] shadow-sm overflow-hidden">
+            <!-- RIGHT SIDE — Animated Booking Preview -->
+            <div class="relative bg-white border border-gray-200 rounded-[20px] shadow-sm overflow-hidden booking-hero-ambient">
 
-                <div class="grid md:grid-cols-2">
-
-                    <!-- LEFT COLUMN -->
-                    <div class="p-6 flex flex-col gap-4">
-
+                <div class="p-6 flex flex-col gap-5 relative z-[1]">
+                    <div class="flex items-start justify-between gap-4">
                         <div class="flex items-start gap-3">
-                            <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" alt="">
-
+                            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80" class="w-10 h-10 rounded-full object-cover" alt="">
                             <div>
                                 <p class="text-sm font-medium text-gray-900">Isabella Valce</p>
-                                <p class="text-lg font-semibold text-gray-900 -mt-0.5">Photoshoot</p>
-
-                                <p class="text-sm text-gray-500 mt-1 leading-relaxed">
-                                    Capture your special moments with our professional photography services today.
+                                <p class="text-lg font-semibold text-gray-900 -mt-0.5">Creative Photoshoot</p>
+                                <p class="text-sm text-gray-500 mt-1 leading-relaxed max-w-sm">
+                                    A modern booking experience that moves from availability to confirmation in a few smooth steps.
                                 </p>
                             </div>
                         </div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] bg-gray-900 text-white shadow-sm">Live preview</span>
+                    </div>
 
-                        <!-- Duration -->
-                        <div class="flex gap-2 mt-2">
-                            <button class="px-3 py-1 border border-gray-300 rounded-full text-xs text-gray-600">15m</button>
-                            <button class="px-3 py-1 border border-gray-300 rounded-full text-xs text-gray-600">30m</button>
-                            <button class="px-3 py-1 border border-gray-300 rounded-full text-xs text-gray-600">45m</button>
-                            <button class="px-3 py-1 bg-gray-900 text-white rounded-full text-xs">1h</button>
+                    <div class="flex gap-2 text-xs text-gray-600 flex-wrap">
+                        <span class="px-3 py-1 rounded-full border border-gray-300">30 min</span>
+                        <span class="px-3 py-1 rounded-full border border-gray-300">Virtual / In-person</span>
+                        <span class="px-3 py-1 rounded-full border border-gray-300">Timezone aware</span>
+                    </div>
+
+                    <div class="relative mt-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-4 shadow-sm min-h-[320px]">
+                        <!-- Calendar State -->
+                        <div class="booking-hero-panel is-active" data-booking-state="calendar">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-xs uppercase tracking-[0.08em] text-gray-500">Availability</p>
+                                    <p class="text-xl font-semibold text-gray-900">May 2025</p>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <button class="w-8 h-8 rounded-full border border-gray-200 hover:border-gray-300 hover:bg-gray-50 flex items-center justify-center">‹</button>
+                                    <button class="w-8 h-8 rounded-full border border-gray-200 hover:border-gray-300 hover:bg-gray-50 flex items-center justify-center">›</button>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-7 text-center text-[11px] text-gray-400 mb-2">
+                                <span>SUN</span><span>MON</span><span>TUE</span><span>WED</span>
+                                <span>THU</span><span>FRI</span><span>SAT</span>
+                            </div>
+
+                            <div class="grid grid-cols-7 gap-2 text-center text-sm">
+                                <span class="text-gray-300 py-2"></span>
+                                <span class="text-gray-300 py-2"></span>
+                                <span class="text-gray-300 py-2"></span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">1</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">2</span>
+                                <span class="text-gray-300 py-2"></span>
+                                <span class="text-gray-300 py-2"></span>
+
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">5</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">6</span>
+                                <span class="text-white py-2 bg-gray-900 rounded-lg font-semibold shadow">7</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">8</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">9</span>
+                                <span class="text-gray-300 py-2"></span>
+                                <span class="text-gray-300 py-2"></span>
+
+                                <span class="text-gray-900 py-2">12</span>
+                                <span class="text-gray-900 py-2">13</span>
+                                <span class="text-gray-900 py-2">14</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">15</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">16</span>
+                                <span class="text-gray-300 py-2"></span>
+                                <span class="text-gray-300 py-2"></span>
+
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">19</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">20</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">21</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">22</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">23</span>
+                                <span class="text-gray-300 py-2"></span>
+                                <span class="text-gray-300 py-2"></span>
+
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">26</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">27</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">28</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">29</span>
+                                <span class="text-gray-900 py-2 bg-gray-100 rounded-lg">30</span>
+                                <span class="text-gray-300 py-2"></span>
+                                <span class="text-gray-300 py-2"></span>
+                            </div>
+
+                            <div class="mt-4 flex items-center gap-2 text-xs text-gray-600">
+                                <span class="w-2 h-2 bg-gray-900 rounded-full"></span> Preferred slots available
+                                <span class="w-2 h-2 bg-gray-200 rounded-full ml-3"></span> Secondary
+                            </div>
                         </div>
 
-                        <!-- Info -->
-                        <div class="flex flex-col gap-2 mt-1 text-sm text-gray-700">
-                            <div class="flex items-center gap-2">
-                                <span>📍</span> Rock Wall Woods
+                        <!-- Booking Form State -->
+                        <div class="booking-hero-panel" data-booking-state="form">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-xs uppercase tracking-[0.08em] text-gray-500">Details</p>
+                                    <p class="text-xl font-semibold text-gray-900">Confirm your booking</p>
+                                </div>
+                                <span class="text-xs text-gray-500">Wed, May 7 · 2:00 PM GMT-3</span>
                             </div>
-                            <div class="flex items-center gap-2">
-                                <span>🌎</span> South America / Rio de Janeiro
+
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="text-xs text-gray-600">Full name</label>
+                                    <input class="w-full mt-1 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none" value="Arianna Doe" />
+                                </div>
+                                <div>
+                                    <label class="text-xs text-gray-600">Email</label>
+                                    <input class="w-full mt-1 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none" value="arianna@example.com" />
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="text-xs text-gray-600">Meeting type</label>
+                                        <div class="mt-1 flex items-center gap-2">
+                                            <span class="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 text-center">Zoom</span>
+                                            <span class="px-3 py-2 rounded-lg border border-gray-900 bg-gray-900 text-white text-sm flex-1 text-center">In studio</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-gray-600">Duration</label>
+                                        <div class="mt-1 px-3 py-2 rounded-lg border border-gray-200 text-sm flex items-center justify-between">
+                                            <span>60 minutes</span>
+                                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l4 4 4-4" /></svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="w-full mt-2 bg-gray-900 text-white text-sm font-medium py-3 rounded-lg shadow hover:bg-gray-800">Book now</button>
+                            </div>
+                        </div>
+
+                        <!-- Confirmation State -->
+                        <div class="booking-hero-panel" data-booking-state="confirmation">
+                            <div class="flex flex-col items-center justify-center text-center h-full gap-3 pt-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 text-white flex items-center justify-center shadow-md">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-[0.08em] text-emerald-600 font-semibold">Booking Confirmed</p>
+                                    <p class="text-xl font-semibold text-gray-900 mt-1">See you soon, Arianna!</p>
+                                    <p class="text-sm text-gray-600 mt-1">A confirmation email has been sent with the meeting link and details.</p>
+                                </div>
+                                <div class="mt-4 flex flex-col gap-2 w-full max-w-sm">
+                                    <div class="flex items-center justify-between text-sm text-gray-700 border border-gray-100 rounded-lg px-3 py-2">
+                                        <span>Wednesday, May 7</span>
+                                        <span class="text-gray-500">2:00 PM GMT-3</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm text-gray-700 border border-gray-100 rounded-lg px-3 py-2">
+                                        <span>Location</span>
+                                        <span class="text-gray-500">Rio Studio • Hybrid</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                     </div>
-
-                    <!-- RIGHT COLUMN (Calendar) -->
-                    <div class="border-l border-gray-200 p-6">
-
-                        <p class="text-sm font-semibold text-gray-900 mb-3">May 2025</p>
-
-                        <!-- Weekdays -->
-                        <div class="grid grid-cols-7 text-center text-[11px] text-gray-400 mb-2">
-                            <span>SUN</span><span>MON</span><span>TUE</span><span>WED</span>
-                            <span>THU</span><span>FRI</span><span>SAT</span>
-                        </div>
-
-                        <!-- Calendar -->
-                        <div class="grid grid-cols-7 gap-1 text-center text-sm">
-
-                            <span class="text-gray-300 py-2"></span>
-                            <span class="text-gray-300 py-2"></span>
-                            <span class="text-gray-300 py-2"></span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">1</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">2</span>
-                            <span class="text-gray-300 py-2"></span>
-                            <span class="text-gray-300 py-2"></span>
-
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">5</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">6</span>
-                            <span class="text-white py-2 bg-gray-900 rounded-md font-semibold shadow">7</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">8</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">9</span>
-                            <span class="text-gray-300 py-2"></span>
-                            <span class="text-gray-300 py-2"></span>
-
-                            <span class="text-gray-900 py-2">12</span>
-                            <span class="text-gray-900 py-2">13</span>
-                            <span class="text-gray-900 py-2">14</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">15</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">16</span>
-                            <span class="text-gray-300 py-2"></span>
-                            <span class="text-gray-300 py-2"></span>
-
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">19</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">20</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">21</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">22</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">23</span>
-                            <span class="text-gray-300 py-2"></span>
-                            <span class="text-gray-300 py-2"></span>
-
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">26</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">27</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">28</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">29</span>
-                            <span class="text-gray-900 py-2 bg-gray-200 rounded-md">30</span>
-                            <span class="text-gray-300 py-2"></span>
-                            <span class="text-gray-300 py-2"></span>
-
-                        </div>
-                    </div>
-
                 </div>
+
+                <div class="absolute inset-0 bg-gradient-to-br from-white via-white/80 to-gray-50 pointer-events-none"></div>
             </div>
 
         </div>
@@ -181,6 +264,28 @@ get_header();
     </div>
 
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const panels = Array.from(document.querySelectorAll('[data-booking-state]'));
+        if (!panels.length) return;
+
+        let activeIndex = 0;
+
+        const setActivePanel = (nextIndex) => {
+            panels.forEach((panel, idx) => {
+                panel.classList.toggle('is-active', idx === nextIndex);
+            });
+        };
+
+        setActivePanel(activeIndex);
+
+        setInterval(() => {
+            activeIndex = (activeIndex + 1) % panels.length;
+            setActivePanel(activeIndex);
+        }, 3600);
+    });
+</script>
 
  <!-- ======================================= -->
 <!-- STEP 2 — HOW IT WORKS (Optimized) -->
