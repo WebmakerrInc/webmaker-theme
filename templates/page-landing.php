@@ -1484,316 +1484,33 @@ get_header();
 </section>
 
 <section class="w-full bg-[#fafafa] py-24 border-t border-gray-200">
-    <div class="max-w-[1150px] mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-
-        <div class="order-1">
-
-            <span class="inline-flex items-center justify-center w-8 h-8 rounded-md 
-                         bg-gray-100 text-gray-700 text-xs font-medium shadow-sm mb-4">
-                04
-            </span>
-
-            <h3 class="text-[28px] md:text-[34px] font-semibold text-gray-900 leading-tight">
-                Simplify team coordination
-            </h3>
-
-            <p class="mt-4 text-[15px] text-gray-600 leading-relaxed max-w-[480px]">
-                Webmakerr keeps your entire team in sync with shared
-                availability, pooled schedules, and collective booking pages.
-                Ensure the right team member is always matched with the
-                right client, automatically.
-            </p>
-
-        </div>
-
-        <div class="order-2 flex justify-center lg:justify-end">
-            <div class="bg-white border border-gray-200 rounded-[20px] shadow-sm 
-                        w-full max-w-[540px] p-6">
-
-                <div class="flex items-center gap-2 mb-6">
-                    <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
-                    <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
-                    <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
-                </div>
-
-                <h4 class="text-[18px] font-semibold text-gray-900 mb-1">
-                    Team Availability Overview
-                </h4>
-                <p class="text-[14px] text-gray-600 mb-4">
-                    One view to understand who is available and when.
-                </p>
-
-                <div class="space-y-4">
-
-                    <div class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4">
-                        <div class="flex items-center gap-3">
-                            <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" />
-                            <div>
-                                <p class="text-[14px] font-semibold text-gray-900">Sarah</p>
-                                <p class="text-[13px] text-gray-600">Available 9am–4pm</p>
-                            </div>
-                        </div>
-                        <span class="text-[12px] px-2 py-1 rounded bg-green-100 text-green-700">
-                            Online
-                        </span>
-                    </div>
-
-                    <div class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4">
-                        <div class="flex items-center gap-3">
-                            <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" />
-                            <div>
-                                <p class="text-[14px] font-semibold text-gray-900">James</p>
-                                <p class="text-[13px] text-gray-600">Available 11am–6pm</p>
-                            </div>
-                        </div>
-                        <span class="text-[12px] px-2 py-1 rounded bg-yellow-100 text-yellow-700">
-                            Busy
-                        </span>
-                    </div>
-
-                    <div class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4">
-                        <div class="flex items-center gap-3">
-                            <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" />
-                            <div>
-                                <p class="text-[14px] font-semibold text-gray-900">Alicia</p>
-                                <p class="text-[13px] text-gray-600">Out today</p>
-                            </div>
-                        </div>
-                        <span class="text-[12px] px-2 py-1 rounded bg-red-100 text-red-700">
-                            Offline
-                        </span>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="w-full bg-white py-24 border-t border-gray-200">
-    <div class="max-w-[1150px] mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-
-        <div class="flex justify-center lg:justify-start">
-            <div class="relative bg-white border border-gray-200 rounded-[20px] shadow-sm 
-                        w-full max-w-[540px] h-[380px] overflow-hidden p-6">
-
-                <div class="flex items-center gap-2 mb-5">
-                    <div class="w-3 h-3 rounded-full bg-gray-300"></div>
-                    <div class="w-3 h-3 rounded-full bg-gray-300"></div>
-                    <div class="w-3 h-3 rounded-full bg-gray-300"></div>
-                </div>
-
-                <div class="absolute inset-0 ecommerce-slide ecommerce-1">
-                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm max-w-[350px] mx-auto">
-
-                        <div class="w-full h-[160px] bg-gray-200 rounded-lg mb-4 animate-pulse"></div>
-
-                        <h4 class="text-[16px] font-semibold text-gray-900">Premium Headphones</h4>
-                        <p class="text-[13px] text-gray-600 mt-1">High-quality sound, noise cancelling.</p>
-
-                        <button class="mt-4 w-full bg-black text-white text-[14px] py-2 rounded-lg">
-                            Add to Cart
-                        </button>
-
-                        <div class="cursor-ec"></div>
-                        <div class="cursor-click-ec"></div>
-                    </div>
-                </div>
-
-                <div class="absolute inset-0 ecommerce-slide ecommerce-2 opacity-0">
-                    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm max-w-[360px] mx-auto">
-
-                        <h4 class="text-[16px] font-semibold text-gray-900 mb-3">Your Cart</h4>
-
-                        <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
-                            <div class="w-[60px] h-[60px] bg-gray-200 rounded-lg"></div>
-                            <div>
-                                <p class="text-[14px] font-medium text-gray-900">Premium Headphones</p>
-                                <p class="text-[13px] text-gray-600">$89.00</p>
-                            </div>
-                        </div>
-
-                        <button class="mt-4 w-full bg-black text-white text-[14px] py-2 rounded-lg">
-                            Checkout →
-                        </button>
-
-                        <div class="cursor-ec-cart"></div>
-                        <div class="cursor-click-ec-cart"></div>
-                    </div>
-                </div>
-
-                <div class="absolute inset-0 ecommerce-slide ecommerce-3 opacity-0">
-                    <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm max-w-[380px] mx-auto">
-
-                        <h4 class="text-[16px] font-semibold text-gray-900 mb-3">Checkout</h4>
-
-                        <input class="w-full border border-gray-300 rounded px-3 py-2 text-[14px] mb-3" placeholder="Full Name" />
-                        <input class="w-full border border-gray-300 rounded px-3 py-2 text-[14px] mb-3" placeholder="Email" />
-                        <input class="w-full border border-gray-300 rounded px-3 py-2 text-[14px]" placeholder="Card Number" />
-
-                        <button class="mt-4 w-full bg-black text-white text-[14px] py-2 rounded-lg">
-                            Pay $89
-                        </button>
-
-                        <div class="cursor-ec-checkout"></div>
-                        <div class="cursor-click-ec-checkout"></div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="flex flex-col justify-center">
-
-            <span class="inline-flex items-center justify-center w-8 h-8 rounded-md 
-                         bg-gray-100 text-gray-700 text-xs font-medium shadow-sm mb-4">
-                05
-            </span>
-
-            <h3 class="text-[28px] md:text-[34px] font-semibold text-gray-900 leading-tight">
-                Sell smarter with automated ecommerce flows
-            </h3>
-
-            <p class="mt-4 text-[15px] text-gray-600 leading-relaxed max-w-[480px]">
-                Webmakerr gives you a frictionless product-to-checkout experience.
-                Automate upsells, reduce cart abandonment, and offer your customers
-                a seamless buying journey—fully integrated with CRM and workflows.
-            </p>
-
-        </div>
-
-    </div>
-</section>
-
-<style>
-
-.ecommerce-slide {
-    transition: opacity .6s ease-in-out;
-}
-
-/* ===================== */
-/* Cursor for Product    */
-/* ===================== */
-.cursor-ec {
-    width:8px; height:8px; background:#111; border-radius:50%;
-    position:absolute; top:220px; left:230px; 
-    transform:translate(-50%,-50%);
-    animation:ecCursor 6s infinite ease-in-out;
-}
-@keyframes ecCursor {
-    0%   { top:220px; left:230px; }
-    20%  { top:260px; left:230px; } /* move to button */
-    30%  { top:260px; left:230px; }
-    100% { top:220px; left:230px; }
-}
-
-.cursor-click-ec {
-    width:14px; height:14px; border:2px solid #111; border-radius:50%;
-    position:absolute; top:260px; left:230px;
-    transform:translate(-50%,-50%) scale(.4);
-    opacity:0;
-    animation:ecClick 6s infinite;
-}
-@keyframes ecClick {
-    0%,18%{opacity:0;}
-    20%{opacity:1; transform:scale(1);}
-    30%{opacity:0; transform:scale(1.6);}
-    100%{opacity:0;}
-}
-
-/* ===================== */
-/* Cursor for Cart       */
-/* ===================== */
-.cursor-ec-cart {
-    width:8px; height:8px; background:#111; border-radius:50%;
-    position:absolute; top:260px; left:250px;
-    transform:translate(-50%,-50%);
-    animation:ecCartCursor 6s infinite ease;
-}
-@keyframes ecCartCursor {
-    0% { opacity:0; }
-    34%{ opacity:1; top:260px; left:250px; }
-    50%{ top:300px; left:250px; } /* move to checkout */
-    60%{ top:300px; left:250px; }
-    100%{ opacity:0; }
-}
-
-.cursor-click-ec-cart {
-    width:14px; height:14px; border:2px solid #111; border-radius:50%;
-    position:absolute; top:300px; left:250px;
-    transform:translate(-50%,-50%) scale(.4);
-    opacity:0;
-    animation:ecCartClick 6s infinite;
-}
-@keyframes ecCartClick {
-    0%,45%{opacity:0;}
-    50%{opacity:1; transform:scale(1);}
-    60%{opacity:0; transform:scale(1.6);}
-    100%{opacity:0;}
-}
-
-/* ===================== */
-/* Cursor for Checkout   */
-/* ===================== */
-.cursor-ec-checkout {
-    width:8px; height:8px; background:#111; border-radius:50%;
-    position:absolute; top:280px; left:240px;
-    transform:translate(-50%,-50%);
-    animation:ecCheckoutCursor 6s infinite ease;
-}
-@keyframes ecCheckoutCursor {
-    0%{opacity:0;}
-    60%{opacity:1; top:280px; left:240px;}
-    80%{top:330px; left:240px;} /* click pay */
-    90%{top:330px; left:240px;}
-    100%{opacity:0;}
-}
-
-.cursor-click-ec-checkout {
-    width:14px; height:14px; border:2px solid #111; border-radius:50%;
-    position:absolute; top:330px; left:240px;
-    transform:translate(-50%,-50%) scale(.4);
-    opacity:0;
-    animation:ecCheckoutClick 6s infinite;
-}
-@keyframes ecCheckoutClick {
-    0%,70%{opacity:0;}
-    80%{opacity:1; transform:scale(1);}
-    90%{opacity:0; transform:scale(1.6);}
-    100%{opacity:0;}
-}
-
-</style>
-
-<section class="w-full bg-[#fafafa] py-24 border-t border-gray-200">
     <div class="max-w-[1150px] mx-auto px-6 text-center">
 
-        <span class="inline-flex items-center bg-white border border-gray-300 
-                     px-3 py-1 text-xs rounded-full text-gray-600 shadow-sm mb-6">
-            Testimonials
+        <span class="inline-flex items-center bg-white/80 border border-gray-200 px-3 py-1 text-xs rounded-full text-gray-700 shadow-sm mb-5 backdrop-blur">
+            Trusted customer stories
         </span>
 
-        <h2 class="text-[32px] md:text-[44px] font-semibold text-gray-900 leading-tight mb-12">
-            Loved by businesses worldwide
+        <h2 class="text-[32px] md:text-[44px] font-semibold text-gray-900 leading-tight mb-10">
+            Results teams rely on every day
         </h2>
 
         <div class="relative max-w-[820px] mx-auto">
 
             <div id="testimonialTrack"
-                 class="flex transition-transform duration-700 ease-out select-none">
+                 class="flex transition-transform duration-700 ease-[cubic-bezier(.4,0,.2,1)] select-none relative">
 
-                <div class="testimonial-slide w-full flex-shrink-0 px-4">
-                    <div class="bg-white border border-gray-200 rounded-[20px] shadow-sm p-8">
-                        <p class="text-[16px] text-gray-700 leading-relaxed italic">
-                            “Webmakerr helped us automate our entire booking flow.
-                            Our no-shows dropped by 60% within the first month.”
+                <div class="testimonial-slide w-full flex-shrink-0 px-3 md:px-4 transition-all duration-700 ease-out opacity-60 scale-[0.98]">
+                    <div class="bg-white/90 border border-gray-200/70 rounded-2xl shadow-lg shadow-slate-900/5 p-7 md:p-8 text-left space-y-5">
+                        <div class="flex items-center gap-3 text-sm font-medium text-emerald-700">
+                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                            <span>Reduced no-shows by 60% in month one</span>
+                        </div>
+                        <p class="text-[15px] md:text-[16px] text-gray-700 leading-relaxed">
+                            “Webmakerr quietly keeps our bookings humming. The automation feels concierge-level and the team now spends time with customers, not calendars.”
                         </p>
 
-                        <div class="flex items-center gap-4 mt-6">
-                            <img src="https://via.placeholder.com/40"
-                                 class="w-10 h-10 rounded-full" />
+                        <div class="flex items-center gap-4 pt-2">
+                            <img src="https://via.placeholder.com/48" class="w-12 h-12 rounded-full object-cover shadow-sm" />
                             <div class="text-left">
                                 <p class="font-semibold text-gray-900 text-sm">Amanda Lee</p>
                                 <p class="text-xs text-gray-500">Head of Operations, LumiHealth</p>
@@ -1802,34 +1519,38 @@ get_header();
                     </div>
                 </div>
 
-                <div class="testimonial-slide w-full flex-shrink-0 px-4">
-                    <div class="bg-white border border-gray-200 rounded-[20px] shadow-sm p-8">
-                        <p class="text-[16px] text-gray-700 leading-relaxed italic">
-                            “The $1 trial was a game-changer. We onboarded our entire
-                            sales team in minutes and started closing appointments instantly.”
+                <div class="testimonial-slide w-full flex-shrink-0 px-3 md:px-4 transition-all duration-700 ease-out opacity-60 scale-[0.98]">
+                    <div class="bg-white/90 border border-gray-200/70 rounded-2xl shadow-lg shadow-slate-900/5 p-7 md:p-8 text-left space-y-5">
+                        <div class="flex items-center gap-3 text-sm font-medium text-blue-700">
+                            <span class="h-2 w-2 rounded-full bg-blue-500"></span>
+                            <span>Full team onboarded in minutes</span>
+                        </div>
+                        <p class="text-[15px] md:text-[16px] text-gray-700 leading-relaxed">
+                            “The $1 start lowered every barrier. Our reps were scheduling demos the same day and the insights help us course-correct in real time.”
                         </p>
 
-                        <div class="flex items-center gap-4 mt-6">
-                            <img src="https://via.placeholder.com/40"
-                                 class="w-10 h-10 rounded-full" />
+                        <div class="flex items-center gap-4 pt-2">
+                            <img src="https://via.placeholder.com/48" class="w-12 h-12 rounded-full object-cover shadow-sm" />
                             <div class="text-left">
                                 <p class="font-semibold text-gray-900 text-sm">Daniel Morris</p>
-                                <p class="text-xs text-gray-500">Sales Lead, IntraPro</p>
+                                <p class="text-xs text-gray-500">Revenue Lead, IntraPro</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="testimonial-slide w-full flex-shrink-0 px-4">
-                    <div class="bg-white border border-gray-200 rounded-[20px] shadow-sm p-8">
-                        <p class="text-[16px] text-gray-700 leading-relaxed italic">
-                            “Finally, a business tool that feels modern. Automated
-                            workflows and booking forms made our operations 10× smoother.”
+                <div class="testimonial-slide w-full flex-shrink-0 px-3 md:px-4 transition-all duration-700 ease-out opacity-60 scale-[0.98]">
+                    <div class="bg-white/90 border border-gray-200/70 rounded-2xl shadow-lg shadow-slate-900/5 p-7 md:p-8 text-left space-y-5">
+                        <div class="flex items-center gap-3 text-sm font-medium text-purple-700">
+                            <span class="h-2 w-2 rounded-full bg-purple-500"></span>
+                            <span>Modern workflows, zero busywork</span>
+                        </div>
+                        <p class="text-[15px] md:text-[16px] text-gray-700 leading-relaxed">
+                            “It feels like a premium SaaS suite without the bloat. Automations, payments, and reporting live together so our studio runs on autopilot.”
                         </p>
 
-                        <div class="flex items-center gap-4 mt-6">
-                            <img src="https://via.placeholder.com/40"
-                                 class="w-10 h-10 rounded-full" />
+                        <div class="flex items-center gap-4 pt-2">
+                            <img src="https://via.placeholder.com/48" class="w-12 h-12 rounded-full object-cover shadow-sm" />
                             <div class="text-left">
                                 <p class="font-semibold text-gray-900 text-sm">Sophia Carter</p>
                                 <p class="text-xs text-gray-500">Founder, Brightside Studio</p>
@@ -1841,15 +1562,13 @@ get_header();
             </div>
 
             <button id="prevBtn"
-                    class="absolute -left-4 top-1/2 -translate-y-1/2 bg-white border border-gray-200 
-                           w-10 h-10 rounded-full flex items-center justify-center shadow-sm hover:bg-gray-50">
-                ←
+                    class="absolute -left-4 top-1/2 -translate-y-1/2 bg-white/90 border border-gray-200 w-10 h-10 rounded-full flex items-center justify-center shadow-md shadow-slate-900/5 hover:-translate-y-1/2 hover:-translate-x-0.5 transition duration-300 hover:bg-white">
+                <span class="text-gray-800">←</span>
             </button>
 
             <button id="nextBtn"
-                    class="absolute -right-4 top-1/2 -translate-y-1/2 bg-white border border-gray-200 
-                           w-10 h-10 rounded-full flex items-center justify-center shadow-sm hover:bg-gray-50">
-                →
+                    class="absolute -right-4 top-1/2 -translate-y-1/2 bg-white/90 border border-gray-200 w-10 h-10 rounded-full flex items-center justify-center shadow-md shadow-slate-900/5 hover:-translate-y-1/2 hover:translate-x-0.5 transition duration-300 hover:bg-white">
+                <span class="text-gray-800">→</span>
             </button>
 
         </div>
@@ -1859,39 +1578,58 @@ get_header();
 
 <script>
 const track = document.getElementById("testimonialTrack");
-const slides = document.querySelectorAll(".testimonial-slide");
+const slides = Array.from(document.querySelectorAll(".testimonial-slide"));
 const prev = document.getElementById("prevBtn");
 const next = document.getElementById("nextBtn");
 
 let index = 0;
+let autoSlide;
 const total = slides.length;
 
-function updateSlider() {
+const setActiveSlide = () => {
     track.style.transform = `translateX(-${index * 100}%)`;
-}
-
-next.onclick = () => {
-    index = (index + 1) % total;
-    updateSlider();
+    slides.forEach((slide, idx) => {
+        const isActive = idx === index;
+        slide.classList.toggle("opacity-100", isActive);
+        slide.classList.toggle("scale-100", isActive);
+        slide.classList.toggle("shadow-xl", isActive);
+        slide.classList.toggle("opacity-60", !isActive);
+        slide.classList.toggle("scale-[0.98]", !isActive);
+    });
 };
 
-prev.onclick = () => {
-    index = (index - 1 + total) % total;
-    updateSlider();
+const goTo = (newIndex) => {
+    index = (newIndex + total) % total;
+    setActiveSlide();
+    restartAutoSlide();
 };
 
-setInterval(() => {
-    index = (index + 1) % total;
-    updateSlider();
-}, 4000);
+const restartAutoSlide = () => {
+    clearInterval(autoSlide);
+    autoSlide = setInterval(() => goTo(index + 1), 4000);
+};
+
+next.addEventListener("click", () => goTo(index + 1));
+prev.addEventListener("click", () => goTo(index - 1));
 
 let startX = 0;
-track.addEventListener("touchstart", e => startX = e.touches[0].clientX);
-track.addEventListener("touchend", e => {
-    let endX = e.changedTouches[0].clientX;
-    if (endX < startX - 50) next.onclick();
-    if (endX > startX + 50) prev.onclick();
+track.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX));
+track.addEventListener("touchend", (e) => {
+    const endX = e.changedTouches[0].clientX;
+    if (endX < startX - 40) goTo(index + 1);
+    if (endX > startX + 40) goTo(index - 1);
 });
+
+track.addEventListener("pointerdown", (e) => (startX = e.clientX));
+track.addEventListener("pointerup", (e) => {
+    if (!startX) return;
+    if (e.clientX < startX - 40) goTo(index + 1);
+    if (e.clientX > startX + 40) goTo(index - 1);
+    startX = 0;
+});
+
+setActiveSlide();
+restartAutoSlide();
 </script>
 
 
