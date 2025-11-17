@@ -1494,12 +1494,12 @@ get_header();
             Results teams rely on every day
         </h2>
 
-        <div class="relative max-w-[820px] mx-auto">
+        <div class="relative max-w-[820px] mx-auto overflow-hidden">
 
             <div id="testimonialTrack"
-                 class="flex transition-transform duration-700 ease-[cubic-bezier(.4,0,.2,1)] select-none relative">
+                 class="flex select-none relative">
 
-                <div class="testimonial-slide w-full flex-shrink-0 px-3 md:px-4 transition-all duration-700 ease-out opacity-60 scale-[0.98]">
+                <div class="testimonial-slide w-full flex-shrink-0 px-3 md:px-4 transition-all duration-700 ease-out opacity-100 scale-100">
                     <div class="bg-white/90 border border-gray-200/70 rounded-2xl shadow-lg shadow-slate-900/5 p-7 md:p-8 text-left space-y-5">
                         <div class="flex items-center gap-3 text-sm font-medium text-emerald-700">
                             <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
@@ -1519,7 +1519,7 @@ get_header();
                     </div>
                 </div>
 
-                <div class="testimonial-slide w-full flex-shrink-0 px-3 md:px-4 transition-all duration-700 ease-out opacity-60 scale-[0.98]">
+                <div class="testimonial-slide w-full flex-shrink-0 px-3 md:px-4 transition-all duration-700 ease-out opacity-100 scale-100">
                     <div class="bg-white/90 border border-gray-200/70 rounded-2xl shadow-lg shadow-slate-900/5 p-7 md:p-8 text-left space-y-5">
                         <div class="flex items-center gap-3 text-sm font-medium text-blue-700">
                             <span class="h-2 w-2 rounded-full bg-blue-500"></span>
@@ -1539,7 +1539,7 @@ get_header();
                     </div>
                 </div>
 
-                <div class="testimonial-slide w-full flex-shrink-0 px-3 md:px-4 transition-all duration-700 ease-out opacity-60 scale-[0.98]">
+                <div class="testimonial-slide w-full flex-shrink-0 px-3 md:px-4 transition-all duration-700 ease-out opacity-100 scale-100">
                     <div class="bg-white/90 border border-gray-200/70 rounded-2xl shadow-lg shadow-slate-900/5 p-7 md:p-8 text-left space-y-5">
                         <div class="flex items-center gap-3 text-sm font-medium text-purple-700">
                             <span class="h-2 w-2 rounded-full bg-purple-500"></span>
@@ -1561,75 +1561,48 @@ get_header();
 
             </div>
 
-            <button id="prevBtn"
-                    class="absolute -left-4 top-1/2 -translate-y-1/2 bg-white/90 border border-gray-200 w-10 h-10 rounded-full flex items-center justify-center shadow-md shadow-slate-900/5 hover:-translate-y-1/2 hover:-translate-x-0.5 transition duration-300 hover:bg-white">
-                <span class="text-gray-800">←</span>
-            </button>
-
-            <button id="nextBtn"
-                    class="absolute -right-4 top-1/2 -translate-y-1/2 bg-white/90 border border-gray-200 w-10 h-10 rounded-full flex items-center justify-center shadow-md shadow-slate-900/5 hover:-translate-y-1/2 hover:translate-x-0.5 transition duration-300 hover:bg-white">
-                <span class="text-gray-800">→</span>
-            </button>
-
         </div>
 
     </div>
 </section>
 
 <script>
-const track = document.getElementById("testimonialTrack");
-const slides = Array.from(document.querySelectorAll(".testimonial-slide"));
-const prev = document.getElementById("prevBtn");
-const next = document.getElementById("nextBtn");
+document.addEventListener("DOMContentLoaded", () => {
+    const track = document.getElementById("testimonialTrack");
+    if (!track) return;
 
-let index = 0;
-let autoSlide;
-const total = slides.length;
+    const slides = Array.from(track.children);
 
-const setActiveSlide = () => {
-    track.style.transform = `translateX(-${index * 100}%)`;
-    slides.forEach((slide, idx) => {
-        const isActive = idx === index;
-        slide.classList.toggle("opacity-100", isActive);
-        slide.classList.toggle("scale-100", isActive);
-        slide.classList.toggle("shadow-xl", isActive);
-        slide.classList.toggle("opacity-60", !isActive);
-        slide.classList.toggle("scale-[0.98]", !isActive);
+    slides.forEach((slide) => {
+        const clone = slide.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        track.appendChild(clone);
     });
-};
 
-const goTo = (newIndex) => {
-    index = (newIndex + total) % total;
-    setActiveSlide();
-    restartAutoSlide();
-};
+    let position = 0;
+    const speed = 0.3;
 
-const restartAutoSlide = () => {
-    clearInterval(autoSlide);
-    autoSlide = setInterval(() => goTo(index + 1), 4000);
-};
+    const getHalfWidth = () => {
+        return Array.from(track.children).reduce((total, slide) => total + slide.getBoundingClientRect().width, 0) / 2;
+    };
 
-next.addEventListener("click", () => goTo(index + 1));
-prev.addEventListener("click", () => goTo(index - 1));
+    let halfWidth = getHalfWidth();
 
-let startX = 0;
-track.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX));
-track.addEventListener("touchend", (e) => {
-    const endX = e.changedTouches[0].clientX;
-    if (endX < startX - 40) goTo(index + 1);
-    if (endX > startX + 40) goTo(index - 1);
+    const step = () => {
+        position -= speed;
+        if (Math.abs(position) >= halfWidth) {
+            position = 0;
+        }
+        track.style.transform = `translateX(${position}px)`;
+        requestAnimationFrame(step);
+    };
+
+    window.addEventListener("resize", () => {
+        halfWidth = getHalfWidth();
+    });
+
+    requestAnimationFrame(step);
 });
-
-track.addEventListener("pointerdown", (e) => (startX = e.clientX));
-track.addEventListener("pointerup", (e) => {
-    if (!startX) return;
-    if (e.clientX < startX - 40) goTo(index + 1);
-    if (e.clientX > startX + 40) goTo(index - 1);
-    startX = 0;
-});
-
-setActiveSlide();
-restartAutoSlide();
 </script>
 
 
