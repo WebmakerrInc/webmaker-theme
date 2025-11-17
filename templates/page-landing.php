@@ -1480,6 +1480,224 @@ get_header();
 </div>
 
 
+</div>
+</section>
+
+<!-- ======================================= -->
+<!-- SECTION 04 — Unified team scheduling (UI RIGHT) -->
+<!-- ======================================= -->
+<section class="w-full bg-[#fafafa] py-24 border-t border-gray-200">
+    <div class="max-w-[1150px] mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- LEFT TEXT COLUMN -->
+        <div class="order-1">
+
+            <!-- Step badge -->
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-md 
+                         bg-gray-100 text-gray-700 text-xs font-medium shadow-sm mb-4">
+                04
+            </span>
+
+            <!-- Heading -->
+            <h3 class="text-[28px] md:text-[34px] font-semibold text-gray-900 leading-tight">
+                Simplify team coordination
+            </h3>
+
+            <!-- Paragraph -->
+            <p class="mt-4 text-[15px] text-gray-600 leading-relaxed max-w-[480px]">
+                Webmakerr keeps your entire team in sync with shared
+                availability, pooled schedules, and collective booking pages.
+                Ensure the right team member is always matched with the
+                right client, automatically.
+            </p>
+
+        </div>
+
+        <!-- RIGHT UI MOCKUP (matches Cal.com style) -->
+        <div class="order-2 flex justify-center lg:justify-end">
+            <div class="bg-white border border-gray-200 rounded-[20px] shadow-sm 
+                        w-full max-w-[540px] p-6">
+
+                <!-- Browser dots -->
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
+                    <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
+                    <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
+                </div>
+
+                <!-- Title -->
+                <h4 class="text-[18px] font-semibold text-gray-900 mb-1">
+                    Team Availability Overview
+                </h4>
+                <p class="text-[14px] text-gray-600 mb-4">
+                    One view to understand who is available and when.
+                </p>
+
+                <!-- Team Members -->
+                <div class="space-y-4">
+
+                    <!-- Member Row -->
+                    <div class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4">
+                        <div class="flex items-center gap-3">
+                            <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" />
+                            <div>
+                                <p class="text-[14px] font-semibold text-gray-900">Sarah</p>
+                                <p class="text-[13px] text-gray-600">Available 9am–4pm</p>
+                            </div>
+                        </div>
+                        <span class="text-[12px] px-2 py-1 rounded bg-green-100 text-green-700">
+                            Online
+                        </span>
+                    </div>
+
+                    <!-- Member Row -->
+                    <div class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4">
+                        <div class="flex items-center gap-3">
+                            <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" />
+                            <div>
+                                <p class="text-[14px] font-semibold text-gray-900">James</p>
+                                <p class="text-[13px] text-gray-600">Available 11am–6pm</p>
+                            </div>
+                        </div>
+                        <span class="text-[12px] px-2 py-1 rounded bg-yellow-100 text-yellow-700">
+                            Busy
+                        </span>
+                    </div>
+
+                    <!-- Member Row -->
+                    <div class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4">
+                        <div class="flex items-center gap-3">
+                            <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" />
+                            <div>
+                                <p class="text-[14px] font-semibold text-gray-900">Alicia</p>
+                                <p class="text-[13px] text-gray-600">Out today</p>
+                            </div>
+                        </div>
+                        <span class="text-[12px] px-2 py-1 rounded bg-red-100 text-red-700">
+                            Offline
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- ======================================= -->
+<!-- SECTION 05 — Ecommerce Product → Cart → Checkout -->
+<!-- ======================================= -->
+<section class="w-full bg-white py-24 border-t border-gray-200">
+    <div class="max-w-[1150px] mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- ======================================= -->
+        <!-- LEFT — ANIMATED ECOMMERCE CARD -->
+        <!-- ======================================= -->
+        <div class="flex justify-center lg:justify-start">
+            <div class="relative bg-white border border-gray-200 rounded-[20px] shadow-sm 
+                        w-full max-w-[540px] h-[380px] overflow-hidden p-6">
+
+                <!-- Browser dots -->
+                <div class="flex items-center gap-2 mb-5">
+                    <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                    <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                    <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                </div>
+
+                <!-- ======================== -->
+                <!-- LAYER 1 — PRODUCT CARD  -->
+                <!-- ======================== -->
+                <div class="absolute inset-0 ecommerce-slide ecommerce-1">
+                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm max-w-[350px] mx-auto">
+
+                        <div class="w-full h-[160px] bg-gray-200 rounded-lg mb-4 animate-pulse"></div>
+
+                        <h4 class="text-[16px] font-semibold text-gray-900">Premium Headphones</h4>
+                        <p class="text-[13px] text-gray-600 mt-1">High-quality sound, noise cancelling.</p>
+
+                        <button class="mt-4 w-full bg-black text-white text-[14px] py-2 rounded-lg">
+                            Add to Cart
+                        </button>
+
+                        <!-- Cursor click -->
+                        <div class="cursor-ec"></div>
+                        <div class="cursor-click-ec"></div>
+                    </div>
+                </div>
+
+                <!-- ======================== -->
+                <!-- LAYER 2 — CART PANEL    -->
+                <!-- ======================== -->
+                <div class="absolute inset-0 ecommerce-slide ecommerce-2 opacity-0">
+                    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm max-w-[360px] mx-auto">
+
+                        <h4 class="text-[16px] font-semibold text-gray-900 mb-3">Your Cart</h4>
+
+                        <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                            <div class="w-[60px] h-[60px] bg-gray-200 rounded-lg"></div>
+                            <div>
+                                <p class="text-[14px] font-medium text-gray-900">Premium Headphones</p>
+                                <p class="text-[13px] text-gray-600">$89.00</p>
+                            </div>
+                        </div>
+
+                        <button class="mt-4 w-full bg-black text-white text-[14px] py-2 rounded-lg">
+                            Checkout →
+                        </button>
+
+                        <div class="cursor-ec-cart"></div>
+                        <div class="cursor-click-ec-cart"></div>
+                    </div>
+                </div>
+
+                <!-- ======================== -->
+                <!-- LAYER 3 — CHECKOUT FORM -->
+                <!-- ======================== -->
+                <div class="absolute inset-0 ecommerce-slide ecommerce-3 opacity-0">
+                    <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm max-w-[380px] mx-auto">
+
+                        <h4 class="text-[16px] font-semibold text-gray-900 mb-3">Checkout</h4>
+
+                        <input class="w-full border border-gray-300 rounded px-3 py-2 text-[14px] mb-3" placeholder="Full Name" />
+                        <input class="w-full border border-gray-300 rounded px-3 py-2 text-[14px] mb-3" placeholder="Email" />
+                        <input class="w-full border border-gray-300 rounded px-3 py-2 text-[14px]" placeholder="Card Number" />
+
+                        <button class="mt-4 w-full bg-black text-white text-[14px] py-2 rounded-lg">
+                            Pay $89
+                        </button>
+
+                        <div class="cursor-ec-checkout"></div>
+                        <div class="cursor-click-ec-checkout"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ======================================= -->
+        <!-- RIGHT TEXT COLUMN -->
+        <!-- ======================================= -->
+        <div class="flex flex-col justify-center">
+
+            <!-- Step badge -->
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-md 
+                         bg-gray-100 text-gray-700 text-xs font-medium shadow-sm mb-4">
+                05
+            </span>
+
+            <h3 class="text-[28px] md:text-[34px] font-semibold text-gray-900 leading-tight">
+                Sell smarter with automated ecommerce flows
+            </h3>
+
+            <p class="mt-4 text-[15px] text-gray-600 leading-relaxed max-w-[480px]">
+                Webmakerr gives you a frictionless product-to-checkout experience.
+                Automate upsells, reduce cart abandonment, and offer your customers
+                a seamless buying journey—fully integrated with CRM and workflows.
+            </p>
+
+        </div>
+
     </div>
 </section>
 
