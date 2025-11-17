@@ -282,125 +282,6 @@ $toolkit_link       = webmakerr_get_popup_link_attributes($toolkit_url, $popup_e
       </div>
     </section>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        var slider = document.querySelector('[data-testimonial-slider]');
-
-        if (!slider) {
-          return;
-        }
-
-        var track = slider.querySelector('[data-slider-track]');
-        var slides = Array.from(slider.querySelectorAll('[data-slide]'));
-        var prevButton = slider.querySelector('[data-slider-prev]');
-        var nextButton = slider.querySelector('[data-slider-next]');
-        var status = slider.querySelector('[data-slider-status]');
-        var activeIndex = 0;
-        var autoInterval;
-        var startX = 0;
-        var deltaX = 0;
-        var isDragging = false;
-
-        var setActiveSlide = function setActiveSlide() {
-          track.style.transform = "translateX(-".concat(activeIndex * 100, "%)");
-
-          slides.forEach(function (slide, index) {
-            var isActive = index === activeIndex;
-            slide.classList.toggle('opacity-100', isActive);
-            slide.classList.toggle('opacity-70', !isActive);
-            slide.classList.toggle('scale-100', isActive);
-            slide.classList.toggle('scale-[0.98]', !isActive);
-          });
-
-          if (status) {
-            status.textContent = "".concat(activeIndex + 1, " / ").concat(slides.length);
-          }
-        };
-
-        var nextSlide = function nextSlide() {
-          activeIndex = (activeIndex + 1) % slides.length;
-          setActiveSlide();
-        };
-
-        var prevSlide = function prevSlide() {
-          activeIndex = (activeIndex - 1 + slides.length) % slides.length;
-          setActiveSlide();
-        };
-
-        var restartAutoSlide = function restartAutoSlide() {
-          clearInterval(autoInterval);
-          autoInterval = setInterval(nextSlide, 4000);
-        };
-
-        prevButton === null || prevButton === void 0 ? void 0 : prevButton.addEventListener('click', function () {
-          prevSlide();
-          restartAutoSlide();
-        });
-
-        nextButton === null || nextButton === void 0 ? void 0 : nextButton.addEventListener('click', function () {
-          nextSlide();
-          restartAutoSlide();
-        });
-
-        var handlePointerDown = function handlePointerDown(clientX) {
-          isDragging = true;
-          startX = clientX;
-          deltaX = 0;
-          track.style.transitionDuration = '0ms';
-          restartAutoSlide();
-        };
-
-        var handlePointerMove = function handlePointerMove(clientX) {
-          if (!isDragging) {
-            return;
-          }
-
-          deltaX = clientX - startX;
-          track.style.transform = "translateX(calc(-".concat(activeIndex * 100, "% + ").concat(deltaX, "px))");
-        };
-
-        var handlePointerUp = function handlePointerUp() {
-          if (!isDragging) {
-            return;
-          }
-
-          track.style.transitionDuration = '';
-
-          if (Math.abs(deltaX) > 60) {
-            if (deltaX > 0) {
-              prevSlide();
-            } else {
-              nextSlide();
-            }
-          } else {
-            setActiveSlide();
-          }
-
-          isDragging = false;
-        };
-
-        track.addEventListener('pointerdown', function (event) {
-          handlePointerDown(event.clientX);
-          track.setPointerCapture(event.pointerId);
-        });
-
-        track.addEventListener('pointermove', function (event) {
-          handlePointerMove(event.clientX);
-        });
-
-        track.addEventListener('pointerup', handlePointerUp);
-        track.addEventListener('pointercancel', handlePointerUp);
-        track.addEventListener('pointerleave', function () {
-          if (isDragging) {
-            handlePointerUp();
-          }
-        });
-
-        setActiveSlide();
-        restartAutoSlide();
-      });
-    </script>
-
     <section class="bg-light py-24">
       <div class="container mx-auto grid items-center gap-12 px-6 lg:grid-cols-[1fr_0.85fr] lg:px-8">
         <div class="flex flex-col gap-5">
@@ -533,97 +414,57 @@ $toolkit_link       = webmakerr_get_popup_link_attributes($toolkit_url, $popup_e
     <section class="container mx-auto px-6 py-24 lg:px-8">
       <div class="mx-auto flex max-w-3xl flex-col gap-4 text-center">
         <span class="text-xs font-semibold uppercase tracking-[0.26em] text-primary">
-          <?php esc_html_e('Customer Proof', 'webmakerr'); ?>
+          <?php esc_html_e('Client Proof', 'webmakerr'); ?>
         </span>
         <h2 class="text-3xl font-semibold text-zinc-950 sm:text-4xl lg:text-5xl">
-          <?php esc_html_e('Revenue teams trust Webmakerr to launch fast and scale with confidence.', 'webmakerr'); ?>
+          <?php esc_html_e('What Growth Leaders Say About Webmakerr', 'webmakerr'); ?>
         </h2>
         <p class="text-base leading-7 text-zinc-600 sm:text-lg">
-          <?php esc_html_e('See how product marketers and founders use our operators to ship conversion-ready websites, sharpen messaging, and keep pipeline growing.', 'webmakerr'); ?>
+          <?php esc_html_e('Real teams rely on Webmakerr to relaunch websites, orchestrate funnels, and keep qualified leads flowing in.', 'webmakerr'); ?>
         </p>
       </div>
-      <div class="mt-14">
+      <div class="mt-14 grid gap-8 md:grid-cols-3">
         <?php
         $testimonials = array(
             array(
-                'quote' => __('“Webmakerr rebuilt our funnel end-to-end, aligned sales and marketing, and lifted demo bookings by 142% within the first month.”', 'webmakerr'),
+                'quote' => __('“In four weeks our refreshed funnel generated 137% more booked calls. The Webmakerr crew tracked every lever.”', 'webmakerr'),
                 'name'  => __('Jordan Blake', 'webmakerr'),
                 'role'  => __('Founder, GrowthLab Media', 'webmakerr'),
             ),
             array(
-                'quote' => __('“The team delivered a sleek ecommerce experience, automated our nurture, and surfaced analytics that our board now uses weekly.”', 'webmakerr'),
+                'quote' => __('“Our ecommerce redesign plus automation rollout pushed revenue up 62% and gave us clear visibility into every stage.”', 'webmakerr'),
                 'name'  => __('Elena Ruiz', 'webmakerr'),
                 'role'  => __('CMO, Brightwave Living', 'webmakerr'),
             ),
             array(
-                'quote' => __('“They operate like an embedded crew—strategic positioning, fast launches, and relentless testing that keep our CAC trending down.”', 'webmakerr'),
+                'quote' => __('“They plugged into our team like seasoned operators—strategic, proactive, and accountable to growth metrics.”', 'webmakerr'),
                 'name'  => __('Marcus Lee', 'webmakerr'),
                 'role'  => __('Head of Demand Gen, Convertix', 'webmakerr'),
             ),
         );
 
-        ?>
-        <div class="relative overflow-hidden rounded-2xl border border-zinc-200 bg-white/80 shadow-[0_24px_80px_-40px_rgba(24,24,27,0.45)] backdrop-blur" data-testimonial-slider>
-          <div class="flex items-center justify-between gap-4 border-b border-zinc-100 px-4 py-3 sm:px-6">
-            <div class="text-left">
-              <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary">
-                <?php esc_html_e('Customer stories', 'webmakerr'); ?>
+        foreach ($testimonials as $testimonial) :
+            ?>
+          <figure class="flex h-full flex-col gap-6 rounded-[5px] border border-zinc-200 bg-white p-8 shadow-sm">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+              <?php
+              // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+              echo webmakerr_frontpage_icon('quote', 'h-5 w-5 text-primary');
+              ?>
+            </span>
+            <blockquote class="text-sm leading-6 text-zinc-600">
+              <?php echo esc_html($testimonial['quote']); ?>
+            </blockquote>
+            <figcaption class="text-left">
+              <p class="text-sm font-semibold text-zinc-950">
+                <?php echo esc_html($testimonial['name']); ?>
               </p>
-              <p class="text-sm text-zinc-600 sm:text-base">
-                <?php esc_html_e('Real operators, real revenue lifts, zero fluff.', 'webmakerr'); ?>
+              <p class="text-xs uppercase tracking-[0.26em] text-zinc-500">
+                <?php echo esc_html($testimonial['role']); ?>
               </p>
-            </div>
-            <div class="flex items-center gap-2">
-              <button type="button" class="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/40" data-slider-prev>
-                <span class="sr-only"><?php esc_html_e('Previous testimonial', 'webmakerr'); ?></span>
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 19 8 12l7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </button>
-              <button type="button" class="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/40" data-slider-next>
-                <span class="sr-only"><?php esc_html_e('Next testimonial', 'webmakerr'); ?></span>
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div class="relative">
-            <div class="flex touch-pan-y transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]" data-slider-track>
-              <?php foreach ($testimonials as $testimonial_index => $testimonial) : ?>
-                <article data-slide class="w-full flex-shrink-0 px-4 py-8 sm:px-10">
-                  <div class="flex h-full flex-col gap-5 rounded-2xl border border-zinc-200/80 bg-white/90 p-6 opacity-100 shadow-md shadow-zinc-900/5 ring-1 ring-transparent transition-all duration-500 ease-out sm:p-8">
-                    <div class="flex items-center gap-3 text-sm font-semibold text-primary">
-                      <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">
-                        <?php
-                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo webmakerr_frontpage_icon('quote', 'h-5 w-5 text-primary');
-                        ?>
-                      </span>
-                      <span class="text-xs uppercase tracking-[0.28em] text-zinc-500"><?php esc_html_e('Verified client', 'webmakerr'); ?></span>
-                    </div>
-                    <blockquote class="text-base leading-7 text-zinc-700 sm:text-lg">
-                      <?php echo esc_html($testimonial['quote']); ?>
-                    </blockquote>
-                    <div class="flex flex-col gap-1 text-left">
-                      <p class="text-base font-semibold text-zinc-950">
-                        <?php echo esc_html($testimonial['name']); ?>
-                      </p>
-                      <p class="text-sm text-zinc-600">
-                        <?php echo esc_html($testimonial['role']); ?>
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              <?php endforeach; ?>
-            </div>
-            <div class="pointer-events-none absolute inset-x-0 bottom-4 flex items-center justify-center">
-              <span class="rounded-full bg-zinc-900/80 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur" data-slider-status>
-                <?php echo esc_html('1 / ' . count($testimonials)); ?>
-              </span>
-            </div>
-          </div>
-        </div>
+            </figcaption>
+          </figure>
+        <?php endforeach; ?>
       </div>
     </section>
 
